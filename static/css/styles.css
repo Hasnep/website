@@ -1,0 +1,136 @@
+body {
+  background-image: url("/images/grid.png");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: bottom center;
+  background-color: #000000;
+  background-size: cover;
+  margin: 0;
+  font-size: 20px;
+  font-family: "Times New Roman", Times, serif;
+  line-height: 1.3;
+  color: #ffffff;
+}
+
+@-ms-viewport {
+  width: device-width;
+}
+
+a {
+  color: inherit;
+}
+
+.text code {
+  font-size: 16px;
+}
+
+.text h1 {
+  font-size: 48px;
+  text-align: center;
+  margin: 0 0 35px 0;
+}
+
+.text h2 {
+  font-size: 32px;
+}
+
+.text h3 {
+  font-size: 24px;
+}
+
+header {
+  height: 50px;
+}
+
+nav {
+  font-size: 32px;
+  text-align: center;
+  background-color: #000000;
+}
+
+nav ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+nav li {
+  display: inline-block;
+  margin: 5px 35px;
+  text-shadow: 0 0 5px #00ffb2;
+}
+
+nav a {
+  text-decoration: none;
+}
+
+div.text {
+  margin: auto;
+  width: 70%;
+  min-width: 700px;
+  background-color: #000000;
+  color: #ffffff;
+  padding: 25px;
+}
+
+.text img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  max-width: 500px;
+}
+
+.central {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+}
+
+.glowing-text {
+  text-shadow: 0 0 5px #00ffb2;
+}
+
+.vapourwave-text {
+  font-size: 100px;
+  letter-spacing: 30px;
+}
+
+.hue-shift {
+  animation-name: cycle-hues;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+.duration-5 {
+  animation-duration: 5s;
+}
+
+.duration-1 {
+  animation-duration: 1s;
+}
+
+text img.thumbnail {
+  height: 250px;
+  max-width: 500px;
+}
+
+.text blockquote {
+  padding: 0 10px;
+  border-left: 2px solid #ffffff;
+  margin: 10px 50px;
+  text-align: justify
+; font-size: 90%;
+}
+
+@-webkit-keyframes cycle-hues {
+  0% {
+    -webkit-filter: hue-rotate(0deg);
+  }
+
+  100% {
+    -webkit-filter: hue-rotate(360deg);
+  }
+}

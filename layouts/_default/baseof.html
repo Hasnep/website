@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="{{if .IsHome}}{{ $.Site.Params.description }}{{else}}{{.Description}}{{end}}" />
+    <link rel="icon" type="image/png" href="/favicon/favicon-16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon/favicon-32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/favicon/favicon-96.png" sizes="96x96">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css" />
+    <title>{{ block "title" . }} {{ .Site.Title }} {{ end }}</title>
+</head>
+<body>
+    {{ block "navbar" . }}
+    {{ $currentPage := . }}
+    <header>
+        <nav>
+            <ul>
+                {{ range .Site.Menus.main }}
+                <li><a href="{{.URL}}" {{if ($currentPage.IsMenuCurrent "main" .) }}class="hue-shift duration-1"{{end}}>{{ .Name }}</a></li>
+                {{ end }}
+            </ul>
+        </nav>
+    </header>
+    {{ end }}
+
+    {{ block "main" . }}
+    {{ end }}
+</body>
+</html>
