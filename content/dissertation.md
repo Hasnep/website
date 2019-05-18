@@ -8,10 +8,11 @@ My dissertation for my master's in maths at the University of Exeter, titled "Ca
 
 ## Abstract
 
-> Machine learning and deep neural networks have seen widespread success in many applications and are set to play a larger rôle in modern society — sometimes visibly, as with driverless cars, but in some cases more discreetly, such as the use of machine learning algorithms in the U.S. judicial system.
-> Due to their hierarchical structure, deep neural networks are very difficult or impossible for humans to understand, which could cause problems when a machine learning algorithm does something unforeseen when in a position of power.
-> This project uses a simple nonlinear function as an example to train a deep neural network and then applies multiple regression and Gaussian processes to the output of the neural network to try and extract human understandable meaning.
-> LASSO regularisation is used to reduce the regression model to a more human understandable form and is then combined with a Gaussian process to fit the neural network better. 
+> Machine learning and deep neural networks have seen widespread success in many of modern life — sometimes visibly, as with driverless cars, but in some cases more discreetly, such as the use of machine learning algorithms in the U.S. judicial system.
+> Due to their hierarchical structure, deep neural networks are a ‘black box’ which no human can understand, which could cause problems when a machine learning algorithm does something unforeseen.
+> Statistical methods such as Gaussian processes may offer a way to look inside this black box, as they offer a similar flexibility and wide range of uses, and are much more easily interpreted by humans.
+> In this project, a simple non-linear function was used to train a deep neural network and then multiple regression and Gaussian processes were used to model the output of the neural network.
+> Regularisation methods such as LASSO were used to reduce the regression model to a more human understandable form, which was then used as the mean function of a Gaussian process to further improve the fit of the model.
 
 ## Download
 
