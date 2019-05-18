@@ -1,0 +1,6 @@
+# generated files by hugo
+/public/
+/resources/_gen/
+
+# VS Code files
+.vscode
