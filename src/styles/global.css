@@ -1,5 +1,7 @@
 body {
-  font-family: "Inconsolata", "Consolas", "DejaVu Sans Mono", "Droid Sans Mono",    "Fira Code", "FreeMono", "Courier New", "Monaco", "SF Mono", Courier,    monospace;
+  font-family: "Inconsolata", "Consolas", "DejaVu Sans Mono", "Droid Sans Mono",
+    "Fira Code", "FreeMono", "Courier New", "Monaco", "SF Mono", Courier,
+    monospace;
   background-color: black;
   color: white;
   font-size: 18px;
