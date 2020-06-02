@@ -10,14 +10,15 @@
     "plugin:prettier/recommended"
   ],
   "env": {
-    "browser": true,
     "node": true
   },
   "parserOptions": {
     "project": "tsconfig.json",
-    "ecmaVersion": 2018,
-    "sourceType": "module"
+    "ecmaVersion": 2020,
+    "sourceType": "module",
+    "ecmaFeatures": { "jsx": true }
   },
+  "settings": { "react": { "version": "detect" } },
   "rules": {
     "prefer-arrow/prefer-arrow-functions": "error",
     "camelcase": "off",
