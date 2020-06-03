@@ -1,6 +1,6 @@
 import React from "react";
 import Page from "../components/page";
-import ProjectBox from "../components/project-boxes";
+import ProjectBox from "../components/project-box";
 import { graphql, StaticQuery } from "gatsby";
 
 const ProjectsPage = (): JSX.Element => (
