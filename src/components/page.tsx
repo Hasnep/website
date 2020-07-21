@@ -2,7 +2,7 @@ import React from "react";
 import { StaticQuery, graphql } from "gatsby";
 import NavBar from "./navbar";
 
-const Title = (): JSX.Element => (
+const WebsiteTitle = (): JSX.Element => (
   <StaticQuery
     query={graphql`
       query GetTitle {
@@ -23,7 +23,7 @@ const Page = ({
   children: JSX.Element | JSX.Element[];
 }): JSX.Element => (
   <div className={"container box drop-shadow"}>
-    <Title />
+    <WebsiteTitle />
     <hr />
     <NavBar />
     <hr />
