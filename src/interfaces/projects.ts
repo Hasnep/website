@@ -12,10 +12,3 @@ interface IProjectInfo {
   createdAt: string;
   isArchived: boolean;
 }
-
-interface IProjectReadme {
-  name: string;
-  createdAt: string;
-  description: string;
-  readme: { text: string };
-}
