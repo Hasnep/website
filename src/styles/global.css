@@ -51,9 +51,12 @@ pre {
 }
 
 .drop-shadow {
-  -webkit-box-shadow: 1rem 1rem white;
-  -moz-box-shadow: 1rem 1rem white;
-  box-shadow: 1rem 1rem white;
+  --drop-shadow-size: 0.5rem;
+  -webkit-box-shadow: var(--drop-shadow-size) var(--drop-shadow-size)
+    var(--main-colour);
+  -moz-box-shadow: var(--drop-shadow-size) var(--drop-shadow-size)
+    var(--main-colour);
+  box-shadow: var(--drop-shadow-size) var(--drop-shadow-size) var(--main-colour);
 }
 
 hr {
