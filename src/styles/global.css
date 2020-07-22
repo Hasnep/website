@@ -117,6 +117,7 @@ a:hover {
   text-decoration: none;
 }
 
+/* Coloured circle for each language */
 .dot {
   height: 1rem;
   width: 1rem;
