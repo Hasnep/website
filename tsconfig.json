@@ -8,16 +8,14 @@
     "esModuleInterop": true,
     "module": "commonjs",
     "moduleResolution": "node",
-    "noImplicitReturns": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
     "pretty": true,
     "sourceMap": true,
     "strict": true,
     "target": "es2017",
     "lib": ["es2017"],
-    "jsx": "react"
+    "jsx": "react",
+    "types": ["node"]
   },
-  "include": ["src/**/*.ts", "*.ts"],
+  "include": ["src/**/*.ts", "src/**/*.tsx", "*.ts", "*.js"],
   "exclude": ["node_modules"]
 }
