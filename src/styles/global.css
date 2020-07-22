@@ -21,8 +21,20 @@ h2 {
   font-size: 1.5rem;
 }
 
-.box {
-  border: 0.1rem solid white;
+blockquote {
+  margin: 1rem;
+  padding-left: 1rem;
+  border-left: var(--line-thickness) dashed var(--main-colour);
+}
+
+pre {
+  font-size: 0.95rem;
+  line-height: 1.4rem;
+}
+
+.box,
+pre {
+  border: var(--line-thickness) solid var(--main-colour);
   padding: 1rem;
   margin: 1rem;
 }
