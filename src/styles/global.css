@@ -7,8 +7,8 @@ body {
   font-family: "Inconsolata", "Consolas", "DejaVu Sans Mono", "Droid Sans Mono",
     "Fira Code", "FreeMono", "Courier New", "Monaco", "SF Mono", Courier,
     monospace;
-  background-color: black;
-  color: white;
+  background-color: var(--background-colour);
+  color: var(--main-colour);
   font-size: 18px;
   line-height: 1.6rem;
 }
@@ -35,6 +35,7 @@ h2 {
   margin: 2rem auto;
   max-width: 75rem;
   padding: 2rem;
+  background-color: var(--background-colour);
 }
 
 .drop-shadow {
@@ -45,8 +46,8 @@ h2 {
 
 hr {
   border: none;
-  height: 0.1rem;
-  background-color: white;
+  height: var(--line-thickness);
+  background-color: var(--main-colour);
 }
 
 /* Navbar */
@@ -72,13 +73,15 @@ nav > ul > li.selected:before {
 
 /* Links */
 a {
-  color: white;
+  color: var(--main-colour);
   text-decoration: underline;
+  text-decoration-thickness: var(--line-thickness);
 }
 
 a:hover {
   text-decoration: underline;
   text-decoration-style: dashed;
+  text-decoration-thickness: var(--line-thickness);
 }
 
 /* Not supported yet */
