@@ -1,6 +1,6 @@
-import React, { Fragment } from "react";
-import { graphql, StaticQuery, Link } from "gatsby";
-import slugify from "slugify";
+import React from "react";
+import { Link } from "gatsby";
+import slugify from "../slugify";
 
 const Dot = (props: { colour: string }): JSX.Element => (
   <span className={"dot"} style={{ backgroundColor: props.colour }} />
