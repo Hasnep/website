@@ -1,5 +1,9 @@
 interface IProjectInfo {
   name: string;
+  description: string;
+  createdAt: string;
+  url: string;
+  isArchived: boolean;
   languages: {
     edges: {
       node: {
@@ -8,7 +12,5 @@ interface IProjectInfo {
       };
     }[];
   };
-  description: string;
-  createdAt: string;
-  isArchived: boolean;
+  readme: { text: string };
 }
