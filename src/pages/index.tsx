@@ -55,15 +55,15 @@ const ProjectsPage = ({
     };
   };
 }): JSX.Element => (
-    <Page>
-      {data.githubData.data.viewer.repositories.nodes
-        .filter((repo_info: IProjectInfo): boolean => !repo_info.isArchived)
-        .filter(
-          (repo_info: IProjectInfo): boolean =>
-            repo_info.languages.edges.length > 0
-        )
-        .map(repo_info_to_page)}
-    </Page>
-  );
+  <Page>
+    {data.githubData.data.viewer.repositories.nodes
+      .filter((repo_info: IProjectInfo): boolean => !repo_info.isArchived)
+      .filter(
+        (repo_info: IProjectInfo): boolean =>
+          repo_info.languages.edges.length > 0
+      )
+      .map(repo_info_to_page)}
+  </Page>
+);
 
 export default ProjectsPage;
