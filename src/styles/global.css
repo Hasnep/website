@@ -33,6 +33,14 @@ pre {
   line-height: 1.4rem;
 }
 
+nav {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  padding: 0.75rem;
+  border-top: var(--line-thickness) solid var(--main-colour);
+  border-bottom: var(--line-thickness) solid var(--main-colour);
+}
+
 .box,
 pre {
   border: var(--line-thickness) solid var(--main-colour);
