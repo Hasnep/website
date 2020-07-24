@@ -4,7 +4,7 @@ import fs from "fs";
 dotenv.config({ path: ".env" });
 
 export const siteMetadata = {
-  title: "Ha.nnesSm.it",
+  title: "Ha.nnes.dev",
   description: "My website to show off some of my projects.",
   author: "Hannes",
 };
