@@ -1,6 +1,5 @@
-# generated files by hugo
-/public/
-/resources/_gen/
-
-# VS Code files
-.vscode
+node_modules
+public
+.cache
+archive
+.env

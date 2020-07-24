@@ -1,0 +1,32 @@
+query GitHubData {
+  viewer {
+    login
+    repositories(
+      first: 100
+      privacy: PUBLIC
+      isFork: false
+      orderBy: { field: UPDATED_AT, direction: DESC }
+    ) {
+      nodes {
+        name
+        description
+        createdAt
+        url
+        isArchived
+        languages(first: 10) {
+          edges {
+            node {
+              name
+              color
+            }
+          }
+        }
+        readme: object(expression: "master:README.md") {
+          ... on Blob {
+            text
+          }
+        }
+      }
+    }
+  }
+}

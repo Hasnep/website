@@ -1,9 +1,0 @@
-baseURL = "https://hasnep.netlify.com/"
-title = "Hannes's Website"
-
-[menu]
-[[menu.main]]
-    identifier = "home"
-    name = "Home"
-    url = "/"
-    weight = -1

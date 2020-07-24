@@ -1,0 +1,134 @@
+:root {
+  --line-thickness: 0.1rem;
+  --main-colour: #eeeeee;
+  --background-colour: #0a0a0a;
+}
+
+body {
+  font-family: "Inconsolata", "Consolas", "DejaVu Sans Mono", "Droid Sans Mono",
+    "Fira Code", "FreeMono", "Courier New", "Monaco", "SF Mono", Courier,
+    monospace;
+  background-color: var(--background-colour);
+  color: var(--main-colour);
+  font-size: 18px;
+  line-height: 1.6rem;
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+h2 {
+  font-size: 1.5rem;
+}
+
+blockquote {
+  margin: 1rem;
+  padding-left: 1rem;
+  border-left: var(--line-thickness) solid var(--main-colour);
+}
+
+pre {
+  font-size: 0.95rem;
+  line-height: 1.4rem;
+}
+
+nav {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  padding: 0.75rem;
+  border-top: var(--line-thickness) solid var(--main-colour);
+  border-bottom: var(--line-thickness) solid var(--main-colour);
+}
+
+.box,
+pre {
+  border: var(--line-thickness) solid var(--main-colour);
+  padding: 1rem;
+  margin: 1rem;
+}
+
+.box-hover:hover {
+  border-style: dashed;
+}
+
+.container {
+  margin: 2rem auto;
+  max-width: 75rem;
+  padding: 2rem;
+  background-color: var(--background-colour);
+}
+
+.drop-shadow {
+  --drop-shadow-size: 0.5rem;
+  -webkit-box-shadow: var(--drop-shadow-size) var(--drop-shadow-size)
+    var(--main-colour);
+  -moz-box-shadow: var(--drop-shadow-size) var(--drop-shadow-size)
+    var(--main-colour);
+  box-shadow: var(--drop-shadow-size) var(--drop-shadow-size) var(--main-colour);
+}
+
+hr {
+  border: none;
+  height: var(--line-thickness);
+  background-color: var(--main-colour);
+}
+
+/* Navbar */
+nav > ul {
+  list-style-type: none;
+  margin: 0rem;
+  padding: 0rem;
+}
+
+nav > ul > li {
+  display: inline;
+}
+
+nav > ul > li:before {
+  content: "‣";
+  margin-left: 1rem;
+  margin-right: 0.3rem;
+}
+
+nav > ul > li.selected:before {
+  content: "▼";
+}
+
+/* Links */
+a {
+  color: var(--main-colour);
+  text-decoration: underline;
+  text-decoration-thickness: var(--line-thickness);
+}
+
+a:hover {
+  text-decoration: underline;
+  text-decoration-style: dashed;
+  text-decoration-thickness: var(--line-thickness);
+}
+
+/* Not supported yet */
+/* a:has(> div.box) {
+  text-decoration: none;
+} */
+
+/* In the meantime use this */
+.box > a {
+  text-decoration: none;
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+}
+
+.box > a:hover {
+  text-decoration: none;
+}
+
+/* Coloured circle for each language */
+.dot {
+  height: 1rem;
+  width: 1rem;
+  border-radius: 50%;
+  display: inline-block;
+}
