@@ -24,6 +24,7 @@ const Page = ({
 }): JSX.Element => (
   <div className={"container box drop-shadow"}>
     <WebsiteTitle />
+    <hr />
     {/* <NavBar /> */}
     {children}
   </div>
