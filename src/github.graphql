@@ -8,12 +8,12 @@ query GitHubData {
       orderBy: { field: UPDATED_AT, direction: DESC }
     ) {
       nodes {
-        createdAt
-        description
         name
-        isArchived
+        description
+        createdAt
         url
-        languages(first: 1) {
+        isArchived
+        languages(first: 10) {
           edges {
             node {
               name

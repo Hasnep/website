@@ -1,4 +1,4 @@
-interface IProjectInfo {
+interface IProjectInfoRaw {
   name: string;
   description: string;
   createdAt: string;
@@ -14,3 +14,18 @@ interface IProjectInfo {
   };
   readme: { text: string };
 }
+
+interface IProjectInfo {
+  name: string;
+  description: string;
+  createdAt: Date;
+  url: string;
+  isArchived: boolean;
+  language: {
+    name: string;
+    colour: string;
+  };
+  readme: string;
+}
+
+export { IProjectInfoRaw, IProjectInfo };

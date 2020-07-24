@@ -1,18 +1,17 @@
 import React from "react";
 import Page from "../components/page";
-import { IGithubReadme } from "../interfaces/github-readme";
+import { IProjectInfo } from "../interfaces/interfaces";
 import ReactMarkdown from "react-markdown";
 
-const ProjectTemplate = ({
-  pageContext: { repo },
-}: {
-  pageContext: {
-    repo: IGithubReadme;
-  };
-}): JSX.Element => {
+interface IProps {
+  pageContext: { repo: IProjectInfo };
+}
+
+const ProjectTemplate = (props: IProps): JSX.Element => {
+  const repo: IProjectInfo = props.pageContext.repo;
   return (
     <Page>
-      <ReactMarkdown source={repo.readme.text} />
+      <ReactMarkdown source={repo.readme} />
     </Page>
   );
 };
