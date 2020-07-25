@@ -94,7 +94,7 @@ export const createPages: GatsbyNode["createPages"] = async ({
     createPage({
       path: "/",
       component: index_template,
-      context: { repos: repos },
+      context: { page_title: "Projects", repos: repos },
     });
 
     const project_page_template = path.resolve("./src/templates/project.tsx");
@@ -114,6 +114,7 @@ export const createPages: GatsbyNode["createPages"] = async ({
         path: "/language/" + slugify(language),
         component: index_template,
         context: {
+          page_title: language,
           repos: repos.filter((repo) => repo.language.name == language),
         },
       });
