@@ -103,9 +103,22 @@ export const createPages: GatsbyNode["createPages"] = async ({
     const project_page_template = path.resolve("./src/templates/project.tsx");
     repos.forEach((repo) => {
       createPage({
-        path: `/projects/${slugify(repo.name)}`,
+        path: "/project/" + slugify(repo.name),
         component: project_page_template,
         context: { repo: repo },
+      });
+    });
+
+    let languages = repos.map((repo: IProjectInfo) => repo.language.name);
+    languages = [...new Set(languages)];
+
+    languages.forEach((language) => {
+      createPage({
+        path: "/language/" + slugify(language),
+        component: index_template,
+        context: {
+          repos: repos.filter((repo) => repo.language.name == language),
+        },
       });
     });
   }
