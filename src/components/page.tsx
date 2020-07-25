@@ -1,5 +1,5 @@
 import React from "react";
-import { StaticQuery, graphql } from "gatsby";
+import { StaticQuery, graphql, Link } from "gatsby";
 import NavBar from "./navbar";
 
 const WebsiteTitle = (): JSX.Element => (
@@ -13,7 +13,11 @@ const WebsiteTitle = (): JSX.Element => (
         }
       }
     `}
-    render={(data): JSX.Element => <h1>{data.site.siteMetadata.title}</h1>}
+    render={(data): JSX.Element => (
+      <Link to={"/"}>
+        <h1>{data.site.siteMetadata.title}</h1>
+      </Link>
+    )}
   />
 );
 
