@@ -13,7 +13,7 @@ query GitHubData {
         createdAt
         url
         isArchived
-        languages(first: 10) {
+        languages(first: 10, orderBy: { field: SIZE, direction: DESC }) {
           edges {
             node {
               name
