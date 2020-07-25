@@ -14,7 +14,7 @@ const ProjectBox = ({ repo }: { repo: IProjectInfo }): JSX.Element => {
   return (
     <div className={"box box-hover"}>
       <Link to={"/project/" + slugify(repo.name)}>
-        <h2>{repo.name}</h2>
+        <h3>{repo.name}</h3>
         <Link to={"/language/" + slugify(repo.language.name)}>
           <Dot colour={repo.language.colour} />
           {repo.language.name}
