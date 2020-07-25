@@ -16,9 +16,8 @@ const ProjectBox = ({ repo }: { repo: IProjectInfo }): JSX.Element => {
       <Link to={"/project/" + slugify(repo.name)}>
         <h2>{repo.name}</h2>
         <Link to={"/language/" + slugify(repo.language.name)}>
-          <div>
-            <Dot colour={repo.language.colour} />{repo.language.name}
-          </div>
+          <Dot colour={repo.language.colour} />
+          {repo.language.name}
         </Link>
         <p>{repo.description}</p>
       </Link>
