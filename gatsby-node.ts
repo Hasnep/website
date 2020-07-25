@@ -60,12 +60,9 @@ export const createPages: GatsbyNode["createPages"] = async ({
     reporter.panicOnBuild("Error while running GraphQL query.");
     return;
   } else {
-    const repos_raw = query_result.data.githubData.data.viewer.repositories.nodes
-      .filter((repo) => !repo.isArchived)
-      .filter((repo) =>
-        repo.languages ? repo.languages.edges.length > 0 : false
-      )
-      .filter((repo) => (repo.readme ? true : false));
+    const repos_raw = query_result.data.githubData.data.viewer.repositories.nodes.filter(
+      (repo) => (repo.readme ? true : false)
+    );
 
     const ignored_languages: string[] = [
       "HTML",
