@@ -6,7 +6,11 @@ import { IProjectInfo } from "../interfaces/interfaces";
 const Dot = (props: { colour: string }): JSX.Element => (
   <span
     className={"dot"}
-    style={{ backgroundColor: props.colour, marginRight: "0.5rem" }}
+    style={{
+      backgroundColor: props.colour,
+      marginLeft: "0.5rem",
+      marginRight: "0.5rem",
+    }}
   />
 );
 
