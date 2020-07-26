@@ -14,7 +14,7 @@ const WebsiteTitle = (): JSX.Element => (
       }
     `}
     render={(data): JSX.Element => (
-      <Link to={"/"}>
+      <Link to={"/"} className="no-underline">
         <h1>{data.site.siteMetadata.title}</h1>
       </Link>
     )}
