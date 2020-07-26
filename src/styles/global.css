@@ -139,7 +139,7 @@ a.no-underline:hover {
 }
 
 /* Coloured circle for each language */
-.dot {
+span.dot {
   height: 1rem;
   width: 1rem;
   border-radius: 50%;
