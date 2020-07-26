@@ -11,11 +11,11 @@ body {
   background-color: var(--background-colour);
   color: var(--main-colour);
   font-size: 18px;
-  line-height: 1.6rem;
+  line-height: 1.4em;
 }
 
 h1 {
-  font-size: 2.5rem;
+  font-size: 3rem;
 }
 
 h2 {
@@ -23,6 +23,10 @@ h2 {
 }
 
 h3 {
+  font-size: 1.75rem;
+}
+
+h4 {
   font-size: 1.5rem;
 }
 
@@ -30,6 +34,8 @@ blockquote {
   margin: 1rem;
   padding-left: 1rem;
   border-left: var(--line-thickness) solid var(--main-colour);
+  font-size: 0.95rem;
+  font-style: italic;
 }
 
 pre {
