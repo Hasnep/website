@@ -30,6 +30,11 @@ h4 {
   font-size: 1.5rem;
 }
 
+img {
+  max-width: 100%;
+  height: auto;
+}
+
 blockquote {
   margin: 1rem;
   padding-left: 1rem;
@@ -64,7 +69,7 @@ pre {
 
 .container {
   margin: 2rem auto;
-  max-width: 75rem;
+  max-width: 60rem;
   padding: 2rem;
   background-color: var(--background-colour);
 }
