@@ -20,4 +20,5 @@ export const plugins = [
       graphQLQuery: fs.readFileSync("./src/github.graphql").toString(),
     },
   },
+  "gatsby-plugin-netlify",
 ];

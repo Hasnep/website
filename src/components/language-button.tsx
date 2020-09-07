@@ -15,7 +15,7 @@ const Dot = (props: { colour: string }): JSX.Element => (
 );
 
 const LanguageButton = (props: { repo: IProjectInfo }): JSX.Element => (
-  <Link to={"/language/" + slugify(props.repo.language.name)}>
+  <Link to={"/projects/languages/" + slugify(props.repo.language.name)}>
     <Dot colour={props.repo.language.colour} />
     {props.repo.language.name}
   </Link>

@@ -23,7 +23,7 @@ export const createPages: GatsbyNode["createPages"] = async ({
   graphql,
   reporter,
 }) => {
-  const { createPage } = actions;
+  const { createPage, createRedirect } = actions;
 
   const query_result: IGithubReadmesQueryResult = await graphql(`
     query GetGithubReadmes {
@@ -60,6 +60,19 @@ export const createPages: GatsbyNode["createPages"] = async ({
     reporter.panicOnBuild("Error while running GraphQL query.");
     return;
   } else {
+    // Create redirects
+    createRedirect({
+      fromPath: "/project",
+      toPath: "/projects",
+      isPermanent: true,
+    });
+    createRedirect({
+      fromPath: "/language",
+      toPath: "/projects/languages",
+      isPermanent: true,
+    });
+
+    // Create pages
     const repos_raw = query_result.data.githubData.data.viewer.repositories.nodes.filter(
       (repo) => (repo.readme ? true : false)
     );
@@ -100,7 +113,7 @@ export const createPages: GatsbyNode["createPages"] = async ({
     const project_page_template = path.resolve("./src/templates/project.tsx");
     repos.forEach((repo) => {
       createPage({
-        path: "/project/" + slugify(repo.name),
+        path: "/projects/" + slugify(repo.name),
         component: project_page_template,
         context: { repo: repo },
       });
@@ -111,7 +124,7 @@ export const createPages: GatsbyNode["createPages"] = async ({
 
     languages.forEach((language) => {
       createPage({
-        path: "/language/" + slugify(language),
+        path: "/projects/languages/" + slugify(language),
         component: index_template,
         context: {
           page_title: language,
