@@ -83,12 +83,7 @@ export const createPages: GatsbyNode["createPages"] = async ({
       (repo) => repo.readme_master || repo.readme_main || repo.readme_develop
     );
 
-    const ignored_languages: string[] = [
-      "HTML",
-      "Jupyter Notebook",
-      "CSS",
-      "JavaScript",
-    ];
+    const ignored_languages = ["HTML", "Jupyter Notebook", "CSS", "JavaScript"];
     const repos: IProjectInfo[] = repos_raw.map(
       (repo_raw: IProjectInfoRaw): IProjectInfo => {
         const language_info = repo_raw.languages.edges.filter(
