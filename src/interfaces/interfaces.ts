@@ -20,6 +20,7 @@ interface IProjectInfoRaw {
 interface IProjectInfo {
   name: string;
   description: string;
+  emoji: string | null;
   createdAt: Date;
   url: string;
   isArchived: boolean;

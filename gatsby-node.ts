@@ -89,9 +89,23 @@ export const createPages: GatsbyNode["createPages"] = async ({
         const language_info = repo_raw.languages.edges.filter(
           (l) => !ignored_languages.includes(l.node.name)
         )[0].node;
+        // Split into description and emoji
+        console.log(`'${repo_raw.description}'`);
+        const result = /^(\W+)\s(.+)$/.exec(repo_raw.description);
+        console.log(result);
+        let emoji: string | null;
+        let description_no_emoji: string;
+        if (result) {
+          emoji = result[1];
+          description_no_emoji = result[2];
+        } else {
+          emoji = null;
+          description_no_emoji = repo_raw.description;
+        }
         return {
           name: repo_raw.name,
-          description: repo_raw.description,
+          description: description_no_emoji,
+          emoji: emoji,
           createdAt: new Date(repo_raw.createdAt),
           url: repo_raw.url,
           isArchived: repo_raw.isArchived,
