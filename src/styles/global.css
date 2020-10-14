@@ -2,6 +2,7 @@
   --line-thickness: 0.1rem;
   --main-colour: #eeeeee;
   --background-colour: #0a0a0a;
+  --emoji-box-size: 10rem;
 }
 
 body {
@@ -141,6 +142,16 @@ a.no-underline {
 
 a.no-underline:hover {
   text-decoration: none;
+}
+
+div.emoji-box {
+  overflow: auto;
+  text-align: center;
+  font-size: 5rem;
+  width: var(--emoji-box-size);
+  height: var(--emoji-box-size);
+  float: left;
+  line-height: var(--emoji-box-size);
 }
 
 /* Coloured circle for each language */
