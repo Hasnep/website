@@ -21,7 +21,17 @@ query GitHubData {
             }
           }
         }
-        readme: object(expression: "master:README.md") {
+        readme_master: object(expression: "master:README.md") {
+          ... on Blob {
+            text
+          }
+        }
+        readme_main: object(expression: "main:README.md") {
+          ... on Blob {
+            text
+          }
+        }
+        readme_develop: object(expression: "develop:README.md") {
           ... on Blob {
             text
           }

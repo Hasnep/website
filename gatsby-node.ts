@@ -32,7 +32,13 @@ export const createPages: GatsbyNode["createPages"] = async ({
           viewer {
             repositories {
               nodes {
-                readme {
+                readme_master {
+                  text
+                }
+                readme_main {
+                  text
+                }
+                readme_develop {
                   text
                 }
                 languages {
@@ -74,7 +80,7 @@ export const createPages: GatsbyNode["createPages"] = async ({
 
     // Create pages
     const repos_raw = query_result.data.githubData.data.viewer.repositories.nodes.filter(
-      (repo) => (repo.readme ? true : false)
+      (repo) => repo.readme_master || repo.readme_main || repo.readme_develop
     );
 
     const ignored_languages: string[] = [
@@ -98,7 +104,11 @@ export const createPages: GatsbyNode["createPages"] = async ({
             name: language_info.name,
             colour: language_info.color,
           },
-          readme: repo_raw.readme.text,
+          readme: (
+            repo_raw.readme_master ||
+            repo_raw.readme_main ||
+            repo_raw.readme_develop
+          ).text,
         };
       }
     );
