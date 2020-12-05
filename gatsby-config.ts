@@ -21,4 +21,5 @@ export const plugins = [
     },
   },
   "gatsby-plugin-netlify",
+  "gatsby-plugin-no-javascript",
 ];
