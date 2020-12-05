@@ -9,13 +9,16 @@ const EmojiBox = ({ emoji }: { emoji: string | null }): JSX.Element => (
 );
 
 const ProjectBox = ({ repo }: { repo: IProjectInfo }): JSX.Element => (
-  <div className="box box-hover">
-    <Link to={"/projects/" + slugify(repo.name)} className="no-underline">
-      <EmojiBox emoji={repo.emoji} />
-      <h3>{repo.name}</h3>
+  <div className="box project drop-shadow">
+    <EmojiBox emoji={repo.emoji} />
+    <div className="column">
+      <h3 className="project-title">{repo.name}</h3>
       <p>{repo.description}</p>
-      <LanguageButton repo={repo} />
-    </Link>
+      <div>
+        Language: <LanguageButton repo={repo} />{" "}
+        <Link to={"/projects/" + slugify(repo.name)}>{"Read more >>"}</Link>
+      </div>
+    </div>
   </div>
 );
 
