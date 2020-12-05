@@ -126,3 +126,7 @@ span.dot {
   border-radius: 50%;
   display: inline-block;
 }
+
+span.dot.language-dot {
+  margin-right: 0.5rem;
+}
