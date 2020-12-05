@@ -25,7 +25,7 @@ const Page = ({
 }: {
   children: JSX.Element | JSX.Element[];
 }): JSX.Element => (
-  <div className={"container box drop-shadow"}>
+  <div className={"container"}>
     <WebsiteTitle />
     <hr />
     {children}
