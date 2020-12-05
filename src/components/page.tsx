@@ -1,6 +1,5 @@
 import React from "react";
 import { StaticQuery, graphql, Link } from "gatsby";
-import NavBar from "./navbar";
 
 const WebsiteTitle = (): JSX.Element => (
   <StaticQuery
@@ -29,7 +28,6 @@ const Page = ({
   <div className={"container box drop-shadow"}>
     <WebsiteTitle />
     <hr />
-    {/* <NavBar /> */}
     {children}
   </div>
 );

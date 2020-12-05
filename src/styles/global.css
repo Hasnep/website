@@ -49,14 +49,6 @@ pre {
   line-height: 1.4rem;
 }
 
-nav {
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-  padding: 0.75rem;
-  border-top: var(--line-thickness) solid var(--main-colour);
-  border-bottom: var(--line-thickness) solid var(--main-colour);
-}
-
 .box,
 pre {
   border: var(--line-thickness) solid var(--main-colour);
@@ -88,27 +80,6 @@ hr {
   border: none;
   height: var(--line-thickness);
   background-color: var(--main-colour);
-}
-
-/* Navbar */
-nav > ul {
-  list-style-type: none;
-  margin: 0rem;
-  padding: 0rem;
-}
-
-nav > ul > li {
-  display: inline;
-}
-
-nav > ul > li:before {
-  content: "‣";
-  margin-left: 1rem;
-  margin-right: 0.3rem;
-}
-
-nav > ul > li.selected:before {
-  content: "▼";
 }
 
 /* Links */
