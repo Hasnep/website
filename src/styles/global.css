@@ -56,10 +56,6 @@ pre {
   margin: 1rem;
 }
 
-.box-hover:hover {
-  border-style: dashed;
-}
-
 .box.project {
   display: grid;
   grid-template-columns: var(--emoji-box-size) auto;
@@ -113,18 +109,6 @@ a:hover {
   text-decoration: underline;
   text-decoration-style: dashed;
   text-decoration-thickness: var(--line-thickness);
-}
-
-/* Not supported yet */
-/* a:has(> div.box) {
-  text-decoration: none;
-} */
-
-/* In the meantime use this */
-div.box > a {
-  display: inline-block;
-  width: 100%;
-  height: 100%;
 }
 
 a.no-underline {
