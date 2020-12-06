@@ -18,7 +18,7 @@ const ProjectsPage = (props: IProps): JSX.Element => {
         {repos.map(
           (repo: IProjectInfo): JSX.Element => (
             <Fragment key={slugify(repo.name)}>
-              <ProjectBox repo={repo} />
+              <ProjectBox repo={repo} detailed={true} />
             </Fragment>
           )
         )}
