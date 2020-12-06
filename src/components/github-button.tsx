@@ -5,7 +5,7 @@ import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
 const GithubButton = ({ repo }: { repo: IProjectInfo }): JSX.Element => (
   <a href={repo.url}>
     <FaGithub style={{ marginRight: "0.5rem" }} />
-    Github
+    GitHub
     <FaExternalLinkAlt style={{ marginLeft: "0.5rem" }} />
   </a>
 );
