@@ -1,9 +1,8 @@
-import React, { Fragment } from "react";
+import React from "react";
 import Page from "../components/page";
 import { IProjectInfo } from "../interfaces/interfaces";
 import ReactMarkdown from "react-markdown";
-import LanguageButton from "../components/language-button";
-import { FaGithub } from "react-icons/fa";
+import ProjectBox from "../components/project-box";
 
 const renderer_factory = (repo: IProjectInfo): ReactMarkdown.Renderers => {
   const heading_renderer = (props: {
@@ -13,19 +12,9 @@ const renderer_factory = (repo: IProjectInfo): ReactMarkdown.Renderers => {
     switch (props.level) {
       case 1:
         return (
-          <Fragment>
-            <h2>{props.children}</h2>
-            <span style={{ marginRight: "2rem" }}>{repo.description}</span>
-            <span style={{ marginRight: "2rem" }}>
-              <a href={repo.url}>
-                <FaGithub style={{ marginRight: "0.5rem" }} />
-                Github
-              </a>
-            </span>
-            <span>
-              <LanguageButton repo={repo} />
-            </span>
-          </Fragment>
+          <div style={{ marginBottom: "2rem" }}>
+            <ProjectBox repo={repo} detailed={false} />
+          </div>
         );
       case 2:
         return <h3>{props.children}</h3>;
