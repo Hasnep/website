@@ -15,27 +15,28 @@ const ProjectBox = ({
 }: {
   repo: IProjectInfo;
   detailed: boolean;
-}): JSX.Element => (
-  <div className="box project drop-shadow">
-    <EmojiBox emoji={repo.emoji} />
-    <div className="column">
-      <h3 className="project-title">{repo.name}</h3>
-      <p>{repo.description}. </p>
-      {detailed && (
-        <p>
-          <Link to={"/projects/" + slugify(repo.name)}>{"Read more >>"}</Link>
-        </p>
-      )}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
-        <div>
-          Language: <LanguageButton repo={repo} />
-        </div>
-        <div>
-          Source code: <GithubButton repo={repo} />
+}): JSX.Element => {
+  let title = <h3 className="project-title">{repo.name}</h3>;
+  if (detailed) {
+    title = <Link to={"/projects/" + slugify(repo.name)}>{title}</Link>;
+  }
+  return (
+    <div className="box project drop-shadow">
+      <EmojiBox emoji={repo.emoji} />
+      <div className="column">
+        {title}
+        <p>{repo.description}.</p>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
+          <div>
+            Language: <LanguageButton repo={repo} />
+          </div>
+          <div>
+            Source code: <GithubButton repo={repo} />
+          </div>
         </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default ProjectBox;
