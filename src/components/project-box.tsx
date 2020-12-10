@@ -17,12 +17,15 @@ const ProjectBox = ({
   detailed: boolean;
 }): JSX.Element => {
   let title = <h3 className="project-title">{repo.name}</h3>;
+  let emoji_box = <EmojiBox emoji={repo.emoji} />;
   if (detailed) {
-    title = <Link to={"/projects/" + slugify(repo.name)}>{title}</Link>;
+    const link_to = "/projects/" + slugify(repo.name);
+    title = <Link to={link_to}>{title}</Link>;
+    emoji_box = <Link to={link_to}>{emoji_box}</Link>;
   }
   return (
     <div className="box project drop-shadow">
-      <EmojiBox emoji={repo.emoji} />
+      {emoji_box}
       <div className="column">
         {title}
         <p>{repo.description}.</p>
