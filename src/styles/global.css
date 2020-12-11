@@ -130,3 +130,13 @@ span.dot {
 span.dot.language-dot {
   margin-right: 0.5rem;
 }
+
+.heading {
+  display: grid;
+  grid-template-columns: auto 10rem;
+}
+
+.heading > ul {
+  list-style: none;
+  padding: 0;
+}
