@@ -20,15 +20,15 @@ const WebsiteTitle = (): JSX.Element => (
         </Link>
         <ul>
           <li>
-            <a href="https://github.com/hasnep">
-              <FaGithub style={{ marginRight: "0.5rem" }} />
-              Hasnep
-            </a>
-          </li>
-          <li>
             <a href="mailto:h@nnes.dev">
               <FaEnvelope style={{ marginRight: "0.5rem" }} />
               h@nnes.dev
+            </a>
+          </li>
+          <li>
+            <a href="https://github.com/hasnep">
+              <FaGithub style={{ marginRight: "0.5rem" }} />
+              Hasnep
             </a>
           </li>
         </ul>
