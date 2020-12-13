@@ -19,6 +19,13 @@ export const plugins = [
       headers: { Authorization: `bearer ${process.env.GITHUB_API_TOKEN}` },
     },
   },
+  {
+    resolve: "gatsby-plugin-favicons",
+    options: {
+      logo: "./src/favicon.svg",
+      appName: "Ha.nnes.dev",
+    },
+  },
   "gatsby-plugin-netlify",
   "gatsby-plugin-no-javascript",
 ];
