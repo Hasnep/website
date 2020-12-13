@@ -3,6 +3,7 @@ import Page from "../components/page";
 import ProjectBox from "../components/project-box";
 import React, { Fragment } from "react";
 import slugify from "slugify";
+import Footer from "../components/footer";
 
 interface IProps {
   pageContext: { page_title: string; repos: IProjectInfo[] };
@@ -23,6 +24,7 @@ const ProjectsPage = (props: IProps): JSX.Element => {
           )
         )}
       </Fragment>
+      <Footer />
     </Page>
   );
 };

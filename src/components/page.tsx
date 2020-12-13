@@ -2,7 +2,6 @@ import React, { Fragment } from "react";
 import { StaticQuery, graphql, Link } from "gatsby";
 import { FaGithub, FaEnvelope, FaFile } from "react-icons/fa";
 import { Helmet } from "react-helmet";
-import Footer from "./footer";
 
 const WebsiteTitle = (): JSX.Element => (
   <StaticQuery
@@ -57,8 +56,6 @@ const Page = (props: {
       <WebsiteTitle />
       <hr />
       {props.children}
-      <hr />
-      <Footer />
     </div>
   </Fragment>
 );
