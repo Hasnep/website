@@ -86,8 +86,8 @@ h3.project-title {
 
 .content {
   margin: 2rem auto;
-  max-width: 60rem;
-  padding: 2rem;
+  max-width: 55rem;
+  padding: 1rem;
   background-color: var(--background-colour);
 }
 
