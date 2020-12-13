@@ -1,6 +1,6 @@
 import React from "react";
 import { StaticQuery, graphql, Link } from "gatsby";
-import { FaGithub, FaEnvelope } from "react-icons/fa";
+import { FaGithub, FaEnvelope, FaFile } from "react-icons/fa";
 
 const WebsiteTitle = (): JSX.Element => (
   <StaticQuery
@@ -32,6 +32,12 @@ const WebsiteTitle = (): JSX.Element => (
               <FaGithub style={{ marginRight: "0.5rem" }} />
               Hasnep
             </a>
+          </li>
+          <li>
+            <Link to="cv">
+              <FaFile style={{ marginRight: "0.5rem" }} />
+              My CV
+            </Link>
           </li>
         </ul>
       </div>
