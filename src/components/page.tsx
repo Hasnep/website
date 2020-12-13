@@ -1,6 +1,7 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { StaticQuery, graphql, Link } from "gatsby";
 import { FaGithub, FaEnvelope, FaFile } from "react-icons/fa";
+import { Helmet } from "react-helmet";
 
 const WebsiteTitle = (): JSX.Element => (
   <StaticQuery
@@ -45,16 +46,18 @@ const WebsiteTitle = (): JSX.Element => (
   />
 );
 
-const Page = ({
-  children,
-}: {
+const Page = (props: {
+  title: string;
   children: JSX.Element | JSX.Element[];
 }): JSX.Element => (
-  <div className={"container"}>
-    <WebsiteTitle />
-    <hr />
-    {children}
-  </div>
+  <Fragment>
+    <Helmet title={props.title} />
+    <div className={"container"}>
+      <WebsiteTitle />
+      <hr />
+      {props.children}
+    </div>
+  </Fragment>
 );
 
 export default Page;

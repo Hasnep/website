@@ -37,7 +37,7 @@ interface IProps {
 const ProjectTemplate = (props: IProps): JSX.Element => {
   const repo: IProjectInfo = props.pageContext.repo;
   return (
-    <Page>
+    <Page title={`${repo.name} - Ha.nnes.dev`}>
       <ReactMarkdown source={repo.readme} renderers={renderer_factory(repo)} />
     </Page>
   );

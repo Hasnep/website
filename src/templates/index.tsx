@@ -12,7 +12,7 @@ const ProjectsPage = (props: IProps): JSX.Element => {
   const page_title = props.pageContext.page_title;
   const repos = props.pageContext.repos;
   return (
-    <Page>
+    <Page title="Ha.nnes.dev">
       <h2>{page_title}</h2>
       <Fragment>
         {repos.map(
