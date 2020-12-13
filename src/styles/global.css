@@ -7,12 +7,12 @@
 
 body {
   font-family: "Inconsolata", "Consolas", "DejaVu Sans Mono", "Droid Sans Mono",
-    "Fira Code", "FreeMono", "Courier New", "Monaco", "SF Mono", Courier,
-    monospace;
+    "FreeMono", "Monaco", "SF Mono", monospace;
   background-color: var(--background-colour);
   color: var(--main-colour);
-  font-size: 16px;
+  font-size: 18px;
   line-height: 1.4em;
+  font-weight: 500;
 }
 
 h1 {
