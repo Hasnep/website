@@ -3,15 +3,13 @@ import slugify from "./src/slugify";
 import path from "path";
 import { IProjectInfo, IProjectInfoRaw } from "./src/interfaces/interfaces";
 
-interface IGithubReadmesQueryResult {
+interface IGithubReposResult {
   errors?: any;
   data?: {
-    githubData: {
-      data: {
-        viewer: {
-          repositories: {
-            nodes: IProjectInfoRaw[];
-          };
+    github: {
+      viewer: {
+        repositories: {
+          nodes: IProjectInfoRaw[];
         };
       };
     };
@@ -24,36 +22,44 @@ export const createPages: GatsbyNode["createPages"] = async ({
   reporter,
 }) => {
   const { createPage, createRedirect } = actions;
-
-  const query_result: IGithubReadmesQueryResult = await graphql(`
-    query GetGithubReadmes {
-      githubData {
-        data {
-          viewer {
-            repositories {
-              nodes {
-                readme_master {
-                  text
-                }
-                readme_main {
-                  text
-                }
-                readme_develop {
-                  text
-                }
-                languages {
-                  edges {
-                    node {
-                      name
-                      color
-                    }
+  const repos_query_result: IGithubReposResult = await graphql(`
+    query GitHubRepos {
+      github {
+        viewer {
+          repositories(
+            first: 100
+            privacy: PUBLIC
+            isFork: false
+            orderBy: { field: UPDATED_AT, direction: DESC }
+          ) {
+            nodes {
+              name
+              description
+              createdAt
+              url
+              isArchived
+              languages(first: 10, orderBy: { field: SIZE, direction: DESC }) {
+                edges {
+                  node {
+                    name
+                    color
                   }
                 }
-                name
-                url
-                createdAt
-                description
-                isArchived
+              }
+              readme_master: object(expression: "master:README.md") {
+                ... on GitHub_Blob {
+                  text
+                }
+              }
+              readme_main: object(expression: "main:README.md") {
+                ... on GitHub_Blob {
+                  text
+                }
+              }
+              readme_develop: object(expression: "develop:README.md") {
+                ... on GitHub_Blob {
+                  text
+                }
               }
             }
           }
@@ -61,11 +67,14 @@ export const createPages: GatsbyNode["createPages"] = async ({
       }
     }
   `);
+
   // Check query executed with no errors and with defined data
-  if (query_result.errors || !query_result.data) {
+  if (repos_query_result.errors || !repos_query_result.data) {
     reporter.panicOnBuild("Error while running GraphQL query.");
     return;
   } else {
+    const repos_query_data = repos_query_result.data;
+
     // Create redirects
     createRedirect({
       fromPath: "/project",
@@ -79,48 +88,49 @@ export const createPages: GatsbyNode["createPages"] = async ({
     });
 
     // Create pages
-    const repos_raw = query_result.data.githubData.data.viewer.repositories.nodes.filter(
-      (repo) => repo.readme_master || repo.readme_main || repo.readme_develop
-    );
-
+    const ignored_repos = ["ansible"];
     const ignored_languages = ["HTML", "Jupyter Notebook", "CSS", "JavaScript"];
-    const repos: IProjectInfo[] = repos_raw.map(
-      (repo_raw: IProjectInfoRaw): IProjectInfo => {
-        const language_info = repo_raw.languages.edges.filter(
-          (l) => !ignored_languages.includes(l.node.name)
-        )[0].node;
-        // Split into description and emoji
-        console.log(`'${repo_raw.description}'`);
-        const result = /^(\W+)\s(.+)$/.exec(repo_raw.description);
-        console.log(result);
+    const repos: IProjectInfo[] = repos_query_data.github.viewer.repositories.nodes
+      // Only repos with a readme
+      .filter(
+        (repo) => repo.readme_master || repo.readme_main || repo.readme_develop
+      )
+      // Remove repos on the ignored list
+      .filter((repo) => !ignored_repos.includes(repo.name))
+      .map((repo) => {
+        //
+        const language_info = repo.languages.edges
+          // Remove languages on the ignored list
+          .filter((l) => !ignored_languages.includes(l.node.name))[0].node;
+        // Split description into emoji and text
+        const regex_result = /^(\W+)\s(.+)$/.exec(repo.description);
         let emoji: string | null;
         let description_no_emoji: string;
-        if (result) {
-          emoji = result[1];
-          description_no_emoji = result[2];
+        if (regex_result) {
+          emoji = regex_result[1];
+          description_no_emoji = regex_result[2];
         } else {
           emoji = null;
-          description_no_emoji = repo_raw.description;
+          description_no_emoji = repo.description;
         }
         return {
-          name: repo_raw.name,
+          name: repo.name,
           description: description_no_emoji,
           emoji: emoji,
-          createdAt: new Date(repo_raw.createdAt),
-          url: repo_raw.url,
-          isArchived: repo_raw.isArchived,
+          createdAt: new Date(repo.createdAt),
+          url: repo.url,
+          isArchived: repo.isArchived,
           language: {
             name: language_info.name,
             colour: language_info.color,
           },
           readme: (
-            repo_raw.readme_master ||
-            repo_raw.readme_main ||
-            repo_raw.readme_develop
+            repo.readme_main ||
+            repo.readme_master ||
+            repo.readme_develop
           ).text,
         };
-      }
-    );
+      });
 
     const index_template = path.resolve("./src/templates/index.tsx");
     createPage({
