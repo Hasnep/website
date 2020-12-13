@@ -44,7 +44,8 @@ blockquote {
   font-style: italic;
 }
 
-pre {
+pre,
+code {
   font-size: 0.95rem;
   line-height: 1.4rem;
 }
