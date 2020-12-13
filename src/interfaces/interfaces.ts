@@ -31,4 +31,17 @@ interface IProjectInfo {
   readme: string;
 }
 
-export { IProjectInfoRaw, IProjectInfo };
+interface IGithubReposResult {
+  errors?: any;
+  data?: {
+    github: {
+      viewer: {
+        repositories: {
+          nodes: IProjectInfoRaw[];
+        };
+      };
+    };
+  };
+}
+
+export { IProjectInfoRaw, IProjectInfo, IGithubReposResult };

@@ -1,20 +1,7 @@
 import { GatsbyNode } from "gatsby";
 import slugify from "./src/slugify";
 import path from "path";
-import { IProjectInfo, IProjectInfoRaw } from "./src/interfaces/interfaces";
-
-interface IGithubReposResult {
-  errors?: any;
-  data?: {
-    github: {
-      viewer: {
-        repositories: {
-          nodes: IProjectInfoRaw[];
-        };
-      };
-    };
-  };
-}
+import { IProjectInfo, IGithubReposResult } from "./src/interfaces/interfaces";
 
 export const createPages: GatsbyNode["createPages"] = async ({
   actions,
