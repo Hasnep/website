@@ -12,7 +12,14 @@ body {
   color: var(--main-colour);
   font-size: 18px;
   line-height: 1.4em;
-  /* font-weight: 500; */
+  font-weight: 500;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 700;
 }
 
 h1 {
@@ -144,4 +151,12 @@ span.dot.language-dot {
 .heading > ul {
   list-style: none;
   padding: 0;
+}
+
+/* Footer */
+.footer {
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: center;
+  font-size: 0.9rem;
 }
