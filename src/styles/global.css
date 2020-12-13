@@ -136,6 +136,10 @@ span.dot.language-dot {
   grid-template-columns: auto 10rem;
 }
 
+.heading > h1 {
+  align-self: end;
+}
+
 .heading > ul {
   list-style: none;
   padding: 0;
