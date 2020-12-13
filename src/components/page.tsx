@@ -34,7 +34,7 @@ const WebsiteTitle = (): JSX.Element => (
             </a>
           </li>
           <li>
-            <Link to="cv">
+            <Link to="/cv">
               <FaFile style={{ marginRight: "0.5rem" }} />
               My CV
             </Link>
