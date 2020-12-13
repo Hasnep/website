@@ -1,6 +1,4 @@
 import dotenv from "dotenv";
-import fs from "fs";
-
 dotenv.config({ path: ".env" });
 
 export const siteMetadata = {
@@ -13,11 +11,12 @@ export const plugins = [
   "gatsby-plugin-typescript",
   "gatsby-plugin-react-helmet",
   {
-    resolve: "gatsby-source-github-api",
+    resolve: "gatsby-source-graphql",
     options: {
-      token: process.env.GITHUB_API_TOKEN,
-      variables: { username: "Hasnep" },
-      graphQLQuery: fs.readFileSync("./src/github.graphql").toString(),
+      typeName: "GitHub",
+      fieldName: "github",
+      url: "https://api.github.com/graphql",
+      headers: { Authorization: `bearer ${process.env.GITHUB_API_TOKEN}` },
     },
   },
   "gatsby-plugin-netlify",
