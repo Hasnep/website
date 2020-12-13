@@ -52,7 +52,7 @@ const Page = (props: {
 }): JSX.Element => (
   <Fragment>
     <Helmet title={props.title} />
-    <div className={"container"}>
+    <div className="content">
       <WebsiteTitle />
       <hr />
       {props.children}
