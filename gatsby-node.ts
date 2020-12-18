@@ -13,12 +13,7 @@ export const createPages: GatsbyNode["createPages"] = async ({
     query GitHubRepos {
       github {
         viewer {
-          repositories(
-            first: 100
-            privacy: PUBLIC
-            isFork: false
-            orderBy: { field: UPDATED_AT, direction: DESC }
-          ) {
+          repositories(first: 100, privacy: PUBLIC, isFork: false) {
             nodes {
               name
               description
@@ -48,6 +43,7 @@ export const createPages: GatsbyNode["createPages"] = async ({
                   text
                 }
               }
+              updatedAt
             }
           }
         }
@@ -84,6 +80,13 @@ export const createPages: GatsbyNode["createPages"] = async ({
       )
       // Remove repos on the ignored list
       .filter((repo) => !ignored_repos.includes(repo.name))
+      // Sort repos by archive status, update date and then name
+      .sort(
+        (a, b) =>
+          (a["isArchived"] ? 1 : 0) - (b["isArchived"] ? 1 : 0) ||
+          Math.sign(Date.parse(b["updatedAt"]) - Date.parse(a["updatedAt"])) ||
+          a["name"].localeCompare(b["name"])
+      )
       .map((repo) => {
         //
         const language_info = repo.languages.edges

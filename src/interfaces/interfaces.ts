@@ -4,6 +4,7 @@ interface IProjectInfoRaw {
   createdAt: string;
   url: string;
   isArchived: boolean;
+  updatedAt: string;
   languages: {
     edges: {
       node: {
