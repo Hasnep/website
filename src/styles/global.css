@@ -73,6 +73,7 @@ pre {
   display: grid;
   grid-template-columns: var(--emoji-box-size) auto;
   align-items: center;
+  min-height: 11rem;
 }
 
 div.emoji-box {
