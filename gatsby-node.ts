@@ -71,15 +71,14 @@ export const createPages: GatsbyNode["createPages"] = async ({
     });
 
     // Create pages
-    const ignored_repos = ["ansible"];
     const ignored_languages = ["HTML", "Jupyter Notebook", "CSS", "JavaScript"];
     const repos: IProjectInfo[] = repos_query_data.github.viewer.repositories.nodes
-      // Only repos with a readme
+      // Only show repos with a readme
       .filter(
         (repo) => repo.readme_master || repo.readme_main || repo.readme_develop
       )
-      // Remove repos on the ignored list
-      .filter((repo) => !ignored_repos.includes(repo.name))
+      // Only show repos with a description
+      .filter((repo) => repo.description != null && repo.description != "")
       // Sort repos by archive status, update date and then name
       .sort(
         (a, b) =>
@@ -88,7 +87,6 @@ export const createPages: GatsbyNode["createPages"] = async ({
           a["name"].localeCompare(b["name"])
       )
       .map((repo) => {
-        //
         const language_info = repo.languages.edges
           // Remove languages on the ignored list
           .filter((l) => !ignored_languages.includes(l.node.name))[0].node;
