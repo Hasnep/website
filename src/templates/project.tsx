@@ -3,6 +3,7 @@ import Page from "../components/page";
 import { IProjectInfo } from "../interfaces/interfaces";
 import ReactMarkdown from "react-markdown";
 import ProjectBox from "../components/project-box";
+import * as gfm from "remark-gfm";
 
 const renderer_factory = (repo: IProjectInfo): ReactMarkdown.Renderers => {
   const heading_renderer = (props: {
@@ -38,7 +39,11 @@ const ProjectTemplate = (props: IProps): JSX.Element => {
   const repo: IProjectInfo = props.pageContext.repo;
   return (
     <Page title={`${repo.name} - Ha.nnes.dev`}>
-      <ReactMarkdown source={repo.readme} renderers={renderer_factory(repo)} />
+      <ReactMarkdown
+        source={repo.readme}
+        renderers={renderer_factory(repo)}
+        plugins={[gfm]} // Use GitHub Flavoured Markdown plugin for tables support
+      />
     </Page>
   );
 };
