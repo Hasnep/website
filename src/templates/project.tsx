@@ -8,8 +8,8 @@ import * as gfm from "remark-gfm";
 const renderer_factory = (repo: IProjectInfo): ReactMarkdown.Renderers => {
   const heading_renderer = (props: {
     level: number;
-    children: JSX.Element;
-  }): JSX.Element => {
+    children: React.ReactNode;
+  }): React.ReactNode => {
     switch (props.level) {
       case 1:
         return (

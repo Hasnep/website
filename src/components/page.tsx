@@ -48,7 +48,7 @@ const WebsiteTitle = (): JSX.Element => (
 
 const Page = (props: {
   title: string;
-  children: JSX.Element | JSX.Element[];
+  children: React.ReactNode;
 }): JSX.Element => (
   <Fragment>
     <Helmet title={props.title} />
