@@ -23,6 +23,7 @@
     "gatsby-plugin-netlify": "^3.0.0",
     "gatsby-plugin-no-javascript": "^2.0.5",
     "gatsby-plugin-react-helmet": "^4.0.0",
+    "gatsby-plugin-sass": "^4.0.2",
     "gatsby-plugin-typescript": "^3.0.0",
     "gatsby-source-graphql": "^3.0.0",
     "react": "^17.0.1",
@@ -32,6 +33,7 @@
     "react-markdown": "^5.0.3",
     "remark-gfm": "^1.0.0",
     "subscriptions-transport-ws": "^0.9.18",
+    "sass": "^1.32.8",
     "ts-node": "^9.1.1",
     "typeface-inconsolata": "^1.1.13"
   },
