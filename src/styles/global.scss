@@ -175,15 +175,15 @@ span.dot.language-dot {
 header {
   display: grid;
   grid-template-columns: auto 10rem;
-}
 
-header > h1 {
-  align-self: end;
-}
+  h1 {
+    align-self: end;
+  }
 
-header > ul {
-  list-style: none;
-  padding: 0;
+  ul {
+    list-style: none;
+    padding: 0;
+  }
 }
 
 /* Footer */
