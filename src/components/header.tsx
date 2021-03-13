@@ -13,7 +13,9 @@ const Header = (): JSX.Element => (
         }
       }
     `}
-    render={(data): JSX.Element => (
+    render={(data: {
+      site: { siteMetadata: { title: string } };
+    }): JSX.Element => (
       <header>
         <h1>
           <Link to={"/"} className="no-underline">
