@@ -14,7 +14,7 @@ const Header = (): JSX.Element => (
       }
     `}
     render={(data): JSX.Element => (
-      <div className="heading">
+      <header>
         <h1>
           <Link to={"/"} className="no-underline">
             {data.site.siteMetadata.title}
@@ -40,7 +40,7 @@ const Header = (): JSX.Element => (
             </Link>
           </li>
         </ul>
-      </div>
+      </header>
     )}
   />
 );

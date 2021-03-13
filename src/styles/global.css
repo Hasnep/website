@@ -145,16 +145,16 @@ span.dot.language-dot {
   margin-right: 0.5rem;
 }
 
-.heading {
+header {
   display: grid;
   grid-template-columns: auto 10rem;
 }
 
-.heading > h1 {
+header > h1 {
   align-self: end;
 }
 
-.heading > ul {
+header > ul {
   list-style: none;
   padding: 0;
 }
