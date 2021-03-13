@@ -144,20 +144,20 @@ a {
   color: var(--main-colour);
   text-decoration: underline;
   text-decoration-thickness: var(--line-thickness);
-}
 
-a:hover {
-  text-decoration: underline;
-  text-decoration-style: dashed;
-  text-decoration-thickness: var(--line-thickness);
-}
+  &:hover {
+    text-decoration: underline;
+    text-decoration-style: dashed;
+    text-decoration-thickness: var(--line-thickness);
+  }
 
-a.no-underline {
-  text-decoration: none;
-}
+  &.no-underline {
+    text-decoration: none;
+  }
 
-a.no-underline:hover {
-  text-decoration: none;
+  &.no-underline:hover {
+    text-decoration: none;
+  }
 }
 
 /* Coloured circle for each language */
