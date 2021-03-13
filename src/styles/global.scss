@@ -71,23 +71,50 @@ pre {
 
 .box.project {
   display: grid;
-  grid-template-columns: var(--emoji-box-size) auto;
+  grid-template-columns: var(--emoji-box-size) auto auto;
+  grid-template-rows: auto auto auto;
   align-items: center;
-  min-height: 11rem;
-}
+  min-height: 10rem;
+  grid-template-areas:
+    "emojiBox projectTitle projectTitle"
+    "emojiBox projectDescription projectDescription"
+    "emojiBox projectLanguage projectGithubButton";
 
-div.emoji-box {
-  overflow: auto;
-  text-align: center;
-  font-size: 5rem;
-  width: var(--emoji-box-size);
-  height: var(--emoji-box-size);
-  float: left;
-  line-height: var(--emoji-box-size);
-}
+  div.emoji-box {
+    grid-area: emojiBox;
+    // overflow: auto;
+    text-align: center;
+    justify-self: center;
+    align-self: center;
+    font-size: 5rem;
+    width: var(--emoji-box-size);
+    height: var(--emoji-box-size);
+    // float: left;
+    line-height: var(--emoji-box-size);
 
-h3.project-title {
-  margin-top: 0;
+    a {
+      text-decoration: none;
+    }
+  }
+
+  h3.project-title {
+    grid-area: projectTitle;
+
+    margin: 0;
+  }
+
+  p.project-description {
+    grid-area: projectDescription;
+    margin: 0;
+  }
+
+  div.project-language {
+    grid-area: projectLanguage;
+  }
+
+  div.project-github-button {
+    grid-area: projectGithubButton;
+  }
 }
 
 .content {
