@@ -36,15 +36,15 @@
     "typeface-inconsolata": "^1.1.13"
   },
   "devDependencies": {
-    "@apollo/client": "^3.2.9",
-    "@types/node": "^14.0.9",
+    "@apollo/client": "^3.3.11",
+    "@types/node": "^14.14.34",
     "@types/react-helmet": "^6.1.0",
-    "eslint": "^6.0.0",
-    "eslint-config-prettier": "^6.11.0",
-    "eslint-plugin-prefer-arrow": "^1.2.1",
-    "eslint-plugin-prettier": "^3.1.3",
-    "eslint-plugin-react": "^7.20.0",
-    "prettier": "^2.0.5",
-    "typescript": "^3.9.2"
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-prefer-arrow": "^1.2.3",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-react": "^7.22.0",
+    "prettier": "^2.2.1",
+    "typescript": "^3.9.9"
   }
 }
