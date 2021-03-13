@@ -5,7 +5,7 @@
   --emoji-box-size: 10rem;
 }
 
-body {
+html {
   font-family: "Inconsolata", "Consolas", "DejaVu Sans Mono", "Droid Sans Mono",
     "FreeMono", "Monaco", "SF Mono", monospace;
   background-color: var(--background-colour);
