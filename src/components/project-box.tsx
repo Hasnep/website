@@ -13,18 +13,18 @@ const ProjectBox = ({
   detailed: boolean;
 }): JSX.Element => {
   let title = <Fragment> {repo.name} </Fragment>;
-  let emoji_box = <Fragment> {repo.emoji ? repo.emoji : ":)"} </Fragment>;
+  let emojiBox = <Fragment> {repo.emoji ? repo.emoji : ":)"} </Fragment>;
 
   // Add links if detailed
   if (detailed) {
-    const link_to = "/projects/" + slugify(repo.name);
-    title = <Link to={link_to}>{title}</Link>;
-    emoji_box = <Link to={link_to}>{emoji_box}</Link>;
+    const linkTo = "/projects/" + slugify(repo.name);
+    title = <Link to={linkTo}>{title}</Link>;
+    emojiBox = <Link to={linkTo}>{emojiBox}</Link>;
   }
 
   return (
     <div className="box project drop-shadow">
-      <div className="emoji-box">{emoji_box}</div>
+      <div className="emoji-box">{emojiBox}</div>
       <h3 className="project-title">{title}</h3>
       <p className="project-description">{repo.description}.</p>
       <div className="project-language">

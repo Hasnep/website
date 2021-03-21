@@ -5,8 +5,8 @@ import ReactMarkdown from "react-markdown";
 import ProjectBox from "../components/project-box";
 import * as gfm from "remark-gfm";
 
-const renderer_factory = (repo: IProjectInfo): ReactMarkdown.Renderers => {
-  const heading_renderer = (props: {
+const rendererFactory = (repo: IProjectInfo): ReactMarkdown.Renderers => {
+  const headingRenderer = (props: {
     level: number;
     children: React.ReactNode;
   }): React.ReactNode => {
@@ -27,7 +27,7 @@ const renderer_factory = (repo: IProjectInfo): ReactMarkdown.Renderers => {
         return props.children;
     }
   };
-  const renderers: ReactMarkdown.Renderers = { heading: heading_renderer };
+  const renderers: ReactMarkdown.Renderers = { heading: headingRenderer };
   return renderers;
 };
 
@@ -41,7 +41,7 @@ const ProjectTemplate = (props: IProps): JSX.Element => {
     <Page title={`${repo.name} - Ha.nnes.dev`}>
       <ReactMarkdown
         source={repo.readme}
-        renderers={renderer_factory(repo)}
+        renderers={rendererFactory(repo)}
         plugins={[gfm]} // Use GitHub Flavoured Markdown plugin for tables support
       />
     </Page>

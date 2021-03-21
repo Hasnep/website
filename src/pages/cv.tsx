@@ -15,7 +15,7 @@ interface ICVResult {
   };
 }
 
-const cv_query = graphql`
+const queryCV = graphql`
   query CV {
     github {
       viewer {
@@ -34,7 +34,7 @@ const cv_query = graphql`
 const CVPage = (): JSX.Element => (
   <Page title="My CV - Ha.nnes.dev">
     <StaticQuery
-      query={cv_query}
+      query={queryCV}
       render={(data: ICVResult): JSX.Element => (
         <ReactMarkdown source={data.github.viewer.repository.cv.text} />
       )}

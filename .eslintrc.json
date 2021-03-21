@@ -23,9 +23,20 @@
     "prefer-arrow/prefer-arrow-functions": "error",
     "camelcase": "off",
     "@typescript-eslint/camelcase": "off",
-    "@typescript-eslint/interface-name-prefix": [
+    "@typescript-eslint/naming-convention": [
       "error",
-      { "prefixWithI": "always" }
+      {
+        "selector": "variable",
+        "format": ["camelCase", "PascalCase"]
+      },
+      {
+        "selector": "interface",
+        "format": ["PascalCase"],
+        "custom": {
+          "regex": "^I[A-Z]",
+          "match": true
+        }
+      }
     ],
     "prettier/prettier": "warn"
   }

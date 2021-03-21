@@ -8,8 +8,9 @@ export const createPages: GatsbyNode["createPages"] = async ({
   graphql,
   reporter,
 }) => {
+  // eslint-disable-next-line @typescript-eslint/unbound-method
   const { createPage, createRedirect } = actions;
-  const repos_query_result: IGithubReposResult = await graphql(`
+  const githubReposResult: IGithubReposResult = await graphql(`
     query GitHubRepos {
       github {
         viewer {
@@ -52,11 +53,11 @@ export const createPages: GatsbyNode["createPages"] = async ({
   `);
 
   // Check query executed with no errors and with defined data
-  if (repos_query_result.errors || !repos_query_result.data) {
+  if (githubReposResult.errors || !githubReposResult.data) {
     reporter.panicOnBuild("Error while running GraphQL query.");
     return;
   } else {
-    const repos_query_data = repos_query_result.data;
+    const githubReposData = githubReposResult.data;
 
     // Create redirects
     createRedirect({
@@ -71,8 +72,8 @@ export const createPages: GatsbyNode["createPages"] = async ({
     });
 
     // Create pages
-    const ignored_languages = ["HTML", "Jupyter Notebook", "CSS", "JavaScript"];
-    const repos: IProjectInfo[] = repos_query_data.github.viewer.repositories.nodes
+    const languagesIgnored = ["HTML", "Jupyter Notebook", "CSS", "JavaScript"];
+    const repos: IProjectInfo[] = githubReposData.github.viewer.repositories.nodes
       // Only show repos with a readme
       .filter(
         (repo) => repo.readme_master || repo.readme_main || repo.readme_develop
@@ -87,30 +88,30 @@ export const createPages: GatsbyNode["createPages"] = async ({
           a["name"].localeCompare(b["name"])
       )
       .map((repo) => {
-        const language_info = repo.languages.edges
+        const languageInfo = repo.languages.edges
           // Remove languages on the ignored list
-          .filter((l) => !ignored_languages.includes(l.node.name))[0].node;
+          .filter((l) => !languagesIgnored.includes(l.node.name))[0].node;
         // Split description into emoji and text
-        const regex_result = /^(\W+)\s(.+)$/.exec(repo.description);
+        const regexResult = /^(\W+)\s(.+)$/.exec(repo.description);
         let emoji: string | null;
-        let description_no_emoji: string;
-        if (regex_result) {
-          emoji = regex_result[1];
-          description_no_emoji = regex_result[2];
+        let descriptionNoEmoji: string;
+        if (regexResult) {
+          emoji = regexResult[1];
+          descriptionNoEmoji = regexResult[2];
         } else {
           emoji = null;
-          description_no_emoji = repo.description;
+          descriptionNoEmoji = repo.description;
         }
         return {
           name: repo.name,
-          description: description_no_emoji,
+          description: descriptionNoEmoji,
           emoji: emoji,
           createdAt: new Date(repo.createdAt),
           url: repo.url,
           isArchived: repo.isArchived,
           language: {
-            name: language_info.name,
-            colour: language_info.color,
+            name: languageInfo.name,
+            colour: languageInfo.color,
           },
           readme: (
             repo.readme_main ||
@@ -120,18 +121,18 @@ export const createPages: GatsbyNode["createPages"] = async ({
         };
       });
 
-    const index_template = path.resolve("./src/templates/index.tsx");
+    const templateIndex = path.resolve("./src/templates/index.tsx");
     createPage({
       path: "/",
-      component: index_template,
+      component: templateIndex,
       context: { page_title: "Projects", repos: repos },
     });
 
-    const project_page_template = path.resolve("./src/templates/project.tsx");
+    const templateProjectPage = path.resolve("./src/templates/project.tsx");
     repos.forEach((repo) => {
       createPage({
         path: "/projects/" + slugify(repo.name),
-        component: project_page_template,
+        component: templateProjectPage,
         context: { repo: repo },
       });
     });
@@ -142,7 +143,7 @@ export const createPages: GatsbyNode["createPages"] = async ({
     languages.forEach((language) => {
       createPage({
         path: "/projects/languages/" + slugify(language),
-        component: index_template,
+        component: templateIndex,
         context: {
           page_title: language,
           repos: repos.filter((repo) => repo.language.name == language),
