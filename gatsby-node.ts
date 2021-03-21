@@ -113,11 +113,8 @@ export const createPages: GatsbyNode["createPages"] = async ({
             name: languageInfo.name,
             colour: languageInfo.color,
           },
-          readme: (
-            repo.readmeMain ||
-            repo.readmeMaster ||
-            repo.readmeDevelop
-          ).text,
+          readme: (repo.readmeMain || repo.readmeMaster || repo.readmeDevelop)
+            .text,
         };
       });
 
