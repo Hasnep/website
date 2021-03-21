@@ -3,6 +3,18 @@ $main-colour: #d3d3d3;
 $background-colour: #0e0e0e;
 $mobile-breakpoint: 960px;
 
+@mixin desktop {
+  @media screen and (min-width: $mobile-breakpoint) {
+    @content;
+  }
+}
+
+@mixin mobile {
+  @media screen and (max-width: $mobile-breakpoint) {
+    @content;
+  }
+}
+
 html {
   font-family: "Inconsolata", "Consolas", "DejaVu Sans Mono", "Droid Sans Mono",
     "FreeMono", "Monaco", "SF Mono", monospace;
@@ -71,8 +83,7 @@ pre {
   display: grid;
   align-items: center;
 
-  // Desktop
-  @media screen and (min-width: $mobile-breakpoint) {
+  @include desktop {
     $emoji-box-size: 10rem;
     min-height: $emoji-box-size;
     grid-template-columns: $emoji-box-size auto auto;
@@ -89,8 +100,8 @@ pre {
       line-height: $emoji-box-size;
     }
   }
-  // Mobile
-  @media screen and (max-width: $mobile-breakpoint) {
+
+  @include mobile {
     $emoji-box-size: 4rem;
     padding: 1rem;
     gap: 1rem;
