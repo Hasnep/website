@@ -1,15 +1,12 @@
-:root {
-  --line-thickness: 0.1rem;
-  --main-colour: #d3d3d3;
-  --background-colour: #0e0e0e;
-  --emoji-box-size: 10rem;
-}
+$line-thickness: 0.1rem;
+$main-colour: #d3d3d3;
+$background-colour: #0e0e0e;
 
 html {
   font-family: "Inconsolata", "Consolas", "DejaVu Sans Mono", "Droid Sans Mono",
     "FreeMono", "Monaco", "SF Mono", monospace;
-  background-color: var(--background-colour);
-  color: var(--main-colour);
+  background-color: $background-colour;
+  color: $main-colour;
   font-size: 18px;
   line-height: 1.6;
   font-weight: 500;
@@ -51,7 +48,7 @@ img {
 blockquote {
   margin: 1rem;
   padding-left: 1rem;
-  border-left: var(--line-thickness) solid var(--main-colour);
+  border-left: $line-thickness solid $main-colour;
   font-size: 0.95rem;
   font-style: italic;
 }
@@ -64,17 +61,19 @@ code {
 
 .box,
 pre {
-  border: var(--line-thickness) solid var(--main-colour);
+  border: $line-thickness solid $main-colour;
   padding: 1rem;
   margin: 1.5rem;
 }
 
 .box.project {
+  $emoji-box-size: 10rem;
+
   display: grid;
-  grid-template-columns: var(--emoji-box-size) auto auto;
+  grid-template-columns: $emoji-box-size auto auto;
   grid-template-rows: auto auto auto;
   align-items: center;
-  min-height: 10rem;
+  min-height: $emoji-box-size;
   grid-template-areas:
     "emojiBox projectTitle projectTitle"
     "emojiBox projectDescription projectDescription"
@@ -86,11 +85,11 @@ pre {
     text-align: center;
     justify-self: center;
     align-self: center;
-    font-size: 5rem;
-    width: var(--emoji-box-size);
-    height: var(--emoji-box-size);
+    font-size: $emoji-box-size / 2;
+    width: $emoji-box-size;
+    height: $emoji-box-size;
     // float: left;
-    line-height: var(--emoji-box-size);
+    line-height: $emoji-box-size;
 
     a {
       text-decoration: none;
@@ -121,34 +120,33 @@ pre {
   margin: 2rem auto;
   max-width: 55rem;
   padding: 1rem;
-  background-color: var(--background-colour);
+  background-color: $background-colour;
 }
 
 .drop-shadow {
-  --drop-shadow-size: 0.5rem;
-  -webkit-box-shadow: var(--drop-shadow-size) var(--drop-shadow-size)
-    var(--main-colour);
-  -moz-box-shadow: var(--drop-shadow-size) var(--drop-shadow-size)
-    var(--main-colour);
-  box-shadow: var(--drop-shadow-size) var(--drop-shadow-size) var(--main-colour);
+  $drop-shadow-size: 0.5rem;
+
+  -webkit-box-shadow: $drop-shadow-size $drop-shadow-size $main-colour;
+  -moz-box-shadow: $drop-shadow-size $drop-shadow-size $main-colour;
+  box-shadow: $drop-shadow-size $drop-shadow-size $main-colour;
 }
 
 hr {
   border: none;
-  height: var(--line-thickness);
-  background-color: var(--main-colour);
+  height: $line-thickness;
+  background-color: $main-colour;
 }
 
 /* Links */
 a {
-  color: var(--main-colour);
+  color: $main-colour;
   text-decoration: underline;
-  text-decoration-thickness: var(--line-thickness);
+  text-decoration-thickness: $line-thickness;
 
   &:hover {
     text-decoration: underline;
     text-decoration-style: dashed;
-    text-decoration-thickness: var(--line-thickness);
+    text-decoration-thickness: $line-thickness;
   }
 
   &.no-underline {
