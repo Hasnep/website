@@ -14,7 +14,7 @@ export const createPages: GatsbyNode["createPages"] = async ({
     query GitHubRepos {
       github {
         viewer {
-          repositories(first: 100, privacy: PUBLIC, isFork: false) {
+          repositories(first: 1000, privacy: PUBLIC, isFork: false) {
             nodes {
               name
               description
@@ -29,17 +29,17 @@ export const createPages: GatsbyNode["createPages"] = async ({
                   }
                 }
               }
-              readme_master: object(expression: "master:README.md") {
+              readmeMaster: object(expression: "master:README.md") {
                 ... on GitHub_Blob {
                   text
                 }
               }
-              readme_main: object(expression: "main:README.md") {
+              readmeMain: object(expression: "main:README.md") {
                 ... on GitHub_Blob {
                   text
                 }
               }
-              readme_develop: object(expression: "develop:README.md") {
+              readmeDevelop: object(expression: "develop:README.md") {
                 ... on GitHub_Blob {
                   text
                 }
@@ -76,7 +76,7 @@ export const createPages: GatsbyNode["createPages"] = async ({
     const repos: IProjectInfo[] = githubReposData.github.viewer.repositories.nodes
       // Only show repos with a readme
       .filter(
-        (repo) => repo.readme_master || repo.readme_main || repo.readme_develop
+        (repo) => repo.readmeMaster || repo.readmeMain || repo.readmeDevelop
       )
       // Only show repos with a description
       .filter((repo) => repo.description != null && repo.description != "")
@@ -114,9 +114,9 @@ export const createPages: GatsbyNode["createPages"] = async ({
             colour: languageInfo.color,
           },
           readme: (
-            repo.readme_main ||
-            repo.readme_master ||
-            repo.readme_develop
+            repo.readmeMain ||
+            repo.readmeMaster ||
+            repo.readmeDevelop
           ).text,
         };
       });

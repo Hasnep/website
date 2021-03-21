@@ -13,9 +13,9 @@ interface IProjectInfoRaw {
       };
     }[];
   };
-  readme_master: { text: string };
-  readme_main: { text: string };
-  readme_develop: { text: string };
+  readmeMaster: { text: string };
+  readmeMain: { text: string };
+  readmeDevelop: { text: string };
 }
 
 interface IProjectInfo {
