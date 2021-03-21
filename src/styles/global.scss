@@ -164,10 +164,10 @@ span.dot {
   width: 1rem;
   border-radius: 50%;
   display: inline-block;
-}
 
-span.dot.language-dot {
-  margin-right: 0.5rem;
+  &.language-dot {
+    margin-right: 0.5rem;
+  }
 }
 
 header {
