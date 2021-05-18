@@ -36,7 +36,12 @@ const CVPage = (): JSX.Element => (
     <StaticQuery
       query={queryCV}
       render={(data: ICVResult): JSX.Element => (
-        <ReactMarkdown source={data.github.viewer.repository.cv.text} />
+        <ReactMarkdown
+          source={data.github.viewer.repository.cv.text.replace(
+            /---(.|\n\r?)+---/,
+            "## My CV"
+          )}
+        />
       )}
     />
   </Page>
