@@ -14,7 +14,12 @@ export const createPages: GatsbyNode["createPages"] = async ({
     query GitHubRepos {
       github {
         viewer {
-          repositories(first: 100, privacy: PUBLIC, isFork: false) {
+          repositories(
+            first: 100
+            privacy: PUBLIC
+            isFork: false
+            ownerAffiliations: OWNER
+          ) {
             nodes {
               name
               description
