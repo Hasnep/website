@@ -1,3 +1,6 @@
+export const slugify = (s: string): string =>
+  s.toLowerCase().replace(/[^\w]/g, "-");
+
 export const getSecret = (secretName: string): string => {
   const token = process.env[secretName];
   if (token === undefined) {
