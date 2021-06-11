@@ -34,8 +34,7 @@
     "remark-gfm": "^1.0.0",
     "subscriptions-transport-ws": "^0.9.18",
     "sass": "^1.32.8",
-    "ts-node": "^9.1.1",
-    "typeface-inconsolata": "^1.1.13"
+    "ts-node": "^9.1.1"
   },
   "devDependencies": {
     "@apollo/client": "^3.3.11",
