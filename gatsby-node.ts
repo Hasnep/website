@@ -1,17 +1,90 @@
 import { GatsbyNode } from "gatsby";
-import slugify from "./src/slugify";
 import path from "path";
-import { IProjectInfo, IGithubReposResult } from "./src/interfaces/interfaces";
+import { IGetPostTitlesQueryResult } from "./src/interfaces/interfaces";
+import { getBlogpostPath, getProjectPath, getSecret } from "./src/utils";
+import {
+  BlobItem,
+  BlobServiceClient,
+  ContainerClient,
+} from "@azure/storage-blob";
+import dotenv from "dotenv";
+import fs from "fs";
+
+dotenv.config({ path: ".env" });
+
+const deleteRecursively = (directoryPath: string): void => {
+  fs.rm(directoryPath, { recursive: true }, (err) => {
+    if (err) {
+      throw err;
+    } else {
+      console.log(`Deleted directory '${directoryPath}'.`);
+    }
+  });
+};
+
+const downloadFileSafely = async (
+  containerClient: ContainerClient,
+  blob: BlobItem,
+  downloadFilePath: string
+) => {
+  fs.mkdirSync(path.dirname(downloadFilePath), { recursive: true });
+  const blobClient = containerClient.getBlobClient(blob.name);
+  await blobClient.downloadToFile(downloadFilePath);
+  console.log(`Downloaded '${blob.name}' to '${downloadFilePath}'.`);
+};
+
+export const onPreBootstrap: GatsbyNode["onPreBootstrap"] = async () => {
+  // Connect to Azure Blob Storage
+  const connectionString = getSecret("AZURE_BLOB_STORAGE_CONNECTION_STRING");
+  const blobServiceClient =
+    BlobServiceClient.fromConnectionString(connectionString);
+
+  // Clear existing static files
+  deleteRecursively("./static/");
+
+  // Download project files
+  const projectsContainerName = "projects";
+  const projectsContainerClient = blobServiceClient.getContainerClient(
+    projectsContainerName
+  );
+  for await (const blob of projectsContainerClient.listBlobsFlat()) {
+    const downloadFilePath = path.resolve("./static/projects/" + blob.name);
+    void downloadFileSafely(projectsContainerClient, blob, downloadFilePath);
+  }
+
+  // Download blogpost files
+  const blogpostsContainerName = "blogposts";
+  const blogpostsContainerClient = blobServiceClient.getContainerClient(
+    blogpostsContainerName
+  );
+  for await (const blob of blogpostsContainerClient.listBlobsFlat()) {
+    const pathParts = blob.name.split("/");
+    const isMarkdown = /.+\.md$/.test(pathParts.slice(-1)[0]);
+    const blogpostName = pathParts[0];
+    const downloadFilePath = path.resolve(
+      "./static" +
+        getBlogpostPath(blogpostName) +
+        (isMarkdown ? "/../" : "/") +
+        pathParts.slice(1).join("/")
+    );
+    void downloadFileSafely(blogpostsContainerClient, blob, downloadFilePath);
+  }
+};
 
 export const createPages: GatsbyNode["createPages"] = async ({
   actions,
   graphql,
-  reporter,
 }) => {
   // eslint-disable-next-line @typescript-eslint/unbound-method
-  const { createPage, createRedirect } = actions;
-  const githubReposResult: IGithubReposResult = await graphql(`
-    query GitHubRepos {
+  const { createPage } = actions;
+
+  await graphql(`
+    query getPostTitles {
+      allFile(filter: { extension: { eq: "md" } }) {
+        nodes {
+          name
+        }
+      }
       github {
         viewer {
           repositories(
@@ -19,141 +92,73 @@ export const createPages: GatsbyNode["createPages"] = async ({
             privacy: PUBLIC
             isFork: false
             ownerAffiliations: OWNER
+            orderBy: { field: UPDATED_AT, direction: DESC }
           ) {
             nodes {
               name
               description
-              createdAt
-              url
+              isEmpty
               isArchived
-              languages(first: 10, orderBy: { field: SIZE, direction: DESC }) {
-                edges {
-                  node {
-                    name
-                    color
-                  }
+              owner {
+                ... on GitHub_User {
+                  login
                 }
               }
-              readmeMaster: object(expression: "master:README.md") {
-                ... on GitHub_Blob {
-                  text
-                }
-              }
-              readmeMain: object(expression: "main:README.md") {
-                ... on GitHub_Blob {
-                  text
-                }
-              }
-              readmeDevelop: object(expression: "develop:README.md") {
-                ... on GitHub_Blob {
-                  text
-                }
-              }
-              updatedAt
             }
           }
         }
       }
     }
-  `);
-
-  // Check query executed with no errors and with defined data
-  if (githubReposResult.errors || !githubReposResult.data) {
-    reporter.panicOnBuild("Error while running GraphQL query.");
-    return;
-  } else {
-    const githubReposData = githubReposResult.data;
-
-    // Create redirects
-    createRedirect({
-      fromPath: "/project",
-      toPath: "/projects",
-      isPermanent: true,
-    });
-    createRedirect({
-      fromPath: "/language",
-      toPath: "/projects/languages",
-      isPermanent: true,
-    });
-
-    // Create pages
-    const languagesIgnored = ["HTML", "Jupyter Notebook", "CSS", "JavaScript"];
-    const repos: IProjectInfo[] =
-      githubReposData.github.viewer.repositories.nodes
-        // Only show repos with a readme
+  `).then((result: IGetPostTitlesQueryResult) => {
+    if (result.errors || !result.data) {
+      return Promise.reject(result.errors);
+    } else {
+      const blogpostNames = result.data.allFile.nodes.map((n) => n.name);
+      const projectNames = result.data.github.viewer.repositories.nodes
+        // Filter out unused repos
         .filter(
-          (repo) => repo.readmeMaster || repo.readmeMain || repo.readmeDevelop
+          (n) =>
+            !n.isArchived && // Remove archived repos
+            !n.isEmpty && // Remove empty repos
+            n.description && // Remove repos without a description
+            n.owner.login == "Hasnep" // Keep only my repos
         )
-        // Only show repos with a description
-        .filter((repo) => repo.description != null && repo.description != "")
-        // Sort repos by archive status, update date and then name
-        .sort(
-          (a, b) =>
-            (a["isArchived"] ? 1 : 0) - (b["isArchived"] ? 1 : 0) ||
-            Math.sign(
-              Date.parse(b["updatedAt"]) - Date.parse(a["updatedAt"])
-            ) ||
-            a["name"].localeCompare(b["name"])
-        )
-        .map((repo) => {
-          const languageInfo = repo.languages.edges
-            // Remove languages on the ignored list
-            .filter((l) => !languagesIgnored.includes(l.node.name))[0].node;
-          // Split description into emoji and text
-          const regexResult = /^(\W+)\s(.+)$/.exec(repo.description);
-          let emoji: string | null;
-          let descriptionNoEmoji: string;
-          if (regexResult) {
-            emoji = regexResult[1];
-            descriptionNoEmoji = regexResult[2];
-          } else {
-            emoji = null;
-            descriptionNoEmoji = repo.description;
-          }
-          return {
-            name: repo.name,
-            description: descriptionNoEmoji,
-            emoji: emoji,
-            createdAt: new Date(repo.createdAt),
-            url: repo.url,
-            isArchived: repo.isArchived,
-            language: {
-              name: languageInfo.name,
-              colour: languageInfo.color,
-            },
-            readme: (repo.readmeMain || repo.readmeMaster || repo.readmeDevelop)
-              .text,
-          };
+        // Get name
+        .map((n) => n.name);
+
+      // Blogposts list page
+      console.log("Creating page " + "/blog");
+      createPage({
+        path: "/blog",
+        component: path.resolve("./src/templates/blog.tsx"),
+        context: { blogpostNames: blogpostNames },
+      });
+      // Individual blogpost pages
+      blogpostNames.forEach((blogpostName) => {
+        console.log("Creating page " + getBlogpostPath(blogpostName));
+        createPage({
+          path: getBlogpostPath(blogpostName),
+          component: path.resolve("./src/templates/blogpost.tsx"),
+          context: { blogpostName: blogpostName },
         });
-
-    const templateIndex = path.resolve("./src/templates/index.tsx");
-    createPage({
-      path: "/",
-      component: templateIndex,
-      context: { page_title: "Projects", repos: repos },
-    });
-
-    const templateProjectPage = path.resolve("./src/templates/project.tsx");
-    repos.forEach((repo) => {
-      createPage({
-        path: "/projects/" + slugify(repo.name),
-        component: templateProjectPage,
-        context: { repo: repo },
       });
-    });
 
-    let languages = repos.map((repo: IProjectInfo) => repo.language.name);
-    languages = [...new Set(languages)];
-
-    languages.forEach((language) => {
+      // Projects list page
+      console.log("Creating page " + "/projects");
       createPage({
-        path: "/projects/languages/" + slugify(language),
-        component: templateIndex,
-        context: {
-          page_title: language,
-          repos: repos.filter((repo) => repo.language.name == language),
-        },
+        path: "/projects",
+        component: path.resolve("./src/templates/projects.tsx"),
+        context: { projectNames: projectNames },
       });
-    });
-  }
+      // Individual project pages
+      projectNames.forEach((projectName) => {
+        console.log("Creating page " + getProjectPath(projectName));
+        createPage({
+          path: getProjectPath(projectName),
+          component: path.resolve("./src/templates/project.tsx"),
+          context: { projectName: projectName },
+        });
+      });
+    }
+  });
 };

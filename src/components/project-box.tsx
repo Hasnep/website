@@ -1,23 +1,23 @@
 import React, { Fragment } from "react";
 import { Link } from "gatsby";
-import slugify from "../slugify";
 import { IProjectInfo } from "../interfaces/interfaces";
 import LanguageButton from "./language-button";
 import GithubButton from "./github-button";
+import { getProjectPath } from "../utils";
 
 const ProjectBox = ({
-  repo,
+  project,
   detailed,
 }: {
-  repo: IProjectInfo;
+  project: IProjectInfo;
   detailed: boolean;
 }): JSX.Element => {
-  let title = <Fragment> {repo.name} </Fragment>;
-  let emojiBox = <Fragment> {repo.emoji ? repo.emoji : ":)"} </Fragment>;
+  let title = <Fragment> {project.title} </Fragment>;
+  let emojiBox = <Fragment> {project.emoji} </Fragment>;
 
   // Add links if detailed
   if (detailed) {
-    const linkTo = "/projects/" + slugify(repo.name);
+    const linkTo = getProjectPath(project.title);
     title = <Link to={linkTo}>{title}</Link>;
     emojiBox = <Link to={linkTo}>{emojiBox}</Link>;
   }
@@ -33,12 +33,12 @@ const ProjectBox = ({
     <div className="box project drop-shadow">
       <div className="emoji-box">{emojiBox}</div>
       {title}
-      <p className="project-description">{repo.description}.</p>
+      <p className="project-description">{project.description}.</p>
       <div className="project-language">
-        Language: <LanguageButton repo={repo} />
+        Language: <LanguageButton language={project.language} />
       </div>
       <div className="project-github-button">
-        Source code: <GithubButton repo={repo} />
+        Source code: <GithubButton repoName={project.title} />
       </div>
     </div>
   );

@@ -1,5 +1,33 @@
 import React, { Fragment } from "react";
-import { IProjectInfo } from "../interfaces/interfaces";
+
+const languageToColour = (language: string): string => {
+  switch (language) {
+    case "Crystal":
+      return "#000000";
+    case "GDScript":
+      return "#3C8FBB";
+    case "Julia":
+      return "#AA79C1";
+    case "MATLAB":
+      return "#F9900F";
+    case "Processing":
+      return "#ED225D";
+    case "Python":
+      return "#FCD244";
+    case "R":
+      return "#74A7D6";
+    case "Rust":
+      return "#F44A00";
+    case "Shell":
+      return "#23FF21";
+    case "TeX":
+      return "#00827F";
+    case "TypeScript":
+      return "#1D7CC1";
+    default:
+      return "#FFFFFF";
+  }
+};
 
 const Dot = (props: { colour: string }): JSX.Element => (
   <span
@@ -8,10 +36,10 @@ const Dot = (props: { colour: string }): JSX.Element => (
   />
 );
 
-const LanguageButton = (props: { repo: IProjectInfo }): JSX.Element => (
+const LanguageButton = (props: { language: string }): JSX.Element => (
   <Fragment>
-    <Dot colour={props.repo.language.colour} />
-    {props.repo.language.name}
+    <Dot colour={languageToColour(props.language)} />
+    {props.language}
   </Fragment>
 );
 

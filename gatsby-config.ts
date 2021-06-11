@@ -12,6 +12,7 @@ export const plugins = [
   "gatsby-plugin-typescript",
   "gatsby-plugin-sass",
   "gatsby-plugin-react-helmet",
+  // Projects
   {
     resolve: "gatsby-source-graphql",
     options: {
@@ -21,6 +22,14 @@ export const plugins = [
       headers: { Authorization: `bearer ${getSecret("GITHUB_API_TOKEN")}` },
     },
   },
+  // Blogposts
+  {
+    resolve: "gatsby-source-filesystem",
+    options: { name: "blogposts", path: "./static/" },
+  },
+  // Markdown
+  "gatsby-transformer-remark",
+  // Webfonts
   {
     resolve: "gatsby-plugin-webfonts",
     options: {

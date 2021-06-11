@@ -1,35 +1,65 @@
 import React from "react";
 import Page from "../components/page";
-import { IProjectInfo } from "../interfaces/interfaces";
-import ReactMarkdown from "react-markdown";
+import { IProjectInfoRaw } from "../interfaces/interfaces";
+import { graphql } from "gatsby";
+import { cleanProjectInfo } from "../utils";
+import MarkdownRenderer from "../components/markdown-renderer";
 import ProjectBox from "../components/project-box";
 import * as gfm from "remark-gfm";
- 
 
 interface IProps {
-  pageContext: { repo: IProjectInfo };
+  data: { github: { viewer: { repository: IProjectInfoRaw } } };
+  pageContext: { projectName: string };
 }
 
 const ProjectTemplate = (props: IProps): JSX.Element => {
-  const repo: IProjectInfo = props.pageContext.repo;
+  const projectInfo = cleanProjectInfo(props.data.github.viewer.repository);
   return (
-    <Page title={`${repo.name} - Ha.nnes.dev`}>
-      <ReactMarkdown
-        components={{
-          h1: ({ node, ...props }) => (
-            <div style={{ marginBottom: "2rem" }}>
-              <ProjectBox repo={repo} detailed={false} />
-            </div>
-          ),
-          h2: "h3",
-          h3: "h4",
-          h4: "h5",
-        }}
-      >
-        {repo.readme}
-      </ReactMarkdown>
+    <Page pageTitle={projectInfo.title}>
+      <ProjectBox project={projectInfo} detailed={false} />
+      <MarkdownRenderer markdownString={projectInfo.readme} />
     </Page>
   );
 };
 
 export default ProjectTemplate;
+
+export const query = graphql`
+  query getProject($projectName: String!) {
+    github {
+      viewer {
+        repository(name: $projectName) {
+          name
+          description
+          createdAt
+          url
+          isArchived
+          languages(first: 10, orderBy: { field: SIZE, direction: DESC }) {
+            edges {
+              node {
+                name
+                color
+              }
+            }
+          }
+          readmeMaster: object(expression: "master:README.md") {
+            ... on GitHub_Blob {
+              text
+            }
+          }
+          readmeMain: object(expression: "main:README.md") {
+            ... on GitHub_Blob {
+              text
+            }
+          }
+          readmeDevelop: object(expression: "develop:README.md") {
+            ... on GitHub_Blob {
+              text
+            }
+          }
+          updatedAt
+        }
+      }
+    }
+  }
+`;

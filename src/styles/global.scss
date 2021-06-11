@@ -1,6 +1,8 @@
 @use "sass:math";
 
-$line-thickness: 0.1rem;
+@use "code-syntax";
+
+$line-thickness: 0.15rem;
 $main-colour: #d3d3d3;
 $background-colour: #0e0e0e;
 $mobile-breakpoint: 960px;
@@ -159,6 +161,14 @@ pre {
   max-width: 55rem;
   padding: 1rem;
   background-color: $background-colour;
+
+  img {
+    // Centre images
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+  }
 }
 
 .drop-shadow {

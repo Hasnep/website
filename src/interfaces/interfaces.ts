@@ -1,4 +1,32 @@
-interface IProjectInfoRaw {
+export interface IBlogpostInfoRaw {
+  name: string;
+  childMarkdownRemark: {
+    frontmatter: {
+      title: string;
+      firstPosted: number[];
+      lastUpdated?: number[];
+      description: string;
+      language: string;
+      emoji?: string;
+      repo?: string;
+    };
+    rawMarkdownBody: string;
+  };
+}
+
+export interface IBlogpostInfo {
+  name: string;
+  title: string;
+  firstPosted: Date;
+  lastUpdated?: Date;
+  description: string;
+  language: string;
+  emoji: string;
+  repo: string;
+  body: string;
+}
+
+export interface IProjectInfoRaw {
   name: string;
   description: string;
   createdAt: string;
@@ -7,42 +35,59 @@ interface IProjectInfoRaw {
   updatedAt: string;
   languages: {
     edges: {
-      node: {
-        name: string;
-        color: string;
-      };
+      node: { name: string };
     }[];
   };
-  readmeMaster: { text: string };
-  readmeMain: { text: string };
-  readmeDevelop: { text: string };
+  readmeMaster: { text: string } | null;
+  readmeMain: { text: string } | null;
+  readmeDevelop: { text: string } | null;
 }
 
-interface IProjectInfo {
-  name: string;
+export interface IProjectInfo {
+  title: string;
   description: string;
-  emoji: string | null;
-  createdAt: Date;
+  emoji: string;
+  updatedAt: Date;
   url: string;
-  isArchived: boolean;
-  language: {
-    name: string;
-    colour: string;
-  };
+  language: string;
   readme: string;
 }
 
-interface IGithubReposResult {
+export interface IProjectsQueryResult {
   errors?: any;
   data?: {
     github: {
       viewer: {
         repositories: {
-          nodes: IProjectInfoRaw[];
+          nodes: {
+            name: string;
+          }[];
         };
       };
     };
   };
 }
 
-export { IProjectInfoRaw, IProjectInfo, IGithubReposResult };
+export interface IGetPostTitlesQueryResult {
+  errors?: any;
+  data?: {
+    allFile: {
+      nodes: {
+        name: string;
+      }[];
+    };
+    github: {
+      viewer: {
+        repositories: {
+          nodes: {
+            name: string;
+            description?: string;
+            isEmpty: boolean;
+            isArchived: boolean;
+            owner: { login: string };
+          }[];
+        };
+      };
+    };
+  };
+}

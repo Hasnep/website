@@ -32,7 +32,7 @@ const queryCV = graphql`
 `;
 
 const CVPage = (): JSX.Element => (
-  <Page title="My CV - Ha.nnes.dev">
+  <Page pageTitle="My CV">
     <StaticQuery
       query={queryCV}
       render={(data: ICVResult): JSX.Element => (
