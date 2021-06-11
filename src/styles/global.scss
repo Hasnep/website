@@ -1,3 +1,5 @@
+@use "sass:math";
+
 $line-thickness: 0.15rem;
 $main-colour: #d3d3d3;
 $background-colour: #0e0e0e;
@@ -94,7 +96,7 @@ pre {
       "emojiBox projectLanguage projectGithubButton";
 
     div.emoji-box {
-      font-size: $emoji-box-size / 2;
+      font-size: math.div($emoji-box-size, 2);
       width: $emoji-box-size;
       height: $emoji-box-size;
       line-height: $emoji-box-size;
@@ -115,7 +117,7 @@ pre {
       "projectGithubButton projectGithubButton";
 
     div.emoji-box {
-      font-size: $emoji-box-size / 2;
+      font-size: math.div($emoji-box-size, 2);
       width: $emoji-box-size;
       height: $emoji-box-size;
       line-height: $emoji-box-size;
