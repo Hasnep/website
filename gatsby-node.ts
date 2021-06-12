@@ -22,12 +22,15 @@ const deleteRecursively = (directoryPath: string): void => {
   });
 };
 
+const makeSureDirectoryExists = (directoryPath: string) =>
+  fs.mkdirSync(path.dirname(directoryPath), { recursive: true });
+
 const downloadFileSafely = async (
   containerClient: ContainerClient,
   blob: BlobItem,
   downloadFilePath: string
 ) => {
-  fs.mkdirSync(path.dirname(downloadFilePath), { recursive: true });
+  makeSureDirectoryExists(downloadFilePath);
   const blobClient = containerClient.getBlobClient(blob.name);
   await blobClient.downloadToFile(downloadFilePath);
   console.log(`Downloaded '${blob.name}' to '${downloadFilePath}'.`);
@@ -41,6 +44,7 @@ export const onPreBootstrap: GatsbyNode["onPreBootstrap"] = async () => {
 
   // Clear existing static files
   deleteRecursively("./static/");
+  makeSureDirectoryExists("./static/");
 
   // Download project files
   const projectsContainerName = "projects";
