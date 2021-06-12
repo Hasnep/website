@@ -109,7 +109,8 @@ export const createPages: GatsbyNode["createPages"] = async ({
         }
       }
     }
-  `).then((result: IGetPostTitlesQueryResult) => {
+  `).then((r) => {
+    const result = r as IGetPostTitlesQueryResult;
     if (result.errors || !result.data) {
       return Promise.reject(result.errors);
     } else {
