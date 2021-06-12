@@ -21,8 +21,8 @@ export interface IBlogpostInfo {
   lastUpdated?: Date;
   description: string;
   language: string;
-  emoji: string;
-  repo: string;
+  emoji: string | null;
+  repo: string | null;
   body: string;
 }
 
