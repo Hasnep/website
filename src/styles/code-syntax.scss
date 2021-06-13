@@ -1,163 +1,155 @@
-div.prismjs {
-  code,
-  pre {
-    text-align: left;
-    white-space: pre;
-    word-spacing: normal;
-    word-break: normal;
-    word-wrap: normal;
-    line-height: 1.5rem;
+pre {
+  font-size: 0.95rem;
+  line-height: 1.5;
 
-    -webkit-hyphens: none;
-    -moz-hyphens: none;
-    -ms-hyphens: none;
-    hyphens: none;
+  div.prismjs {
+    code {
+      span.token {
+        &.atrule {
+          color: #c792ea;
+        }
 
-    span.token {
-      &.atrule {
-        color: #c792ea;
-      }
+        &.attr-name {
+          color: #ffcb6b;
+        }
 
-      &.attr-name {
-        color: #ffcb6b;
-      }
+        &.attr-value {
+          color: #a5e844;
+        }
 
-      &.attr-value {
-        color: #a5e844;
-      }
+        &.attribute {
+          color: #a5e844;
+        }
 
-      &.attribute {
-        color: #a5e844;
-      }
+        &.boolean {
+          color: #c792ea;
+        }
 
-      &.boolean {
-        color: #c792ea;
-      }
+        &.builtin {
+          color: #ffcb6b;
+        }
 
-      &.builtin {
-        color: #ffcb6b;
-      }
+        &.cdata {
+          color: #80cbc4;
+        }
 
-      &.cdata {
-        color: #80cbc4;
-      }
+        &.char {
+          color: #80cbc4;
+        }
 
-      &.char {
-        color: #80cbc4;
-      }
+        &.class {
+          color: #ffcb6b;
+        }
 
-      &.class {
-        color: #ffcb6b;
-      }
+        &.class-name {
+          color: #f2ff00;
+        }
 
-      &.class-name {
-        color: #f2ff00;
-      }
+        &.comment {
+          color: #616161;
+        }
 
-      &.comment {
-        color: #616161;
-      }
+        &.constant {
+          color: #c792ea;
+        }
 
-      &.constant {
-        color: #c792ea;
-      }
+        &.deleted {
+          color: #ff6666;
+        }
 
-      &.deleted {
-        color: #ff6666;
-      }
+        &.doctype {
+          color: #616161;
+        }
 
-      &.doctype {
-        color: #616161;
-      }
+        &.entity {
+          color: #ff6666;
+        }
 
-      &.entity {
-        color: #ff6666;
-      }
+        &.function {
+          color: #c792ea;
+        }
 
-      &.function {
-        color: #c792ea;
-      }
+        &.hexcode {
+          color: #f2ff00;
+        }
 
-      &.hexcode {
-        color: #f2ff00;
-      }
+        &.id {
+          color: #c792ea;
+          font-weight: bold;
+        }
 
-      &.id {
-        color: #c792ea;
-        font-weight: bold;
-      }
+        &.important {
+          color: #c792ea;
+          font-weight: bold;
+        }
 
-      &.important {
-        color: #c792ea;
-        font-weight: bold;
-      }
+        &.inserted {
+          color: #80cbc4;
+        }
 
-      &.inserted {
-        color: #80cbc4;
-      }
+        &.keyword {
+          color: #c792ea;
+        }
 
-      &.keyword {
-        color: #c792ea;
-      }
+        &.number {
+          color: #fd9170;
+        }
 
-      &.number {
-        color: #fd9170;
-      }
+        &.operator {
+          color: #89ddff;
+        }
 
-      &.operator {
-        color: #89ddff;
-      }
+        &.prolog {
+          color: #616161;
+        }
 
-      &.prolog {
-        color: #616161;
-      }
+        &.property {
+          color: #80cbc4;
+        }
 
-      &.property {
-        color: #80cbc4;
-      }
+        &.pseudo-class {
+          color: #a5e844;
+        }
 
-      &.pseudo-class {
-        color: #a5e844;
-      }
+        &.pseudo-element {
+          color: #a5e844;
+        }
 
-      &.pseudo-element {
-        color: #a5e844;
-      }
+        &.punctuation {
+          color: #89ddff;
+        }
 
-      &.punctuation {
-        color: #89ddff;
-      }
+        &.regex {
+          color: #f2ff00;
+        }
 
-      &.regex {
-        color: #f2ff00;
-      }
+        &.selector {
+          color: #ff6666;
+        }
 
-      &.selector {
-        color: #ff6666;
-      }
+        &.string {
+          color: #a5e844;
+        }
 
-      &.string {
-        color: #a5e844;
-      }
+        &.symbol {
+          color: #c792ea;
+        }
 
-      &.symbol {
-        color: #c792ea;
-      }
+        &.tag {
+          color: #ff6666;
+        }
 
-      &.tag {
-        color: #ff6666;
-      }
+        &.unit {
+          color: #fd9170;
+        }
 
-      &.unit {
-        color: #fd9170;
-      }
+        &.url {
+          color: #ff6666;
+        }
 
-      &.url {
-        color: #ff6666;
-      }
-
-      &.variable {
-        color: #ff6666;
+        &.variable {
+          color: #ff6666;
+        }
       }
     }
   }
