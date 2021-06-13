@@ -6,6 +6,7 @@ $line-thickness: 0.15rem;
 $main-colour: #d3d3d3;
 $background-colour: #0e0e0e;
 $mobile-breakpoint: 960px;
+$gap: 1rem;
 
 @mixin desktop {
   @media screen and (min-width: $mobile-breakpoint) {
@@ -30,7 +31,7 @@ html {
 }
 
 p {
-  margin: 0.5rem 0;
+  margin: math.div($gap, 2) 0;
 }
 
 h1,
@@ -38,7 +39,7 @@ h2,
 h3,
 h4 {
   font-weight: 700;
-  margin-bottom: 1rem;
+  margin-bottom: $gap;
 }
 
 h1 {
@@ -63,8 +64,8 @@ img {
 }
 
 blockquote {
-  margin: 1rem;
-  padding-left: 1rem;
+  margin: $gap;
+  padding-left: $gap;
   border-left: $line-thickness solid $main-colour;
   font-size: 0.95rem;
   font-style: italic;
@@ -73,8 +74,8 @@ blockquote {
 .box,
 pre {
   border: $line-thickness solid $main-colour;
-  padding: 1rem;
-  margin: 1.5rem;
+  padding: $gap;
+  margin: 2 * $gap;
 }
 
 .box.project {
@@ -101,8 +102,8 @@ pre {
 
   @include mobile {
     $emoji-box-size: 4rem;
-    padding: 1rem;
-    gap: 1rem;
+    padding: $gap;
+    gap: $gap;
     min-height: 10rem;
     grid-template-columns: $emoji-box-size auto;
     grid-template-rows: auto auto auto auto;
@@ -151,9 +152,9 @@ pre {
 }
 
 .content {
-  margin: 2rem auto;
+  margin: $gap auto;
   max-width: 55rem;
-  padding: 1rem;
+  padding: $gap;
   background-color: $background-colour;
 
   img {
@@ -166,7 +167,7 @@ pre {
 }
 
 .drop-shadow {
-  $drop-shadow-size: 0.3rem;
+  $drop-shadow-size: math.div($gap, 2);
 
   -webkit-box-shadow: $drop-shadow-size $drop-shadow-size $main-colour;
   -moz-box-shadow: $drop-shadow-size $drop-shadow-size $main-colour;
@@ -181,9 +182,9 @@ hr {
 
 // Navbar
 nav {
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-  padding: 0.75rem;
+  margin-top: $gap;
+  margin-bottom: 2 * $gap;
+  padding: 0.5 * $gap;
   border-top: $line-thickness solid $main-colour;
   border-bottom: $line-thickness solid $main-colour;
   font-size: 1.1rem;
@@ -195,12 +196,12 @@ nav {
 
     li {
       display: inline;
-      margin: 0 1rem;
+      margin: 0 $gap;
     }
 
     li:before {
       content: "‣";
-      margin-right: 0.3rem;
+      margin-right: math.div($gap, 3);
     }
 
     li.selected:before {
@@ -238,7 +239,7 @@ span.dot {
   display: inline-block;
 
   &.language-dot {
-    margin-right: 0.5rem;
+    margin-right: math.div($gap, 2);
   }
 }
 
