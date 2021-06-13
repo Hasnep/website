@@ -4,7 +4,7 @@ export interface IBlogpostInfoRaw {
     frontmatter: {
       title: string;
       firstPosted: number[];
-      lastUpdated?: number[];
+      lastUpdated: number[];
       description: string;
       language: string;
       emoji?: string;
