@@ -9,7 +9,7 @@ export const unique = <T>(x: T[]): T[] => [...new Set(x)];
 
 const extractEmojiAndDescription = (
   description: string
-): { emoji: string; description: string } => {
+): { emoji: string | null; description: string } => {
   const regexResult = /^(\W+)\s(.+)$/.exec(description);
   return regexResult
     ? { emoji: regexResult[1], description: regexResult[2] }
@@ -31,8 +31,8 @@ export const cleanBlogpostInfo = (
     firstPosted: new Date(2021, 1, 1), // ymdToDate(blogpost.childMarkdownRemark.frontmatter.firstPosted),
     lastUpdated: new Date(2021, 1, 1), // ymdToDate(blogpost.childMarkdownRemark.frontmatter.lastUpdated),
     language: blogpost.childMarkdownRemark.frontmatter.language,
-    emoji: blogpost.childMarkdownRemark.frontmatter.emoji,
-    repo: blogpost.childMarkdownRemark.frontmatter.repo,
+    emoji: blogpost.childMarkdownRemark.frontmatter.emoji || null,
+    repo: blogpost.childMarkdownRemark.frontmatter.repo || null,
   };
 };
 
