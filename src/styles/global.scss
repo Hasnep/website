@@ -21,8 +21,7 @@ $gap: 1rem;
 }
 
 html {
-  font-family: "Inconsolata", "Consolas", "DejaVu Sans Mono", "Droid Sans Mono",
-    "FreeMono", "Monaco", "SF Mono", monospace;
+  font-family: monospace;
   background-color: $background-colour;
   color: $main-colour;
   font-size: 18px;
