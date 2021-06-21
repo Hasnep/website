@@ -1,5 +1,4 @@
 import React from "react";
-import { IProjectInfo } from "../interfaces/interfaces";
 import { FaGithub } from "react-icons/fa";
 import ExternalLink from "./external-link";
 
