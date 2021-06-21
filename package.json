@@ -10,7 +10,9 @@
     "serve": "gatsby serve",
     "clean": "gatsby clean",
     "lint": "eslint --ext js,jsx,ts,tsx --ignore-path .gitignore .",
-    "fix": "eslint --fix --ext js,jsx,ts,tsx --ignore-path .gitignore ."
+    "fix": "npm run fix:typescript; npm run fix:other",
+    "fix:typescript": "eslint --fix --ext js,jsx,ts,tsx --ignore-path .gitignore .",
+    "fix:other": "prettier --write --ignore-path .gitignore  *.json ./**/*.json ./src/**/*.scss"
   },
   "repository": {
     "type": "git",
