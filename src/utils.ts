@@ -22,23 +22,17 @@ const ymdToDate = (ymd: number[]): Date => new Date(ymd[0], ymd[1], ymd[2]);
 
 export const cleanBlogpostInfo = (
   blogpost: IBlogpostInfoRaw
-): IBlogpostInfo => {
-  return {
-    name: blogpost.name,
-    title: blogpost.childMarkdownRemark.frontmatter.title,
-    body: blogpost.childMarkdownRemark.rawMarkdownBody,
-    description: blogpost.childMarkdownRemark.frontmatter.description,
-    firstPosted: ymdToDate(
-      blogpost.childMarkdownRemark.frontmatter.firstPosted
-    ),
-    lastUpdated: ymdToDate(
-      blogpost.childMarkdownRemark.frontmatter.lastUpdated
-    ),
-    language: blogpost.childMarkdownRemark.frontmatter.language,
-    emoji: blogpost.childMarkdownRemark.frontmatter.emoji || null,
-    repo: blogpost.childMarkdownRemark.frontmatter.repo || null,
-  };
-};
+): IBlogpostInfo => ({
+  name: blogpost.name,
+  title: blogpost.childMarkdownRemark.frontmatter.title,
+  body: blogpost.childMarkdownRemark.rawMarkdownBody,
+  description: blogpost.childMarkdownRemark.frontmatter.description,
+  firstPosted: ymdToDate(blogpost.childMarkdownRemark.frontmatter.firstPosted),
+  lastUpdated: ymdToDate(blogpost.childMarkdownRemark.frontmatter.lastUpdated),
+  language: blogpost.childMarkdownRemark.frontmatter.language,
+  emoji: blogpost.childMarkdownRemark.frontmatter.emoji || null,
+  repo: blogpost.childMarkdownRemark.frontmatter.repo || null,
+});
 
 export const cleanProjectInfo = (project: IProjectInfoRaw): IProjectInfo => {
   const language = (
