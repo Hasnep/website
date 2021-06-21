@@ -28,8 +28,12 @@ export const cleanBlogpostInfo = (
     title: blogpost.childMarkdownRemark.frontmatter.title,
     body: blogpost.childMarkdownRemark.rawMarkdownBody,
     description: blogpost.childMarkdownRemark.frontmatter.description,
-    firstPosted: new Date(2021, 1, 1), // ymdToDate(blogpost.childMarkdownRemark.frontmatter.firstPosted),
-    lastUpdated: new Date(2021, 1, 1), // ymdToDate(blogpost.childMarkdownRemark.frontmatter.lastUpdated),
+    firstPosted: ymdToDate(
+      blogpost.childMarkdownRemark.frontmatter.firstPosted
+    ),
+    lastUpdated: ymdToDate(
+      blogpost.childMarkdownRemark.frontmatter.lastUpdated
+    ),
     language: blogpost.childMarkdownRemark.frontmatter.language,
     emoji: blogpost.childMarkdownRemark.frontmatter.emoji || null,
     repo: blogpost.childMarkdownRemark.frontmatter.repo || null,
