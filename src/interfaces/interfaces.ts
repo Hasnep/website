@@ -7,8 +7,8 @@ export interface IBlogpostInfoRaw {
       lastUpdated: number[];
       description: string;
       language: string;
-      emoji?: string;
-      repo?: string;
+      emoji: string;
+      repo: string;
     };
     rawMarkdownBody: string;
   };
@@ -18,11 +18,11 @@ export interface IBlogpostInfo {
   name: string;
   title: string;
   firstPosted: Date;
-  lastUpdated?: Date;
+  lastUpdated: Date;
   description: string;
   language: string;
-  emoji: string | null;
-  repo: string | null;
+  emoji: string;
+  repo: string;
   body: string;
 }
 

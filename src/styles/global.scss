@@ -84,12 +84,12 @@ pre {
   @include desktop {
     $emoji-box-size: 10rem;
     min-height: $emoji-box-size;
-    grid-template-columns: $emoji-box-size auto auto;
+    grid-template-columns: $emoji-box-size auto auto auto;
     grid-template-rows: auto auto auto;
     grid-template-areas:
-      "emojiBox projectTitle projectTitle"
-      "emojiBox projectDescription projectDescription"
-      "emojiBox projectLanguage projectGithubButton";
+      "emojiBox projectTitle projectTitle projectTitle"
+      "emojiBox projectDescription projectDescription projectDescription"
+      "emojiBox projectDate projectLanguage projectGithubButton";
 
     div.emoji-box {
       font-size: math.div($emoji-box-size, 2);
@@ -108,7 +108,7 @@ pre {
     grid-template-rows: auto auto auto auto;
     grid-template-areas:
       "emojiBox projectTitle"
-      "projectDescription projectDescription"
+      "projectDate projectDescription"
       "projectLanguage projectLanguage"
       "projectGithubButton projectGithubButton";
 
@@ -139,6 +139,10 @@ pre {
   p.project-description {
     grid-area: projectDescription;
     margin: 0;
+  }
+
+  div.project-date {
+    grid-area: projectDate;
   }
 
   div.project-language {

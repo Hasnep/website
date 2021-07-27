@@ -30,8 +30,8 @@ export const cleanBlogpostInfo = (
   firstPosted: ymdToDate(blogpost.childMarkdownRemark.frontmatter.firstPosted),
   lastUpdated: ymdToDate(blogpost.childMarkdownRemark.frontmatter.lastUpdated),
   language: blogpost.childMarkdownRemark.frontmatter.language,
-  emoji: blogpost.childMarkdownRemark.frontmatter.emoji || null,
-  repo: blogpost.childMarkdownRemark.frontmatter.repo || null,
+  emoji: blogpost.childMarkdownRemark.frontmatter.emoji,
+  repo: blogpost.childMarkdownRemark.frontmatter.repo,
 });
 
 export const cleanProjectInfo = (project: IProjectInfoRaw): IProjectInfo => {
@@ -79,3 +79,10 @@ export const getSecret = (secretName: string): string => {
     return token;
   }
 };
+
+export const formatDate = (date: Date): string =>
+  date.getFullYear().toString() +
+  "-" +
+  date.getMonth().toString().padStart(2, "0") +
+  "-" +
+  date.getDate().toString().padStart(2, "0");

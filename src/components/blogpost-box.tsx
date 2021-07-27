@@ -3,7 +3,7 @@ import { Link } from "gatsby";
 import { IBlogpostInfo } from "../interfaces/interfaces";
 import LanguageButton from "./language-button";
 import GithubButton from "./github-button";
-import { getBlogpostPath } from "../utils";
+import { formatDate, getBlogpostPath } from "../utils";
 
 const BlogpostBox = ({
   blogpost,
@@ -29,11 +29,13 @@ const BlogpostBox = ({
       <div className="emoji-box">{emojiBox}</div>
       <h3 className="project-title">{title}</h3>
       <p className="project-description">{blogpost.description}.</p>
+      <div className="project-date">{formatDate(blogpost.firstPosted)}</div>
       <div className="project-language">
-        Language: <LanguageButton language={blogpost.language} />
+        {detailed ? "Language: " : ""}
+        <LanguageButton language={blogpost.language} />
       </div>
       <div className="project-github-button">
-        Source code: <GithubButton repoName={blogpost.repo} />
+        <GithubButton repoName={blogpost.repo} />
       </div>
     </div>
   );
