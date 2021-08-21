@@ -25,21 +25,22 @@ const BlogpostTemplate = (props: IProps): JSX.Element => {
 export default BlogpostTemplate;
 
 export const query = graphql`
-  query getBlogpost($blogpostName: String) {
-    file(name: { eq: $blogpostName }) {
-      name
-      childMarkdownRemark {
-        frontmatter {
-          title
-          lastUpdated
-          description
-          language
-          emoji
-          firstPosted
-          repo
-        }
-        rawMarkdownBody
+  query getBlogpost($seasonNumber: Int, $episodeNumber: Int) {
+    podcastJson(
+      episode: {
+        seasonNumber: { eq: $seasonNumber }
+        episodeNumber: { eq: $episodeNumber }
       }
+    ) {
+      episode {
+        episodeNumber
+        seasonNumber
+        title
+      }
+      duration
+      description
+      tagline
+      releaseDate
     }
   }
 `;
