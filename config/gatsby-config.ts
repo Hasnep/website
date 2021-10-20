@@ -21,6 +21,19 @@ export const plugins = [
       headers: { Authorization: `bearer ${getSecret("GITHUB_API_TOKEN")}` },
     },
   },
+  {
+    resolve: "gatsby-plugin-webfonts",
+    options: {
+      fonts: {
+        google: [
+          {
+            family: "Inconsolata",
+            variants: ["500", "700"],
+          },
+        ],
+      },
+    },
+  },
   // Temporarily broken
   // {
   //   resolve: "gatsby-plugin-favicons",
