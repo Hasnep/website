@@ -1,6 +1,6 @@
 @use "sass:math";
 
-$line-thickness: 0.15rem;
+$line-thickness: 0.1rem;
 $main-colour: #d3d3d3;
 $background-colour: #0e0e0e;
 $mobile-breakpoint: 960px;
@@ -162,7 +162,7 @@ pre {
 }
 
 .drop-shadow {
-  $drop-shadow-size: 0.5rem;
+  $drop-shadow-size: 0.3rem;
 
   -webkit-box-shadow: $drop-shadow-size $drop-shadow-size $main-colour;
   -moz-box-shadow: $drop-shadow-size $drop-shadow-size $main-colour;
