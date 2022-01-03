@@ -42,6 +42,5 @@ export const plugins = [
   //     appName: "Ha.nnes.dev",
   //   },
   // },
-  "gatsby-plugin-netlify",
-  "gatsby-plugin-no-javascript",
+  "gatsby-plugin-no-javascript-utils",
 ];
