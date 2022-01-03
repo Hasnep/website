@@ -17,7 +17,8 @@ $gap: 1rem;
 @mixin mobile {
   @media screen and (max-width: $mobile-breakpoint) {
     @content;
-  }}
+  }
+}
 
 html {
   font-family: monospace;
