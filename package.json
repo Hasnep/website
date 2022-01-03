@@ -46,7 +46,7 @@
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.16.5",
-    "@types/node": "^17.0.7",
+    "@types/node": "^16.0.0",
     "@types/react-helmet": "^6.1.5",
     "@types/react-syntax-highlighter": "^13.5.2",
     "eslint": "^8.6.0",
