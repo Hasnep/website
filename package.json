@@ -2,7 +2,7 @@
   "name": "website",
   "author": "Hannes",
   "license": "GPL-3.0-or-later",
-  "homepage": "https://hasnep.netlify.com",
+  "homepage": "https://ha.nnes.dev",
   "scripts": {
     "build": "gatsby build",
     "develop": "gatsby develop",
