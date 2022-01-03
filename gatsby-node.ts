@@ -78,50 +78,53 @@ export const createPages: GatsbyNode["createPages"] = async ({
 
     // Create pages
     const languagesIgnored = ["HTML", "Jupyter Notebook", "CSS", "JavaScript"];
-    const repos: IProjectInfo[] = githubReposData.github.viewer.repositories.nodes
-      // Only show repos with a readme
-      .filter(
-        (repo) => repo.readmeMaster || repo.readmeMain || repo.readmeDevelop
-      )
-      // Only show repos with a description
-      .filter((repo) => repo.description != null && repo.description != "")
-      // Sort repos by archive status, update date and then name
-      .sort(
-        (a, b) =>
-          (a["isArchived"] ? 1 : 0) - (b["isArchived"] ? 1 : 0) ||
-          Math.sign(Date.parse(b["updatedAt"]) - Date.parse(a["updatedAt"])) ||
-          a["name"].localeCompare(b["name"])
-      )
-      .map((repo) => {
-        const languageInfo = repo.languages.edges
-          // Remove languages on the ignored list
-          .filter((l) => !languagesIgnored.includes(l.node.name))[0].node;
-        // Split description into emoji and text
-        const regexResult = /^(\W+)\s(.+)$/.exec(repo.description);
-        let emoji: string | null;
-        let descriptionNoEmoji: string;
-        if (regexResult) {
-          emoji = regexResult[1];
-          descriptionNoEmoji = regexResult[2];
-        } else {
-          emoji = null;
-          descriptionNoEmoji = repo.description;
-        }
-        return {
-          name: repo.name,
-          description: descriptionNoEmoji,
-          emoji: emoji,
-          createdAt: new Date(repo.createdAt),
-          url: repo.url,
-          isArchived: repo.isArchived,
-          language: {
-            name: languageInfo.name,
-            colour: languageInfo.color,
-          },
-          readme: (repo.readmeMain || repo.readmeMaster || repo.readmeDevelop)
-            .text,
-        };
-      });
+    const repos: IProjectInfo[] =
+      githubReposData.github.viewer.repositories.nodes
+        // Only show repos with a readme
+        .filter(
+          (repo) => repo.readmeMaster || repo.readmeMain || repo.readmeDevelop
+        )
+        // Only show repos with a description
+        .filter((repo) => repo.description != null && repo.description != "")
+        // Sort repos by archive status, update date and then name
+        .sort(
+          (a, b) =>
+            (a["isArchived"] ? 1 : 0) - (b["isArchived"] ? 1 : 0) ||
+            Math.sign(
+              Date.parse(b["updatedAt"]) - Date.parse(a["updatedAt"])
+            ) ||
+            a["name"].localeCompare(b["name"])
+        )
+        .map((repo) => {
+          const languageInfo = repo.languages.edges
+            // Remove languages on the ignored list
+            .filter((l) => !languagesIgnored.includes(l.node.name))[0].node;
+          // Split description into emoji and text
+          const regexResult = /^(\W+)\s(.+)$/.exec(repo.description);
+          let emoji: string | null;
+          let descriptionNoEmoji: string;
+          if (regexResult) {
+            emoji = regexResult[1];
+            descriptionNoEmoji = regexResult[2];
+          } else {
+            emoji = null;
+            descriptionNoEmoji = repo.description;
+          }
+          return {
+            name: repo.name,
+            description: descriptionNoEmoji,
+            emoji: emoji,
+            createdAt: new Date(repo.createdAt),
+            url: repo.url,
+            isArchived: repo.isArchived,
+            language: {
+              name: languageInfo.name,
+              colour: languageInfo.color,
+            },
+            readme: (repo.readmeMain || repo.readmeMaster || repo.readmeDevelop)
+              .text,
+          };
+        });
 
     const templateIndex = path.resolve("./src/templates/index.tsx");
     createPage({
