@@ -22,10 +22,17 @@ const ProjectBox = ({
     emojiBox = <Link to={linkTo}>{emojiBox}</Link>;
   }
 
+  // Change header level depending on detail
+  if (detailed) {
+    title = <h3 className="project-title">{title}</h3>;
+  } else {
+    title = <h2 className="project-title">{title}</h2>;
+  }
+
   return (
     <div className="box project drop-shadow">
       <div className="emoji-box">{emojiBox}</div>
-      <h3 className="project-title">{title}</h3>
+      {title}
       <p className="project-description">{repo.description}.</p>
       <div className="project-language">
         Language: <LanguageButton repo={repo} />
