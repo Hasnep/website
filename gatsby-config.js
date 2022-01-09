@@ -5,4 +5,4 @@
 require("ts-node").register();
 
 // Use a TypeScript version of gatsby-config.js.
-module.exports = require("./config/gatsby-config.ts");
+module.exports = require("./gatsby-config.ts");

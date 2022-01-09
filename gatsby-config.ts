@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import { getSecret } from "../src/utils";
+import { getSecret } from "./src/utils";
 dotenv.config({ path: ".env" });
 
 export const siteMetadata = {
