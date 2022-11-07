@@ -86,6 +86,8 @@ export const createPages: GatsbyNode["createPages"] = async ({
         )
         // Only show repos with a description
         .filter((repo) => repo.description != null && repo.description != "")
+        // Remove archived repos
+        .filter((repo) => !repo.isArchived)
         // Sort repos by archive status, update date and then name
         .sort(
           (a, b) =>
