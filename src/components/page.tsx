@@ -7,7 +7,9 @@ const Page = (props: {
   children: React.ReactNode;
 }): JSX.Element => (
   <Fragment>
-    <Helmet title={props.title} />
+    <Helmet title={props.title}>
+      <link href="https://julialang.social/@hasnep" rel="me" />
+    </Helmet>
     <div className="content">
       <Header />
       <hr />
