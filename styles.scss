@@ -1,0 +1,311 @@
+@use "sass:math";
+
+$line-thickness: 0.1rem;
+$main-colour: #d3d3d3;
+$background-colour: #0e0e0e;
+$mobile-breakpoint: 960px;
+$font-stack: "Mona Sans", sans-serif;
+$normal-font-weight: 500;
+$header-font-weight: 900;
+$normal-font-stretch: 100%;
+$header-font-stretch: 200%;
+
+@font-face {
+  font-family: "Mona Sans";
+  src:
+    url("/static/fonts/mona-sans.woff2") format("woff2 supports variations"),
+    url("/static/fonts/mona-sans.woff2") format("woff2-variations");
+  font-weight: $normal-font-weight $header-font-weight;
+  font-stretch: $normal-font-stretch $header-font-stretch;
+}
+
+@mixin desktop {
+  @media screen and (min-width: $mobile-breakpoint) {
+    @content;
+  }
+}
+
+@mixin mobile {
+  @media screen and (max-width: $mobile-breakpoint) {
+    @content;
+  }
+}
+
+// Base styles
+
+html {
+  font-family: $font-stack;
+  background-color: $background-colour;
+  color: $main-colour;
+  font-size: 20px;
+  line-height: 1.5;
+  font-weight: $normal-font-weight;
+  font-stretch: $normal-font-stretch;
+}
+
+p {
+  margin: 0.5rem 0;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-weight: $header-font-weight;
+  font-stretch: $header-font-stretch;
+  margin-bottom: 1rem;
+}
+
+h1 {
+  font-size: 1.75rem;
+}
+
+h2 {
+  font-size: 1.5rem;
+}
+
+h3 {
+  font-size: 1.25rem;
+}
+
+h4 {
+  font-size: 1rem;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+blockquote {
+  margin: 1rem;
+  padding-left: 1rem;
+  border-left: $line-thickness solid $main-colour;
+  font-size: 0.95rem;
+  font-style: italic;
+}
+
+pre,
+code {
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+hr {
+  border: none;
+  height: $line-thickness;
+  background-color: $main-colour;
+}
+
+a {
+  color: $main-colour;
+  text-decoration-line: underline;
+  text-decoration-thickness: $line-thickness;
+
+  &:hover {
+    text-decoration-line: underline;
+    text-decoration-style: dashed;
+    text-decoration-thickness: $line-thickness;
+  }
+
+  &.no-underline {
+    text-decoration: none;
+  }
+
+  &.no-underline:hover {
+    text-decoration: none;
+  }
+}
+
+// Main content section
+div#content {
+  margin: 1rem auto;
+  max-width: 55rem;
+  padding: 1rem;
+  background-color: $background-colour;
+}
+
+// Header
+header {
+  display: grid;
+  grid-template-columns: auto 10rem;
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    "websiteTitle contactLinks"
+    "navbar navbar";
+
+  // Website title
+  h1#website-title {
+    grid-area: websiteTitle;
+    align-self: end;
+  }
+
+  // Contact links
+  ul.contact-links {
+    grid-area: contactLinks;
+    li {
+      list-style: none;
+    }
+  }
+
+  // Navbar
+  nav {
+    grid-area: navbar;
+    ul {
+      list-style-type: none;
+      margin: 0rem;
+      padding: 0rem;
+
+      li {
+        display: inline;
+
+        &:before {
+          content: "‣";
+          margin-left: 1rem;
+          margin-right: 0.3rem;
+        }
+      }
+    }
+  }
+}
+
+// Drop shadow effect
+.drop-shadow {
+  $drop-shadow-size: 0.3rem;
+  box-shadow: $drop-shadow-size $drop-shadow-size $main-colour;
+}
+
+// Box elements
+
+.box,
+pre {
+  border: $line-thickness solid $main-colour;
+  padding: 1rem;
+  margin: 1.5rem;
+}
+
+.box.project {
+  display: grid;
+  align-items: center;
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    "boxEmoji boxTitle"
+    "boxEmoji boxSubtitle";
+
+  @include desktop {
+    $emoji-box-size: 8rem;
+    padding: 1rem;
+    gap: 0.5rem;
+    grid-template-columns: $emoji-box-size auto;
+    min-height: $emoji-box-size;
+    div.box-emoji {
+      font-size: math.div($emoji-box-size, 1.75);
+      width: $emoji-box-size;
+      height: $emoji-box-size;
+      line-height: $emoji-box-size;
+    }
+  }
+
+  @include mobile {
+    $emoji-box-size: 5rem;
+    padding: 0.5rem;
+    gap: 0.5rem;
+    grid-template-columns: $emoji-box-size auto;
+    min-height: $emoji-box-size;
+    div.box-emoji {
+      font-size: math.div($emoji-box-size, 1.75);
+      width: $emoji-box-size;
+      height: $emoji-box-size;
+      line-height: $emoji-box-size;
+    }
+  }
+
+  .box-title {
+    grid-area: boxTitle;
+    margin: 0;
+  }
+
+  .box-emoji {
+    grid-area: boxEmoji;
+    text-align: center;
+    justify-self: center;
+    align-self: center;
+    a {
+      text-decoration: none;
+    }
+  }
+
+  .box-subtitle {
+    grid-area: boxSubtitle;
+    margin: 0;
+  }
+}
+
+// Code blocks
+
+main {
+  div.sourceCode {
+    background-color: transparent;
+    overflow: visible;
+
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+
+      code {
+        font-family: monospace;
+        font-size: 85%;
+        margin: 0;
+        padding: 0;
+        overflow: visible;
+
+        a {
+          text-decoration: none;
+
+          &:hover {
+            text-decoration: none;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Images in blogposts
+
+main {
+  img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+  }
+}
+
+// Social icons
+img.social-icon {
+  display: inline;
+  width: 1em;
+  height: 1em;
+  margin: 0 0.5rem -0.15rem 0;
+  filter: invert(1);
+}
+
+// Footer
+footer {
+  ul {
+    text-align: center;
+    list-style: none;
+    li {
+      @include desktop {
+        display: inline;
+      }
+      @include mobile {
+        display: block;
+      }
+      &:not(:last-child) {
+        margin-right: 0.5rem;
+      }
+    }
+  }
+}

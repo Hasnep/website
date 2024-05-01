@@ -1,0 +1,40 @@
+name: Build and deploy
+
+on:
+  # Run on each PR
+  pull_request:
+  # Run when a new commit is pushed to the main branch
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    name: Build and deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Install Nix
+        uses: cachix/install-nix-action@v17
+        with:
+          extra_nix_config: access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
+      - name: Run pre-commit
+        run: nix develop --accept-flake-config --impure --command pre-commit run --all-files
+        env:
+          # Prevent this action failing when running on the main branch
+          SKIP: no-commit-to-branch
+      - name: Download data
+        run: nix develop --accept-flake-config --impure --command just download
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build
+        run: nix develop --accept-flake-config --impure --command just build
+      - name: Deploy to Netlify
+        uses: jsmrcaga/action-netlify-deploy@v2.0.0
+        with:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          NETLIFY_DEPLOY_TO_PROD: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+          build_directory: build
+          install_command: echo 'Skipping installing the dependencies'
+          build_command: echo 'Skipping building the web files'

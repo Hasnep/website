@@ -1,0 +1,126 @@
+repos:
+  # General checks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      # - name: Prevent committing to main
+      #   id: no-commit-to-branch
+      #   args: [--branch, main]
+      - name: Make sure files end with a newline character
+        id: end-of-file-fixer
+      - name: Remove trailing whitespace
+        id: trailing-whitespace
+      - name: Check for files that would conflict on case-insensitive filesystem
+        id: check-case-conflict
+      - name: Check for merge conflicts
+        id: check-merge-conflict
+      - name: Check executable files have a shebang
+        id: check-executables-have-shebangs
+      - name: Check scripts with a shebang are executable
+        id: check-shebang-scripts-are-executable
+      - name: Don't allow adding large files
+        id: check-added-large-files
+
+  # Python
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - name: Validate Python
+        id: check-ast
+  - repo: local
+    hooks:
+      - name: Check Poetry configuration
+        id: poetry-check
+        language: system
+        entry: poetry check
+        pass_filenames: false
+      - name: Run Poetry lock
+        id: poetry-lock
+        language: system
+        entry: poetry lock --no-update
+        pass_filenames: false
+  - repo: local
+    hooks:
+      - name: Sort Python files
+        id: ssort
+        language: system
+        entry: ssort
+        types: [python]
+  - repo: local
+    hooks:
+      - name: Format Python files
+        id: ruff-format
+        language: system
+        entry: ruff format
+        types: [python]
+  - repo: local
+    hooks:
+      - name: Lint Python files
+        id: ruff
+        language: system
+        entry: ruff check --fix
+        types: [python]
+  - repo: local
+    hooks:
+      - name: Type-check Python files
+        id: mypy
+        language: system
+        entry: mypy
+        types: [python]
+
+  # SCSS
+  - repo: local
+    hooks:
+      - name: Format SCSS files
+        id: prettier
+        language: system
+        entry: prettier --write
+        types: [scss]
+
+  # YAML
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - name: Validate YAML
+        id: check-yaml
+  - repo: local
+    hooks:
+      - name: Format YAML files
+        id: prettier
+        language: system
+        entry: prettier --write
+        types: [yaml]
+
+  # TOML
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - name: Validate TOML
+        id: check-toml
+  - repo: local
+    hooks:
+      - name: Format TOML files
+        id: taplo
+        language: system
+        entry: taplo format
+        types: [toml]
+
+  # GitHub Actions
+  - repo: https://github.com/python-jsonschema/check-jsonschema
+    rev: 0.28.2
+    hooks:
+      - name: Validate GitHub Actions workflow files
+        id: check-github-workflows
+
+  # Pre-commit
+  - repo: https://github.com/python-jsonschema/check-jsonschema
+    rev: 0.28.2
+    hooks:
+      - name: Validate Pre-commit config
+        id: check-jsonschema
+        files: ^.*\.pre-commit-config.yaml$
+        args:
+          [
+            "--schemafile",
+            "https://json.schemastore.org/pre-commit-config.json",
+          ]
