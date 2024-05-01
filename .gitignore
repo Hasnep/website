@@ -1,6 +1,14 @@
-node_modules
-public
-.cache
-archive
+# Environment variables
 .env
-static/
+
+# Virtual environment
+.venv/
+
+# Data
+data/
+
+# Built website
+build/
+
+# Pycache
+__pycache__/

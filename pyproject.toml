@@ -1,0 +1,75 @@
+[tool.poetry]
+name = "website"
+version = "0.1.0"
+description = ""
+authors = ["Hannes <h@nnes.dev>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+brotli = "^1.1.0"
+dart-sass = "^0.5.2"
+emoji = "^2.11.0"
+msgspec = "^0.18.5"
+pygithub = "^2.3.0"
+whenever = "^0.5.1"
+httpx = "^0.27.0"
+
+[tool.poetry.group.dev.dependencies]
+mypy = "^1.8"
+ssort = "^0.11.6"
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+  "ANN101",
+  "C901",
+  "COM812",
+  "COM819",
+  "D1",
+  "D203",
+  "D212",
+  "E501",
+  "EM",
+  "ERA001",
+  "FA100",
+  "FA102",
+  "FBT003",
+  "FIX",
+  "G004",
+  "ISC003",
+  "PLR0913",
+  "PYI041",
+  "RET505",
+  "S",
+  "S101",
+  "S106",
+  "SIM118",
+  "T20",
+  "TCH002",
+  "TD",
+  "TRY003",
+  "UP006",
+  "UP015",
+]
+unfixable = ["F401", "ISC001"]
+
+[tool.ruff.lint.flake8-import-conventions.extend-aliases]
+"logging.getLogger" = "get_logger"
+"xml.dom.minidom.parseString" = "parse_xml_string"
+"datetime.date" = "PyDate"
+"datetime.datetime" = "PyDateTime"
+
+[tool.ruff.lint.pep8-naming]
+extend-ignore-names = ["get_logger", "parse_xml_string", "PyDate", "PyDateTime"]
+
+[tool.ruff.lint.isort]
+combine-as-imports = true
+
+[tool.mypy]
+packages = "website"
+strict = true
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
