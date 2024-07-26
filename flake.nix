@@ -1,6 +1,6 @@
 {
   inputs = {
-    nixpkgs.url = "github:cachix/devenv-nixpkgs/rolling";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     systems.url = "github:nix-systems/default";
     devenv = {
       url = "github:cachix/devenv";
@@ -41,19 +41,19 @@
             modules = [
               {
                 # https://devenv.sh/reference/options/
-                languages.python = {
-                  enable = true;
-                  version = "3.11";
-                  poetry = {
-                    enable = true;
-                    activate.enable = true;
-                    install = {
-                      enable = true;
-                      groups = ["dev"];
-                    };
-                  };
-                };
                 packages = [
+                  (
+                    pkgs.python3.withPackages (
+                      python-pkgs: [
+                        python-pkgs.emoji
+                        python-pkgs.httpx
+                        python-pkgs.msgspec
+                        python-pkgs.mypy
+                        python-pkgs.pygithub
+                        python-pkgs.whenever
+                      ]
+                    )
+                  )
                   pkgs.dart-sass
                   pkgs.just
                   pkgs.nodePackages.prettier
