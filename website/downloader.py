@@ -245,7 +245,7 @@ def download_data() -> Dict[str, Any]:
         },
         "projects": projects,
         "blogposts": blogposts,
-        "cv": get_repo_file(cv_repo, "cv-johannes-smit.md"),
+        "cv": get_repo_file(cv_repo, "src/cv-johannes-smit.md"),
         "static": {
             "fonts": download_fonts(),
             "icons": download_icons(),
