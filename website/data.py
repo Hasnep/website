@@ -6,7 +6,7 @@ from typing import List, Optional, Self
 
 import msgspec
 from msgspec import Struct
-from whenever import Date, UTCDateTime
+from whenever import Date, Instant
 
 from website.constants import DATA_FILE
 from website.utils import first_with_default, is_emoji
@@ -36,8 +36,8 @@ class Project(Struct):
     _last_updated: PyDateTime = msgspec.field(name="last_updated")
 
     @property
-    def last_updated(self: Self) -> UTCDateTime:
-        return UTCDateTime.from_py_datetime(self._last_updated)
+    def last_updated(self: Self) -> Instant:
+        return Instant.from_py_datetime(self._last_updated)
 
     @property
     def title(self: Self) -> str:

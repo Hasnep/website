@@ -3,7 +3,7 @@ import subprocess
 from typing import Iterable, List, TypeVar, Union
 
 import emoji
-from whenever import Date, UTCDateTime
+from whenever import Date, Instant
 
 T = TypeVar("T")
 S = TypeVar("S")
@@ -41,15 +41,15 @@ def run_cli_command(command: List[str], *, stdin: str) -> str:
     return result.stdout
 
 
-def date_to_datetime(d: Date) -> UTCDateTime:
-    return UTCDateTime(d.year, d.month, d.day)
+def date_to_datetime(d: Date) -> Instant:
+    return Instant.from_utc(d.year, d.month, d.day)
 
 
-def strftime(d: UTCDateTime | Date, fmt: str) -> str:
+def strftime(d: Instant | Date, fmt: str) -> str:
     match d:
         case Date():
             return date_to_datetime(d).py_datetime().strftime(fmt)
-        case UTCDateTime():
+        case Instant():
             return d.py_datetime().strftime(fmt)
 
 
