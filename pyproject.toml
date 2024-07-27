@@ -7,8 +7,6 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.11"
-brotli = "^1.1.0"
-dart-sass = "^0.5.2"
 emoji = "^2.11.0"
 msgspec = "^0.18.5"
 pygithub = "^2.3.0"
