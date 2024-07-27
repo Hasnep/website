@@ -15,20 +15,24 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: Install Nix
-        uses: cachix/install-nix-action@v17
+        uses: DeterminateSystems/nix-installer-action@main
+      - name: Cache Nix environment
+        uses: DeterminateSystems/magic-nix-cache-action@main
+      - name: Use Nix dev shell for subsequent steps
+        uses: rrbutani/use-nix-shell-action@v1
         with:
-          extra_nix_config: access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
+          extraNixOptions: --accept-flake-config
       - name: Run pre-commit
-        run: nix develop --accept-flake-config --impure --command pre-commit run --all-files
+        run: pre-commit run --all-files
         env:
           # Prevent this action failing when running on the main branch
           SKIP: no-commit-to-branch
       - name: Download data
-        run: nix develop --accept-flake-config --impure --command just download
+        run: just download
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Build
-        run: nix develop --accept-flake-config --impure --command just build
+        run: just build
       - name: Deploy to Netlify
         uses: jsmrcaga/action-netlify-deploy@v2.0.0
         with:
