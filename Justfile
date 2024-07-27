@@ -13,10 +13,7 @@ download:
     python -m website download
 
 # Format
-format: ssort ruff_fix ruff_format prettier
-
-ssort:
-    python -m ssort website
+format: ruff_fix ruff_format prettier
 
 ruff_fix:
     ruff check --fix-only
