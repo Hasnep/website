@@ -10,7 +10,7 @@ python = "^3.11"
 emoji = "^2.11.0"
 msgspec = "^0.18.5"
 pygithub = "^2.3.0"
-whenever = "^0.5.1"
+whenever = "^0.6.4"
 httpx = "^0.27.0"
 
 [tool.poetry.group.dev.dependencies]
