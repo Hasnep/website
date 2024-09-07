@@ -176,7 +176,6 @@ header {
 }
 
 // Box elements
-
 .box,
 pre {
   border: $line-thickness solid $main-colour;
@@ -189,13 +188,13 @@ pre {
   align-items: center;
   grid-template-rows: auto auto;
   grid-template-areas:
-    "boxEmoji boxTitle"
-    "boxEmoji boxSubtitle";
+    "boxEmoji boxTitle boxDate"
+    "boxEmoji boxSubtitle boxSubtitle";
 
   @include desktop {
     $emoji-box-size: 8rem;
     padding: 1rem;
-    gap: 0.5rem;
+    gap: 0.25rem;
     grid-template-columns: $emoji-box-size auto;
     min-height: $emoji-box-size;
     div.box-emoji {
@@ -238,6 +237,12 @@ pre {
   .box-subtitle {
     grid-area: boxSubtitle;
     margin: 0;
+  }
+
+  .box-date {
+    grid-area: boxDate;
+    margin: 1rem;
+    text-align: right;
   }
 }
 
