@@ -1,6 +1,8 @@
 from typing import Any, Dict, List, Optional
 from urllib.parse import urlencode as encode_url_query, urlunparse as construct_url
 
+from whenever import Date
+
 from website import html, markdown, xml
 from website.data import Blogpost, Project, get_data
 from website.utils import strftime
@@ -56,11 +58,13 @@ def get_project_box(
             href = f"/projects/{project_or_blogpost.project_id}"
             emoji = project.emoji
             subtitle = project.description_no_emoji
+            dt = Date.from_py_date(project.last_updated.py_datetime().date())
         case Blogpost() as blogpost:
             title = blogpost.title
             href = f"/blog/{project_or_blogpost.blogpost_id}"
             emoji = blogpost.emoji
-            subtitle = strftime(blogpost.last_updated, r"%Y-%m-%d")
+            subtitle = blogpost.description
+            dt = blogpost.first_posted
 
     title_header_element = html.h2 if is_on_its_own_page else html.h3
     title_element = (
@@ -76,10 +80,12 @@ def get_project_box(
         else html.div(emoji, _class="box-emoji")
     )
     subtitle_element = html.p(subtitle, _class="box-subtitle")
+    date_element = html.p(dt.format_common_iso(), _class="box-date")
     return html.div(
         title_element,
         emoji_element,
         subtitle_element,
+        date_element,
         _class="project box drop-shadow",
     )
 
