@@ -1,6 +1,8 @@
 name: Build and deploy
 
 on:
+  # Run when manually triggered
+  workflow_dispatch:
   # Run on each PR
   pull_request:
   # Run when a new commit is pushed to the main branch
