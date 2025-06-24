@@ -163,9 +163,9 @@ def get_projects(repos: List[Repository]) -> List[Dict[str, Optional[str]]]:
 def download_fonts() -> List[Dict[str, str]]:
     gh = get_gh()
     font_repo = gh.get_repo("github/mona-sans")
-    font_release = get_latest_release(font_repo)
-    if font_release is None:
-        raise ValueError("Could not find font release.")
+    font_release = next(
+        release for release in font_repo.get_releases() if release.tag_name == "v1.0.1"
+    )
     font_files = get_zip_file_contents(download_first_release_asset(font_release))
     mona_sans_woff_2 = first(
         f for f in font_files if f["name"] == "Mona Sans/Mona-Sans.woff2"
