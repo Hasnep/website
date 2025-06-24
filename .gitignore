@@ -1,14 +1,16 @@
 # Environment variables
 .env
 
-# Virtual environment
-.venv/
-
 # Data
 data/
 
 # Built website
 build/
 
-# Pycache
+# Python
 __pycache__/
+.mypy_cache/
+.ruff_cache/
+
+# Netlify
+.netlify/
