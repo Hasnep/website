@@ -3,9 +3,10 @@ import os
 import tarfile
 import zipfile
 from base64 import b64encode
+from collections.abc import Iterable
 from pathlib import Path
 from tarfile import TarFile, TarInfo
-from typing import Any, Dict, Iterable, List, Optional, TypeVar
+from typing import Any, Optional, TypeVar
 from zipfile import ZipFile, ZipInfo
 
 import github
@@ -38,7 +39,7 @@ def get_repo_file(repo: Repository, file_path: str) -> str:
     print(f"Getting file `{file_path}` from `{repo.name}`.")
     file_content_raw = repo.get_contents(file_path)
     file_content = (
-        file_content_raw[0] if isinstance(file_content_raw, List) else file_content_raw
+        file_content_raw[0] if isinstance(file_content_raw, list) else file_content_raw
     )
     return file_content.decoded_content.decode("utf-8")
 
@@ -84,7 +85,7 @@ def extract_zip_file(from_zip_file: ZipFile, member: ZipInfo) -> str:
         return b64encode(extracted).decode("ascii")
 
 
-def get_tar_file_contents(content: bytes) -> List[Dict[str, str]]:
+def get_tar_file_contents(content: bytes) -> list[dict[str, str]]:
     content_io = io.BytesIO(content)
     with tarfile.open(fileobj=content_io) as f:
         return [
@@ -102,7 +103,7 @@ def download_first_release_asset(release: GitRelease) -> bytes:
     return download_file(url)
 
 
-def get_zip_file_contents(content: bytes) -> List[Dict[str, str]]:
+def get_zip_file_contents(content: bytes) -> list[dict[str, str]]:
     content_io = io.BytesIO(content)
     with zipfile.ZipFile(content_io) as f:
         return [
@@ -126,7 +127,7 @@ def has_non_empty_description(repo: Repository) -> bool:
     return get_description(repo) is not None
 
 
-def get_blogpost(repo: Repository) -> Dict[str, str | List[Dict[str, str]]]:
+def get_blogpost(repo: Repository) -> dict[str, str | list[dict[str, str]]]:
     blogpost_id = repo.name
     print(f"Getting blogpost `{blogpost_id}`.")
     latest_release = get_latest_release(repo)
@@ -140,14 +141,14 @@ def get_blogpost(repo: Repository) -> Dict[str, str | List[Dict[str, str]]]:
 
 
 def get_blogposts(
-    repos: List[Repository],
-) -> List[Dict[str, str | List[Dict[str, str]]]]:
+    repos: list[Repository],
+) -> list[dict[str, str | list[dict[str, str]]]]:
     print("Getting blogposts.")
     blogpost_repos = [repo for repo in repos if is_blogpost(repo)]
     return [get_blogpost(repo) for repo in blogpost_repos]
 
 
-def get_projects(repos: List[Repository]) -> List[Dict[str, Optional[str]]]:
+def get_projects(repos: list[Repository]) -> list[dict[str, Optional[str]]]:
     return [
         {
             "id": repo.name,
@@ -160,7 +161,7 @@ def get_projects(repos: List[Repository]) -> List[Dict[str, Optional[str]]]:
     ]
 
 
-def download_fonts() -> List[Dict[str, str]]:
+def download_fonts() -> list[dict[str, str]]:
     gh = get_gh()
     font_repo = gh.get_repo("github/mona-sans")
     font_release = next(
@@ -178,7 +179,7 @@ def get_scss_file() -> str:
         return f.read()
 
 
-def download_icons() -> List[Dict[str, str]]:
+def download_icons() -> list[dict[str, str]]:
     url = "https://use.fontawesome.com/releases/v6.2.1/fontawesome-free-6.2.1-web.zip"
     icon_files = get_zip_file_contents(download_file(url))
     icon_prefix = "fontawesome-free-6.2.1-web/svgs"
@@ -198,7 +199,7 @@ def download_icons() -> List[Dict[str, str]]:
     ]
 
 
-def download_data() -> Dict[str, Any]:
+def download_data() -> dict[str, Any]:
     gh = get_gh()
     repos = [
         repo

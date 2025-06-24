@@ -1,11 +1,11 @@
-from typing import Callable, Dict, List, Self
+from typing import Callable, Self
 
 from website.utils import enquote
 
 
 class Element:
     def __init__(
-        self: Self, tag_name: str, children: List["Node"], attrs: Dict[str, str]
+        self: Self, tag_name: str, children: list["Node"], attrs: dict[str, str]
     ) -> None:
         self.tag_name = tag_name
         self.children = children
