@@ -25,22 +25,35 @@
             name = "website";
             packages = [
               (pkgs.python3.withPackages (python-pkgs: [
+                # keep-sorted start
                 python-pkgs.emoji
                 python-pkgs.httpx
                 python-pkgs.msgspec
                 python-pkgs.mypy
                 python-pkgs.pygithub
                 python-pkgs.whenever
+                # keep-sorted end
               ]))
+              # keep-sorted start
               pkgs.dart-sass
+              pkgs.deadnix
+              pkgs.json-sort-cli
               pkgs.just
+              pkgs.keep-sorted
+              pkgs.markdownlint-cli2
               pkgs.netlify-cli
+              pkgs.nixfmt-rfc-style
               pkgs.nodePackages.prettier
               pkgs.pandoc
               pkgs.pre-commit
+              pkgs.python3Packages.pre-commit-hooks
+              pkgs.ratchet
               pkgs.ruff
-              pkgs.taplo
-              pkgs.nixfmt-rfc-style
+              pkgs.toml-sort
+              pkgs.typos
+              pkgs.yamlfix
+              pkgs.zizmor
+              # keep-sorted end
             ];
             shellHook = "pre-commit install --overwrite";
           };

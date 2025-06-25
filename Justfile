@@ -1,4 +1,4 @@
-set dotenv-load
+set dotenv-load := true
 
 default: format lint build
 

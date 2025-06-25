@@ -2,52 +2,60 @@
 name = "website"
 version = "0.0.0"
 
+[tool.mypy]
+packages = "website"
+strict = true
+
 [tool.ruff.lint]
 select = ["ALL"]
 ignore = [
-  "C901",
-  "COM812",
-  "COM819",
-  "D1",
-  "D203",
-  "D212",
-  "E501",
-  "EM",
-  "ERA001",
-  "FA100",
-  "FA102",
-  "FBT003",
-  "FIX",
-  "G004",
-  "ISC003",
-  "PLR0913",
-  "PYI041",
-  "RET505",
-  "S",
-  "S101",
-  "S106",
-  "SIM118",
-  "T20",
-  "TC002",
-  "TD",
-  "TRY003",
-  "UP006",
-  "UP015",
+    "C901",
+    "COM812",
+    "COM819",
+    "D1",
+    "D203",
+    "D212",
+    "E501",
+    "EM",
+    "ERA001",
+    "FA100",
+    "FA102",
+    "FBT003",
+    "FIX",
+    "G004",
+    "ISC003",
+    "PLR0913",
+    "PYI041",
+    "RET505",
+    "S",
+    "S101",
+    "S106",
+    "SIM118",
+    "T20",
+    "TC002",
+    "TD",
+    "TRY003",
+    "UP006",
+    "UP015",
 ]
 unfixable = ["F401", "ISC001"]
 
 [tool.ruff.lint.flake8-import-conventions.extend-aliases]
-"logging.getLogger" = "get_logger"
-"xml.dom.minidom.parseString" = "parse_xml_string"
 "datetime.date" = "PyDate"
 "datetime.datetime" = "PyDateTime"
-
-[tool.ruff.lint.pep8-naming]
-extend-ignore-names = ["get_logger", "parse_xml_string", "PyDate", "PyDateTime"]
+"logging.getLogger" = "get_logger"
+"xml.dom.minidom.parseString" = "parse_xml_string"
 
 [tool.ruff.lint.isort]
 combine-as-imports = true
 
-[tool.mypy]
-packages = "website"
-strict = true
+[tool.ruff.lint.pep8-naming]
+extend-ignore-names = ["get_logger", "parse_xml_string", "PyDate", "PyDateTime"]
+
+[tool.tomlsort]
+all = true
+ignore_case = true
+sort_first = ["select"]
+spaces_before_inline_comment = 2
+spaces_indent_inline_array = 4
+trailing_comma_inline_array = true
