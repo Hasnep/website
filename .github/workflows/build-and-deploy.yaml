@@ -1,5 +1,5 @@
+---
 name: Build and deploy
-
 on:
   # Run when manually triggered
   workflow_dispatch:
@@ -8,20 +8,22 @@ on:
   # Run when a new commit is pushed to the main branch
   push:
     branches: [main]
-
+permissions: {}
 jobs:
   deploy:
     name: Build and deploy
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # ratchet:actions/checkout@v4
+        with:
+          persist-credentials: false
       - name: Install Nix
-        uses: DeterminateSystems/nix-installer-action@v17
+        uses: DeterminateSystems/nix-installer-action@21a544727d0c62386e78b4befe52d19ad12692e3  # ratchet:DeterminateSystems/nix-installer-action@v17
       - name: Cache Nix environment
-        uses: DeterminateSystems/magic-nix-cache-action@v11
+        uses: DeterminateSystems/magic-nix-cache-action@def9f5a5c6a6b8751c0534e8813a5d0ad2635660  # ratchet:DeterminateSystems/magic-nix-cache-action@v11
       - name: Use Nix dev shell for subsequent steps
-        uses: rrbutani/use-nix-shell-action@v1
+        uses: rrbutani/use-nix-shell-action@59a52b2b9bbfe3cc0e7deb8f9059abe37a439edf  # ratchet:rrbutani/use-nix-shell-action@v1
         with:
           extraNixOptions: --accept-flake-config
       - name: Run pre-commit
@@ -36,7 +38,7 @@ jobs:
       - name: Build
         run: just build
       - name: Deploy to Netlify
-        uses: jsmrcaga/action-netlify-deploy@v2.4.0
+        uses: jsmrcaga/action-netlify-deploy@ae36ac1b3d1ad3646eecb5631977e7314d3a6a2f  # ratchet:jsmrcaga/action-netlify-deploy@v2.4.0
         with:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
