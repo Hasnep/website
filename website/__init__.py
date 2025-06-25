@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Optional
+from typing import Any, Optional
 from urllib.parse import urlencode as encode_url_query, urlunparse as construct_url
 
 from whenever import Date
@@ -255,7 +255,7 @@ def get_blogpost_page(blogpost: Blogpost) -> html.Element:
 # See https://css-tricks.com/working-with-web-feeds-its-more-than-rss/
 
 
-def get_rss_feed(blogposts: List[Blogpost]) -> xml.Node:
+def get_rss_feed(blogposts: list[Blogpost]) -> xml.Node:
     return xml.rss(
         xml.channel(
             xml.title("Ha.nnes.dev"),
@@ -284,7 +284,7 @@ def get_rss_feed(blogposts: List[Blogpost]) -> xml.Node:
     )
 
 
-def get_atom_feed(blogposts: List[Blogpost]) -> xml.Node:
+def get_atom_feed(blogposts: list[Blogpost]) -> xml.Node:
     return xml.feed(
         xml.title("Ha.nnes.dev"),
         xml.link(href="http://ha.nnes.dev/"),
@@ -305,7 +305,7 @@ def get_atom_feed(blogposts: List[Blogpost]) -> xml.Node:
     )
 
 
-def get_json_feed(blogposts: List[Blogpost]) -> Dict[str, Any]:
+def get_json_feed(blogposts: list[Blogpost]) -> dict[str, Any]:
     return {
         "version": "https://jsonfeed.org/version/1.1",
         "title": "Ha.nnes.dev",

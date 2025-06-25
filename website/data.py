@@ -2,7 +2,7 @@ import functools
 from base64 import b64decode
 from binascii import Error as DecodeError
 from datetime import date as PyDate, datetime as PyDateTime
-from typing import List, Optional, Self
+from typing import Optional, Self
 
 import msgspec
 from msgspec import Struct
@@ -25,8 +25,8 @@ class NavBarLink(Struct):
 
 class Config(Struct):
     title: str
-    contact_links: List[ContactLink] = msgspec.field(name="contactLinks")
-    nav_bar_links: List[NavBarLink] = msgspec.field(name="navBarLinks")
+    contact_links: list[ContactLink] = msgspec.field(name="contactLinks")
+    nav_bar_links: list[NavBarLink] = msgspec.field(name="navBarLinks")
 
 
 class Project(Struct):
@@ -91,7 +91,7 @@ class BlogpostMetaData(Struct):
 
 class Blogpost(Struct):
     blogpost_id: str = msgspec.field(name="id")
-    files: List[File]
+    files: list[File]
 
     def _get_file_contents(self: Self, file_name: str) -> Optional[str]:
         file = first_with_default(
@@ -138,20 +138,20 @@ class Blogpost(Struct):
 
 
 class Static(Struct):
-    fonts: List[File]
-    icons: List[File]
+    fonts: list[File]
+    icons: list[File]
     scss: str
 
 
 class Data(Struct):
     config: Config
-    projects: List[Project]
-    blogposts: List[Blogpost]
+    projects: list[Project]
+    blogposts: list[Blogpost]
     cv: str
     static: Static
 
     @property
-    def projects_sorted(self: Self) -> List[Project]:
+    def projects_sorted(self: Self) -> list[Project]:
         return sorted(
             get_data().projects,
             key=lambda p: p.last_updated,
@@ -159,7 +159,7 @@ class Data(Struct):
         )
 
     @property
-    def blogposts_sorted(self: Self) -> List[Blogpost]:
+    def blogposts_sorted(self: Self) -> list[Blogpost]:
         return sorted(
             get_data().blogposts,
             key=lambda b: b.first_posted,

@@ -1,6 +1,7 @@
 import itertools
 import subprocess
-from typing import Iterable, List, TypeVar, Union
+from collections.abc import Iterable
+from typing import TypeVar, Union
 
 import emoji
 from whenever import Date, Instant
@@ -17,19 +18,19 @@ def is_emoji(s: str) -> bool:
     return emoji.is_emoji(s)
 
 
-def flatten(nested_list: List[List[T]]) -> List[T]:
+def flatten(nested_list: list[list[T]]) -> list[T]:
     return list(itertools.chain.from_iterable(nested_list))
 
 
-def first(xs: Iterable[T] | List[T]) -> T:
+def first(xs: Iterable[T] | list[T]) -> T:
     return next(x for x in xs)
 
 
-def first_with_default(xs: Iterable[T] | List[T], default: S) -> Union[T, S]:
+def first_with_default(xs: Iterable[T] | list[T], default: S) -> Union[T, S]:
     return next((x for x in xs), default)
 
 
-def run_cli_command(command: List[str], *, stdin: str) -> str:
+def run_cli_command(command: list[str], *, stdin: str) -> str:
     result = subprocess.run(
         command,
         capture_output=True,
@@ -53,5 +54,5 @@ def strftime(d: Instant | Date, fmt: str) -> str:
             return d.py_datetime().strftime(fmt)
 
 
-# def skip_nones(xs: Sequence[Optional[T]]) -> List[T]:
+# def skip_nones(xs: Sequence[Optional[T]]) -> list[T]:
 #     return [x for x in xs if x is not None]

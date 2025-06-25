@@ -8,7 +8,6 @@ readme = "README.md"
 [tool.ruff.lint]
 select = ["ALL"]
 ignore = [
-  "ANN101",
   "C901",
   "COM812",
   "COM819",
@@ -32,7 +31,7 @@ ignore = [
   "S106",
   "SIM118",
   "T20",
-  "TCH002",
+  "TC002",
   "TD",
   "TRY003",
   "UP006",

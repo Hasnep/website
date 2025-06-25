@@ -1,10 +1,11 @@
-from typing import Callable, Dict, List, Optional, Self, Sequence, Tuple
+from collections.abc import Sequence
+from typing import Callable, Optional, Self
 from xml.dom.minidom import (
     Element as MiniDomElement,
     Text as MiniDomText,
     parseString as parse_xml_string,
 )
-from xml.etree import ElementTree
+from xml.etree import ElementTree as ET
 from xml.etree.ElementTree import Element as ElementTreeElement
 
 MiniDomNode = MiniDomElement | MiniDomText
@@ -12,7 +13,7 @@ MiniDomNode = MiniDomElement | MiniDomText
 
 class Element:
     def __init__(
-        self: Self, tag_name: str, children: Sequence[Self | str], attrs: Dict[str, str]
+        self: Self, tag_name: str, children: Sequence[Self | str], attrs: dict[str, str]
     ) -> None:
         self.tag_name = tag_name
         self.children = list(children)
@@ -36,7 +37,7 @@ def element(tag_name: str) -> Callable[..., Element]:
 
 def parse_element(html: str) -> Element:
     def mini_dom_element_to_element(mini_dom_element: MiniDomElement) -> Element:
-        e_children: List[Element | str] = [
+        e_children: list[Element | str] = [
             mini_dom_node_to_node(n) for n in mini_dom_element.childNodes
         ]
         e_attributes = {
@@ -61,7 +62,7 @@ def parse_fragment(html_fragment: str) -> Sequence[Node]:
     return parse_element("<fakeRoot>" + html_fragment + "</fakeRoot>").children
 
 
-def remove_h1s(nodes: Sequence[Node]) -> List[Node]:
+def remove_h1s(nodes: Sequence[Node]) -> list[Node]:
     return [
         node
         for node in nodes
@@ -87,7 +88,7 @@ def increase_header_levels(nodes: Sequence[Node]) -> Sequence[Node]:
 
 
 def render_element(element: Element) -> str:
-    def get_initial_strings(nodes: List[Node]) -> Tuple[str, List[Node]]:
+    def get_initial_strings(nodes: list[Node]) -> tuple[str, list[Node]]:
         output = ""
         for i, n in enumerate(nodes):
             match n:
@@ -98,15 +99,15 @@ def render_element(element: Element) -> str:
         return output, []
 
     def convert_children_to_pairs(
-        nodes: List[Node],
-    ) -> Tuple[str, List[Tuple[Element, str]]]:
+        nodes: list[Node],
+    ) -> tuple[str, list[tuple[Element, str]]]:
         initial_string, rest = get_initial_strings(nodes)
         rest_pairs = take_text_nodes(rest, "", None)
         return initial_string, rest_pairs
 
     def take_text_nodes(
-        nodes: List[Node], output_text: str, output_element: Optional[Element]
-    ) -> List[Tuple[Element, str]]:
+        nodes: list[Node], output_text: str, output_element: Optional[Element]
+    ) -> list[tuple[Element, str]]:
         if len(nodes) == 0:
             if output_element is None:
                 return []
@@ -135,7 +136,7 @@ def render_element(element: Element) -> str:
             e_element_tree.append(sub_element)
         return e_element_tree
 
-    return ElementTree.tostring(
+    return ET.tostring(
         element_to_element_tree_element(element),
         encoding="unicode",
         method="html",
