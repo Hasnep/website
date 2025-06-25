@@ -34,6 +34,7 @@
               ]))
               pkgs.dart-sass
               pkgs.just
+              pkgs.netlify-cli
               pkgs.nodePackages.prettier
               pkgs.pandoc
               pkgs.pre-commit
