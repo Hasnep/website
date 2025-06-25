@@ -1,9 +1,5 @@
-[tool.poetry]
+[project]
 name = "website"
-version = "0.1.0"
-description = ""
-authors = ["Hannes <h@nnes.dev>"]
-readme = "README.md"
 
 [tool.ruff.lint]
 select = ["ALL"]
