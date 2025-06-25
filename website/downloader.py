@@ -233,7 +233,7 @@ def download_data() -> dict[str, Any]:
                 },
                 {
                     "text": "Mastodon",
-                    "href": "https://julialang.social/@hasnep",
+                    "href": "https://fosstodon.org/@hasnep",
                     "image": "/static/icons/mastodon.svg",
                 },
             ],
