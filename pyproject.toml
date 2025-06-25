@@ -1,5 +1,6 @@
 [project]
 name = "website"
+version = "0.0.0"
 
 [tool.ruff.lint]
 select = ["ALL"]
