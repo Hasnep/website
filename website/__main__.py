@@ -2,6 +2,9 @@ import json
 from base64 import b64decode
 from pathlib import Path
 from shutil import rmtree
+from typing import Annotated, Literal
+
+import typer
 
 from website import (
     get_atom_feed,
@@ -17,7 +20,6 @@ from website import (
     sass,
     xml,
 )
-from website.cli import get_action
 from website.constants import BUILD_FOLDER, DATA_FILE, DATA_FOLDER, STATIC_FOLDER
 from website.data import get_data
 from website.downloader import download_data
@@ -105,8 +107,13 @@ def build() -> None:
             _ = f.write(icon.contents)
 
 
-def main() -> None:
-    match get_action():
+type Action = Literal["download", "build"]
+
+
+def main(
+    action: Annotated[Action, typer.Argument()],
+) -> None:
+    match action:
         case "download":
             download()
         case "build":
@@ -114,4 +121,4 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    typer.run(main)

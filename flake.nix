@@ -30,6 +30,7 @@
                 python-pkgs.httpx
                 python-pkgs.msgspec
                 python-pkgs.pygithub
+                python-pkgs.typer
                 python-pkgs.whenever
                 # keep-sorted end
               ]))
