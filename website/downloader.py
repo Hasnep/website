@@ -6,7 +6,7 @@ from base64 import b64encode
 from collections.abc import Iterable
 from pathlib import Path
 from tarfile import TarFile, TarInfo
-from typing import Any, Optional, TypeVar
+from typing import TypeVar, cast
 from zipfile import ZipFile, ZipInfo
 
 import github
@@ -15,7 +15,7 @@ from github import Github
 from github.GitRelease import GitRelease
 from github.Repository import Repository
 
-from website.utils import first, first_with_default, is_emoji
+from website.utils import is_emoji
 
 T = TypeVar("T")
 
@@ -27,7 +27,7 @@ def get_gh() -> Github:
     return Github(github_token)
 
 
-def get_repo_readme(repo: Repository) -> Optional[str]:
+def get_repo_readme(repo: Repository) -> str | None:
     print(f"Getting README for `{repo.name}`.")
     try:
         return repo.get_readme().decoded_content.decode("utf-8")
@@ -48,13 +48,13 @@ def is_blogpost(repo: Repository) -> bool:
     return "blogpost" in repo.topics
 
 
-def get_latest_release(repo: Repository) -> Optional[GitRelease]:
+def get_latest_release(repo: Repository) -> GitRelease | None:
     print(f"Getting releases for `{repo.owner.name}/{repo.name}`.")
     releases = repo.get_releases()
     releases_sorted = sorted(
         releases, key=lambda release: release.published_at, reverse=True
     )
-    return first_with_default(releases_sorted, default=None)
+    return next((release for release in releases_sorted), None)
 
 
 def download_file(url: str) -> bytes:
@@ -118,8 +118,8 @@ def get_user_repos(gh: Github) -> Iterable[Repository]:
     return user.get_repos()
 
 
-def get_description(repo: Repository) -> Optional[str]:
-    description: Optional[str] = repo.description
+def get_description(repo: Repository) -> str | None:
+    description = cast("str | None", repo.description)
     return None if description is None or len(description) == 0 else description
 
 
@@ -148,13 +148,13 @@ def get_blogposts(
     return [get_blogpost(repo) for repo in blogpost_repos]
 
 
-def get_projects(repos: list[Repository]) -> list[dict[str, Optional[str]]]:
+def get_projects(repos: list[Repository]) -> list[dict[str, str | None]]:
     return [
         {
             "id": repo.name,
             "readme": get_repo_readme(repo),
             "description": get_description(repo),
-            "last_updated": repo.get_commits()[0].commit.committer.date.isoformat(),
+            "last_updated": repo.get_commits()[0].commit.committer.date.isoformat(),  # pyright: ignore[reportAny]
         }
         for repo in repos
         if not is_blogpost(repo)
@@ -168,7 +168,7 @@ def download_fonts() -> list[dict[str, str]]:
         release for release in font_repo.get_releases() if release.tag_name == "v1.0.1"
     )
     font_files = get_zip_file_contents(download_first_release_asset(font_release))
-    mona_sans_woff_2 = first(
+    mona_sans_woff_2 = next(
         f for f in font_files if f["name"] == "Mona Sans/Mona-Sans.woff2"
     )
     return [{"name": "mona-sans.woff2", "contents": mona_sans_woff_2["contents"]}]
@@ -191,7 +191,7 @@ def download_icons() -> list[dict[str, str]]:
     return [
         {
             "name": icon_name,
-            "contents": first(
+            "contents": next(
                 f["contents"] for f in icon_files if f["name"] == icon_path
             ),
         }
@@ -199,7 +199,13 @@ def download_icons() -> list[dict[str, str]]:
     ]
 
 
-def download_data() -> dict[str, Any]:
+def download_data() -> dict[
+    str,
+    dict[str, str | list[dict[str, str]]]
+    | list[dict[str, str | None]]
+    | list[dict[str, str | list[dict[str, str]]]]
+    | str,
+]:
     gh = get_gh()
     repos = [
         repo
@@ -216,7 +222,7 @@ def download_data() -> dict[str, Any]:
     ]
     blogposts = get_blogposts(repos)
     projects = get_projects(repos)
-    cv_repo = first(repo for repo in repos if repo.name == "cv")
+    cv_repo = next(repo for repo in repos if repo.name == "cv")
     return {
         "config": {
             "title": "Ha.nnes.dev",

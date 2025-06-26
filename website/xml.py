@@ -1,8 +1,9 @@
-from typing import Callable, Self
+from typing import Callable, Self, final
 
 from website.utils import enquote
 
 
+@final
 class Element:
     def __init__(
         self: Self, tag_name: str, children: list["Node"], attrs: dict[str, str]
@@ -12,7 +13,7 @@ class Element:
         self.attrs = {("class" if k == "_class" else k): v for (k, v) in attrs.items()}
 
 
-Node = Element | str
+type Node = Element | str
 
 
 def render(node: Node) -> str:

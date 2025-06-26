@@ -29,12 +29,12 @@
                 python-pkgs.emoji
                 python-pkgs.httpx
                 python-pkgs.msgspec
-                python-pkgs.mypy
                 python-pkgs.pygithub
                 python-pkgs.whenever
                 # keep-sorted end
               ]))
               # keep-sorted start
+              pkgs.basedpyright
               pkgs.dart-sass
               pkgs.deadnix
               pkgs.json-sort-cli

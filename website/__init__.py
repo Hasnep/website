@@ -1,4 +1,3 @@
-from typing import Any, Optional
 from urllib.parse import urlencode as encode_url_query, urlunparse as construct_url
 
 from whenever import Date
@@ -98,7 +97,7 @@ def get_page_project_box(project_or_blogpost: Project | Blogpost) -> html.Elemen
     return get_project_box(project_or_blogpost, is_on_its_own_page=True)
 
 
-def get_page(subtitle: Optional[str], *children: html.Node) -> html.Element:
+def get_page(subtitle: str | None, *children: html.Node) -> html.Element:
     title_and_subtitle = (
         get_data().config.title
         if subtitle is None
@@ -305,7 +304,7 @@ def get_atom_feed(blogposts: list[Blogpost]) -> xml.Node:
     )
 
 
-def get_json_feed(blogposts: list[Blogpost]) -> dict[str, Any]:
+def get_json_feed(blogposts: list[Blogpost]) -> dict[str, str | list[dict[str, str]]]:
     return {
         "version": "https://jsonfeed.org/version/1.1",
         "title": "Ha.nnes.dev",

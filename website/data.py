@@ -2,14 +2,14 @@ import functools
 from base64 import b64decode
 from binascii import Error as DecodeError
 from datetime import date as PyDate, datetime as PyDateTime
-from typing import Optional, Self
+from typing import Self
 
 import msgspec
 from msgspec import Struct
 from whenever import Date, Instant
 
 from website.constants import DATA_FILE
-from website.utils import first_with_default, is_emoji
+from website.utils import is_emoji
 
 
 class ContactLink(Struct):
@@ -36,24 +36,24 @@ class Project(Struct):
     _last_updated: PyDateTime = msgspec.field(name="last_updated")
 
     @property
-    def last_updated(self: Self) -> Instant:
+    def last_updated(self) -> Instant:
         return Instant.from_py_datetime(self._last_updated)
 
     @property
-    def title(self: Self) -> str:
+    def title(self) -> str:
         return self.readme.splitlines()[0].lstrip("# ")
 
     @property
-    def emoji(self: Self) -> str:
+    def emoji(self) -> str:
         first_word = [*self.description.split(" "), ""][0]
         return first_word if is_emoji(first_word) else ""
 
     @property
-    def description_no_emoji(self: Self) -> str:
+    def description_no_emoji(self) -> str:
         return (self.description).removeprefix(self.emoji)
 
     @property
-    def contents(self: Self) -> str:
+    def contents(self) -> str:
         return "\n".join(self.readme.splitlines()[1:])
 
     # @property
@@ -65,7 +65,7 @@ class File(Struct):
     name: str
     contents: str
 
-    def to_bytes(self: Self) -> bytes:
+    def to_bytes(self) -> bytes:
         try:
             return b64decode(self.contents, validate=True)
         except (DecodeError, ValueError):
@@ -81,11 +81,11 @@ class BlogpostMetaData(Struct):
     description: str
 
     @property
-    def first_posted(self: Self) -> Date:
+    def first_posted(self) -> Date:
         return Date.from_py_date(self._first_posted)
 
     @property
-    def last_updated(self: Self) -> Date:
+    def last_updated(self) -> Date:
         return Date.from_py_date(self._last_updated)
 
 
@@ -93,13 +93,11 @@ class Blogpost(Struct):
     blogpost_id: str = msgspec.field(name="id")
     files: list[File]
 
-    def _get_file_contents(self: Self, file_name: str) -> Optional[str]:
-        file = first_with_default(
-            (f for f in self.files if f.name == file_name), default=None
-        )
+    def _get_file_contents(self, file_name: str) -> str | None:
+        file = next((f for f in self.files if f.name == file_name), None)
         return None if file is None else file.contents
 
-    def _get_metadata(self: Self) -> BlogpostMetaData:
+    def _get_metadata(self) -> BlogpostMetaData:
         metadata_file_contents = self._get_file_contents("metadata.toml") or ""
         try:
             return msgspec.toml.decode(metadata_file_contents, type=BlogpostMetaData)
@@ -109,31 +107,31 @@ class Blogpost(Struct):
             ) from err
 
     @property
-    def contents(self: Self) -> str:
+    def contents(self) -> str:
         return self._get_file_contents("blogpost.html") or ""
 
     @property
-    def title(self: Self) -> str:
+    def title(self) -> str:
         return self._get_metadata().title
 
     @property
-    def emoji(self: Self) -> str:
+    def emoji(self) -> str:
         return self._get_metadata().emoji
 
     @property
-    def last_updated(self: Self) -> Date:
+    def last_updated(self) -> Date:
         return self._get_metadata().last_updated
 
     @property
-    def first_posted(self: Self) -> Date:
+    def first_posted(self) -> Date:
         return self._get_metadata().first_posted
 
     @property
-    def description(self: Self) -> str:
+    def description(self) -> str:
         return self._get_metadata().description
 
     @property
-    def repo_url(self: Self) -> str:
+    def repo_url(self) -> str:
         return f"https://github.com/Hasnep/{self.blogpost_id}"
 
 

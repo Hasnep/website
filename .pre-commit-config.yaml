@@ -54,9 +54,9 @@ repos:
         entry: ruff check --fix
         types: [python]
       - name: Type-check Python files
-        id: mypy
+        id: basedpyright
         language: system
-        entry: mypy
+        entry: basedpyright
         types: [python]
         pass_filenames: false
       # YAML
