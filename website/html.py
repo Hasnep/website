@@ -1,5 +1,5 @@
 from collections.abc import Sequence
-from typing import Callable, Optional, Self
+from typing import Callable, Self, cast, final
 from xml.dom.minidom import (
     Element as MiniDomElement,
     Text as MiniDomText,
@@ -8,9 +8,10 @@ from xml.dom.minidom import (
 from xml.etree import ElementTree as ET
 from xml.etree.ElementTree import Element as ElementTreeElement
 
-MiniDomNode = MiniDomElement | MiniDomText
+type MiniDomNode = MiniDomElement | MiniDomText
 
 
+@final
 class Element:
     def __init__(
         self: Self, tag_name: str, children: Sequence[Self | str], attrs: dict[str, str]
@@ -25,7 +26,7 @@ class Element:
         }
 
 
-Node = Element | str
+type Node = Element | str
 
 
 def element(tag_name: str) -> Callable[..., Element]:
@@ -37,12 +38,15 @@ def element(tag_name: str) -> Callable[..., Element]:
 
 def parse_element(html: str) -> Element:
     def mini_dom_element_to_element(mini_dom_element: MiniDomElement) -> Element:
-        e_children: list[Element | str] = [
-            mini_dom_node_to_node(n) for n in mini_dom_element.childNodes
+        e_children = [
+            mini_dom_node_to_node(n)
+            for n in cast("Sequence[MiniDomNode]", mini_dom_element.childNodes)
         ]
         e_attributes = {
-            str(k): str(v)
-            for (k, v) in mini_dom_element.attributes.items()  # type: ignore[no-untyped-call]
+            k: str(v)  # type: ignore[reportAny]
+            for (k, v) in cast(  # type: ignore[reportAny]
+                "dict[str, str | int | float]", dict(mini_dom_element.attributes)
+            ).items()
         }
         return Element(mini_dom_element.nodeName, e_children, e_attributes)
 
@@ -51,10 +55,12 @@ def parse_element(html: str) -> Element:
             case MiniDomElement() as e:
                 return mini_dom_element_to_element(e)
             case MiniDomText() as t:
-                return str(t.nodeValue)
+                return t.nodeValue
 
     mini_dom_document = parse_xml_string(html)
-    mini_dom_root_element: MiniDomElement = mini_dom_document.childNodes[0]
+    mini_dom_root_element = cast(
+        "Sequence[MiniDomElement]", mini_dom_document.childNodes
+    )[0]
     return mini_dom_element_to_element(mini_dom_root_element)
 
 
@@ -106,7 +112,7 @@ def render_element(element: Element) -> str:
         return initial_string, rest_pairs
 
     def take_text_nodes(
-        nodes: list[Node], output_text: str, output_element: Optional[Element]
+        nodes: list[Node], output_text: str, output_element: Element | None
     ) -> list[tuple[Element, str]]:
         if len(nodes) == 0:
             if output_element is None:

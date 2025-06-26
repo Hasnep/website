@@ -1,7 +1,7 @@
 import itertools
 import subprocess
 from collections.abc import Iterable
-from typing import TypeVar, Union
+from typing import TypeVar
 
 import emoji
 from whenever import Date, Instant
@@ -26,7 +26,7 @@ def first(xs: Iterable[T] | list[T]) -> T:
     return next(x for x in xs)
 
 
-def first_with_default(xs: Iterable[T] | list[T], default: S) -> Union[T, S]:
+def first_with_default(xs: Iterable[T] | list[T], default: S) -> T | S:
     return next((x for x in xs), default)
 
 
@@ -52,7 +52,3 @@ def strftime(d: Instant | Date, fmt: str) -> str:
             return date_to_datetime(d).py_datetime().strftime(fmt)
         case Instant():
             return d.py_datetime().strftime(fmt)
-
-
-# def skip_nones(xs: Sequence[Optional[T]]) -> list[T]:
-#     return [x for x in xs if x is not None]

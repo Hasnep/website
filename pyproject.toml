@@ -2,9 +2,8 @@
 name = "website"
 version = "0.0.0"
 
-[tool.mypy]
-packages = "website"
-strict = true
+[tool.basedpyright]
+pythonVersion = "3.13"
 
 [tool.ruff.lint]
 select = ["ALL"]
@@ -35,8 +34,6 @@ ignore = [
     "TC002",
     "TD",
     "TRY003",
-    "UP006",
-    "UP015",
 ]
 unfixable = ["F401", "ISC001"]
 

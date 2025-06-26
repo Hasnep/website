@@ -55,7 +55,7 @@ def build() -> None:
         print(f"Writing page to `{page_file_path}`.")
         page_file_path.parent.mkdir(exist_ok=True, parents=True)
         with page_file_path.open("w") as f:
-            f.write(html.render_page(page))
+            _ = f.write(html.render_page(page))
 
     assets = flatten(
         [
@@ -74,7 +74,7 @@ def build() -> None:
         )
         print(f"Writing blogpost asset to `{asset_file_path}`.")
         with asset_file_path.open("wb") as f:
-            f.write(blogpost_asset.to_bytes())
+            _ = f.write(blogpost_asset.to_bytes())
 
     feeds = [
         (BUILD_FOLDER / "rss.xml", xml.render(get_rss_feed(get_data().blogposts))),
@@ -84,25 +84,25 @@ def build() -> None:
     for feed_path, feed in feeds:
         print(f"Writing feed to `{feed_path}`.")
         with feed_path.open("w") as f:
-            f.write(feed)
+            _ = f.write(feed)
 
     css_file = STATIC_FOLDER / "styles.css"
     print(f"Writing CSS file to `{css_file}`.")
     css = sass.compile_sass(get_data().static.scss)
     with css_file.open("w") as f:
-        f.write(css)
+        _ = f.write(css)
 
     fonts_folder = STATIC_FOLDER / "fonts"
     fonts_folder.mkdir(exist_ok=True)
     for font in get_data().static.fonts:
         with (fonts_folder / font.name).open("wb") as f:
-            f.write(b64decode(font.contents))
+            _ = f.write(b64decode(font.contents))
 
     icons_folder = STATIC_FOLDER / "icons"
     icons_folder.mkdir(exist_ok=True)
     for icon in get_data().static.icons:
         with (icons_folder / icon.name).open("w") as f:
-            f.write(icon.contents)
+            _ = f.write(icon.contents)
 
 
 def main() -> None:

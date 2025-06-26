@@ -25,10 +25,10 @@ prettier:
     prettier --write styles.scss
 
 # Lint
-lint: ruff mypy
+lint: ruff typecheck
 
 ruff:
     ruff check
 
-mypy:
-    mypy
+typecheck:
+    basedpyright
