@@ -42,12 +42,7 @@ def parse_element(html: str) -> Element:
             mini_dom_node_to_node(n)
             for n in cast("Sequence[MiniDomNode]", mini_dom_element.childNodes)
         ]
-        e_attributes = {
-            k: str(v)  # type: ignore[reportAny]
-            for (k, v) in cast(  # type: ignore[reportAny]
-                "dict[str, str | int | float]", dict(mini_dom_element.attributes)
-            ).items()
-        }
+        e_attributes = dict(mini_dom_element.attributes.items())
         return Element(mini_dom_element.nodeName, e_children, e_attributes)
 
     def mini_dom_node_to_node(mini_dom_node: MiniDomNode) -> Node:
