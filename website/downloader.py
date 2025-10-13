@@ -154,7 +154,7 @@ def get_projects(repos: list[Repository]) -> list[dict[str, str | None]]:
             "id": repo.name,
             "readme": get_repo_readme(repo),
             "description": get_description(repo),
-            "last_updated": repo.get_commits()[0].commit.committer.date.isoformat(),  # pyright: ignore[reportAny]
+            "last_updated": repo.get_commits()[0].commit.committer.date.isoformat(),
         }
         for repo in repos
         if not is_blogpost(repo)
