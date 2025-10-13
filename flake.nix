@@ -34,17 +34,22 @@
                 # keep-sorted end
               ]))
               # keep-sorted start
-              pkgs.basedpyright
               pkgs.dart-sass
+              pkgs.just
+              pkgs.netlify-cli
+              pkgs.pandoc
+              # keep-sorted end
+            ]
+            # Pre-commit
+            ++ [
+              # keep-sorted start
+              pkgs.basedpyright
               pkgs.deadnix
               pkgs.json-sort-cli
-              pkgs.just
               pkgs.keep-sorted
               pkgs.markdownlint-cli2
-              pkgs.netlify-cli
-              pkgs.nixfmt-rfc-style
+              pkgs.nixfmt
               pkgs.nodePackages.prettier
-              pkgs.pandoc
               pkgs.pre-commit
               pkgs.python3Packages.pre-commit-hooks
               pkgs.ratchet
@@ -57,7 +62,7 @@
             ];
             shellHook = "pre-commit install --overwrite";
           };
-          formatter = pkgs.nixfmt-rfc-style;
+          formatter = pkgs.nixfmt-tree;
         };
     };
 }
