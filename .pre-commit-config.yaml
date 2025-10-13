@@ -59,6 +59,12 @@ repos:
         entry: basedpyright
         types: [python]
         pass_filenames: false
+      # CSS
+      - name: Format CSS files
+        id: css-format
+        language: system
+        entry: prettier --write
+        types: [css, sass, scss]
       # YAML
       - name: Format YAML files
         id: fix-yaml
