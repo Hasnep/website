@@ -34,7 +34,7 @@
                 # keep-sorted end
               ]))
               # keep-sorted start
-              pkgs.dart-sass
+              pkgs.grass-sass
               pkgs.just
               pkgs.netlify-cli
               pkgs.pandoc
