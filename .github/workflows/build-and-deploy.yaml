@@ -30,8 +30,8 @@ jobs:
         uses: rrbutani/use-nix-shell-action@59a52b2b9bbfe3cc0e7deb8f9059abe37a439edf  # ratchet:rrbutani/use-nix-shell-action@v1
         with:
           extraNixOptions: --accept-flake-config
-      - name: Run pre-commit
-        run: pre-commit run --all-files
+      - name: Run prek
+        run: prek run --all-files
         env:
           # Prevent this action failing when running on the main branch
           SKIP: no-commit-to-branch
