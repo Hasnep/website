@@ -12,4 +12,4 @@ download:
     python -m website download
 
 check:
-    pre-commit run --all-files
+    prek run --all-files

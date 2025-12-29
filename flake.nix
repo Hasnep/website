@@ -50,7 +50,7 @@
               pkgs.markdownlint-cli2
               pkgs.nixfmt
               pkgs.nodePackages.prettier
-              pkgs.pre-commit
+              pkgs.prek
               pkgs.python3Packages.pre-commit-hooks
               pkgs.ratchet
               pkgs.ruff
@@ -60,7 +60,7 @@
               pkgs.zizmor
               # keep-sorted end
             ];
-            shellHook = "pre-commit install --overwrite";
+            shellHook = "prek install --overwrite";
           };
           formatter = pkgs.nixfmt-tree;
         };
