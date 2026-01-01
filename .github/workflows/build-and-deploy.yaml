@@ -42,11 +42,8 @@ jobs:
       - name: Build
         run: just build
       - name: Deploy to Netlify
-        uses: jsmrcaga/action-netlify-deploy@ae36ac1b3d1ad3646eecb5631977e7314d3a6a2f  # ratchet:jsmrcaga/action-netlify-deploy@v2.4.0
-        with:
+        run: netlify deploy --dir build --prod $NETLIFY_DEPLOY_TO_PROD
+        env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
           NETLIFY_DEPLOY_TO_PROD: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
-          build_directory: build
-          install_command: echo 'Skipping installing the dependencies'
-          build_command: echo 'Skipping building the web files'
