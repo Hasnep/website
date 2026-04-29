@@ -128,11 +128,23 @@ div#content {
 // Header
 header {
   display: grid;
-  grid-template-columns: auto 10rem;
-  grid-template-rows: auto auto;
-  grid-template-areas:
-    "websiteTitle contactLinks"
-    "navbar navbar";
+
+  @include desktop {
+    grid-template-columns: auto 10rem;
+    grid-template-rows: auto auto;
+    grid-template-areas:
+      "websiteTitle contactLinks"
+      "navbar navbar";
+  }
+
+  @include mobile {
+    grid-template-columns: auto;
+    grid-template-rows: auto auto auto;
+    grid-template-areas:
+      "websiteTitle"
+      "contactLinks"
+      "navbar";
+  }
 
   // Website title
   h1#website-title {
@@ -157,7 +169,9 @@ header {
       padding: 0rem;
 
       li {
-        display: inline;
+        @include desktop {
+          display: inline;
+        }
 
         &:before {
           content: "‣";
@@ -186,16 +200,16 @@ pre {
 .box.project {
   display: grid;
   align-items: center;
-  grid-template-rows: auto auto;
-  grid-template-areas:
-    "boxEmoji boxTitle boxDate"
-    "boxEmoji boxSubtitle boxSubtitle";
 
   @include desktop {
     $emoji-box-size: 8rem;
     padding: 1rem;
     gap: 0.25rem;
     grid-template-columns: $emoji-box-size auto;
+    grid-template-rows: auto auto;
+    grid-template-areas:
+      "boxEmoji boxTitle boxDate"
+      "boxEmoji boxSubtitle boxSubtitle";
     min-height: $emoji-box-size;
     div.box-emoji {
       font-size: math.div($emoji-box-size, 1.75);
@@ -206,10 +220,16 @@ pre {
   }
 
   @include mobile {
-    $emoji-box-size: 5rem;
+    $emoji-box-size: 2rem;
+    margin:  1.5rem 0.5rem;
     padding: 0.5rem;
     gap: 0.5rem;
     grid-template-columns: $emoji-box-size auto;
+    grid-template-rows: auto auto auto;
+    grid-template-areas:
+      "boxTitle boxTitle"
+      "boxEmoji boxDate"
+      "boxSubtitle boxSubtitle";
     min-height: $emoji-box-size;
     div.box-emoji {
       font-size: math.div($emoji-box-size, 1.75);
