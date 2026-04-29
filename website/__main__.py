@@ -2,6 +2,9 @@ import json
 from base64 import b64decode
 from pathlib import Path
 from shutil import rmtree
+from typing import Annotated
+
+from cyclopts import App, Parameter
 
 from website import (
     get_atom_feed,
@@ -17,20 +20,25 @@ from website import (
     sass,
     xml,
 )
-from website.cli import get_action
 from website.constants import BUILD_FOLDER, DATA_FILE, DATA_FOLDER, STATIC_FOLDER
 from website.data import get_data
 from website.downloader import download_data
 from website.utils import flatten
 
+app = App()
 
-def download() -> None:
-    data = download_data()
+
+@app.command
+def download(
+    *, online: Annotated[bool, Parameter(negative="--offline")] = False
+) -> None:
+    data = download_data(online=online)
     DATA_FOLDER.mkdir(exist_ok=True)
     with DATA_FILE.open("w") as f:
         json.dump(data, f, ensure_ascii=False)
 
 
+@app.command
 def build() -> None:
     output: dict[Path, str | bytes] = {}
 
@@ -105,13 +113,5 @@ def build() -> None:
                     _ = f.write(contents)
 
 
-def main() -> None:
-    match get_action():
-        case "download":
-            download()
-        case "build":
-            build()
-
-
 if __name__ == "__main__":
-    main()
+    app()

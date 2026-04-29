@@ -6,10 +6,10 @@ build:
     python -m website build
 
 watch:
-    fd --extension py . website | entr just build
+    fd | entr just download --offline build
 
-download:
-    python -m website download
+download arg:
+    python -m website download {{ arg }}
 
 check:
     prek run --all-files

@@ -1,4 +1,5 @@
 import io
+import json
 import os
 import tarfile
 import zipfile
@@ -15,6 +16,7 @@ from github import Github
 from github.GitRelease import GitRelease
 from github.Repository import Repository
 
+from website.constants import DATA_FILE
 from website.utils import is_emoji
 
 T = TypeVar("T")
@@ -199,63 +201,84 @@ def download_icons() -> list[dict[str, str]]:
     ]
 
 
-def download_data() -> dict[
+SITE_CONFIG = {
+    "title": "Ha.nnes.dev",
+    "contactLinks": [
+        {
+            "text": "h@nnes.dev",
+            "href": "mailto:h@nnes.dev",
+            "image": "/static/icons/envelope.svg",
+        },
+        {
+            "text": "GitHub",
+            "href": "https://github.com/hasnep",
+            "image": "/static/icons/github.svg",
+        },
+        {
+            "text": "Mastodon",
+            "href": "https://fosstodon.org/@hasnep",
+            "image": "/static/icons/mastodon.svg",
+        },
+    ],
+    "navBarLinks": [
+        {"text": "Home", "href": "/"},
+        {"text": "Blog", "href": "/blog"},
+        {"text": "Projects", "href": "/projects"},
+        {"text": "CV", "href": "/cv"},
+    ],
+}
+
+
+def download_data(
+    *,
+    online: bool,
+) -> dict[
     str,
     dict[str, str | list[dict[str, str]]]
     | list[dict[str, str | None]]
     | list[dict[str, str | list[dict[str, str]]]]
     | str,
 ]:
-    gh = get_gh()
-    repos = [
-        repo
-        for repo in get_user_repos(gh)
-        if (not repo.fork)
-        and (not repo.archived)
-        and (
-            (
-                has_non_empty_description(repo)
-                and is_emoji(repo.description.split(" ")[0])
+    if online:
+        gh = get_gh()
+        repos = [
+            repo
+            for repo in get_user_repos(gh)
+            if (not repo.fork)
+            and (not repo.archived)
+            and (
+                (
+                    has_non_empty_description(repo)
+                    and is_emoji(repo.description.split(" ")[0])
+                )
+                or is_blogpost(repo)
             )
-            or is_blogpost(repo)
-        )
-    ]
-    blogposts = get_blogposts(repos)
-    projects = get_projects(repos)
-    cv_repo = next(repo for repo in repos if repo.name == "cv")
-    return {
-        "config": {
-            "title": "Ha.nnes.dev",
-            "contactLinks": [
-                {
-                    "text": "h@nnes.dev",
-                    "href": "mailto:h@nnes.dev",
-                    "image": "/static/icons/envelope.svg",
-                },
-                {
-                    "text": "GitHub",
-                    "href": "https://github.com/hasnep",
-                    "image": "/static/icons/github.svg",
-                },
-                {
-                    "text": "Mastodon",
-                    "href": "https://fosstodon.org/@hasnep",
-                    "image": "/static/icons/mastodon.svg",
-                },
-            ],
-            "navBarLinks": [
-                {"text": "Home", "href": "/"},
-                {"text": "Blog", "href": "/blog"},
-                {"text": "Projects", "href": "/projects"},
-                {"text": "CV", "href": "/cv"},
-            ],
-        },
-        "projects": projects,
-        "blogposts": blogposts,
-        "cv": get_repo_file(cv_repo, "src/cv-johannes-smit.md"),
-        "static": {
-            "fonts": download_fonts(),
-            "icons": download_icons(),
-            "scss": get_scss_file(),
-        },
-    }
+        ]
+        blogposts = get_blogposts(repos)
+        projects = get_projects(repos)
+        cv_repo = next(repo for repo in repos if repo.name == "cv")
+        return {
+            "config": SITE_CONFIG,
+            "projects": projects,
+            "blogposts": blogposts,
+            "cv": get_repo_file(cv_repo, "src/cv-johannes-smit.md"),
+            "static": {
+                "fonts": download_fonts(),
+                "icons": download_icons(),
+                "scss": get_scss_file(),
+            },
+        }
+    else:
+        with DATA_FILE.open("r") as f:
+            cached = json.load(f)  # pyright: ignore[reportAny]
+        return {
+            "config": SITE_CONFIG,
+            "projects": cached["projects"],
+            "blogposts": cached["blogposts"],
+            "cv": cached["cv"],
+            "static": {
+                "fonts": cached["static"]["fonts"],
+                "icons": cached["static"]["icons"],
+                "scss": get_scss_file(),
+            },
+        }
