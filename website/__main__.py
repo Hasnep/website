@@ -32,9 +32,7 @@ def download() -> None:
 
 
 def build() -> None:
-    rmtree(BUILD_FOLDER, ignore_errors=True)
-    BUILD_FOLDER.mkdir()
-    STATIC_FOLDER.mkdir()
+    output: dict[Path, str | bytes] = {}
 
     pages = [
         (".", get_index_page()),
@@ -53,9 +51,7 @@ def build() -> None:
     for page_path, page in pages:
         page_file_path = BUILD_FOLDER / page_path / "index.html"
         print(f"Writing page to `{page_file_path}`.")
-        page_file_path.parent.mkdir(exist_ok=True, parents=True)
-        with page_file_path.open("w") as f:
-            _ = f.write(html.render_page(page))
+        output[page_file_path] = html.render_page(page)
 
     assets = flatten(
         [
@@ -73,8 +69,7 @@ def build() -> None:
             BUILD_FOLDER / "blog" / blogpost.blogpost_id / blogpost_asset.name
         )
         print(f"Writing blogpost asset to `{asset_file_path}`.")
-        with asset_file_path.open("wb") as f:
-            _ = f.write(blogpost_asset.to_bytes())
+        output[asset_file_path] = blogpost_asset.to_bytes()
 
     feeds = [
         (BUILD_FOLDER / "rss.xml", xml.render(get_rss_feed(get_data().blogposts))),
@@ -83,26 +78,31 @@ def build() -> None:
     ]
     for feed_path, feed in feeds:
         print(f"Writing feed to `{feed_path}`.")
-        with feed_path.open("w") as f:
-            _ = f.write(feed)
+        output[feed_path] = feed
 
     css_file = STATIC_FOLDER / "styles.css"
     print(f"Writing CSS file to `{css_file}`.")
     css = sass.compile_sass(get_data().static.scss)
-    with css_file.open("w") as f:
-        _ = f.write(css)
+    output[css_file] = css
 
     fonts_folder = STATIC_FOLDER / "fonts"
-    fonts_folder.mkdir(exist_ok=True)
     for font in get_data().static.fonts:
-        with (fonts_folder / font.name).open("wb") as f:
-            _ = f.write(b64decode(font.contents))
+        output[fonts_folder / font.name] = b64decode(font.contents)
 
     icons_folder = STATIC_FOLDER / "icons"
-    icons_folder.mkdir(exist_ok=True)
     for icon in get_data().static.icons:
-        with (icons_folder / icon.name).open("w") as f:
-            _ = f.write(icon.contents)
+        output[icons_folder / icon.name] = icon.contents
+
+    rmtree(BUILD_FOLDER, ignore_errors=True)
+    for p, contents in output.items():
+        p.parent.mkdir(parents=True, exist_ok=True)
+        match contents:
+            case str():
+                with p.open("w") as f:
+                    _ = f.write(contents)
+            case bytes():
+                with p.open("wb") as f:
+                    _ = f.write(contents)
 
 
 def main() -> None:
