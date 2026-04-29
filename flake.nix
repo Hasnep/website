@@ -21,6 +21,7 @@
             packages = [
               (pkgs.python3.withPackages (python-pkgs: [
                 # keep-sorted start
+                python-pkgs.cyclopts
                 python-pkgs.emoji
                 python-pkgs.httpx
                 python-pkgs.msgspec

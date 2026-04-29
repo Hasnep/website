@@ -36,7 +36,7 @@ jobs:
           # Prevent this action failing when running on the main branch
           SKIP: no-commit-to-branch
       - name: Download data
-        run: just download
+        run: just download --online
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Build
